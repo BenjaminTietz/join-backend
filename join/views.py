@@ -2,6 +2,9 @@ from django.shortcuts import render
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
+from rest_framework import viewsets, status
+from django_join_backend_app.serializers import UserSerializer
+
 # Create your views here.
 class LoginView(ObtainAuthToken):
     def post(self, request, *args, **kwargs):
@@ -15,3 +18,10 @@ class LoginView(ObtainAuthToken):
             'user_id': user.pk,
             'email': user.email
         })
+class SignupView(viewsets.ViewSet):
+    def create(self, request):
+        serializer = UserSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
