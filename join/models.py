@@ -3,6 +3,10 @@ from django.db.models.fields import DateField
 from datetime import date
 from django.conf import settings
 from django.db import models
+from rest_framework import serializers
+from django.contrib.auth import get_user_model # If used custom user model
+
+UserModel = get_user_model()
 # Create your models here.
 class Task(models.Model):
     title = models.CharField(max_length=50)
@@ -38,3 +42,23 @@ class Contact(models.Model):
 
     def __str__(self):
         return self.name
+
+class User(serializers.ModelSerializer):
+    password = serializers.CharField(write_only=True)
+
+    def create(self, validated_data):
+
+        user = UserModel.objects.create_user(
+            username=validated_data['username'],
+            email=validated_data['email'],
+       )
+        user.set_password(validated_data['password'])  # safe method for hashing password
+        user.save()
+
+
+        return user
+
+    class Meta:
+        model = UserModel
+        # Tuple of serialized model fields 
+        fields = ( "id", "username","email", "password", )
