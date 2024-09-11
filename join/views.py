@@ -3,7 +3,8 @@ from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
 from rest_framework import viewsets, status
-from django_join_backend_app.serializers import UserSerializer
+from django_join_backend_app.serializers import UserSerializer, ContactSerializer
+from .models import Contact
 
 # Create your views here.
 class LoginView(ObtainAuthToken):
@@ -25,3 +26,19 @@ class SignupView(viewsets.ViewSet):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+class ContactView(viewsets.ViewSet):
+    def create(self, request):
+        serializer = ContactSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        contact = Contact(
+            name=serializer.validated_data['name'],
+            email=serializer.validated_data['email'],
+            phone=serializer.validated_data['phone']
+        )
+        contact.save()
+        return Response({
+            'name': contact.name,
+            'email': contact.email,
+            'phone': contact.phone
+        })
