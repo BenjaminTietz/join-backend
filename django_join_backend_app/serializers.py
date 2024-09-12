@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from django.contrib.auth.models import User
-from join.models import Contact, Task
+from join.models import Contact, Task, SubTask
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -22,3 +22,9 @@ class TaskSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         return Task.objects.create(**validated_data)
+    
+class SubTaskSerializer(serializers.ModelSerializer):
+    task = serializers.PrimaryKeyRelatedField(queryset=Task.objects.all())
+    class Meta:
+        model = SubTask
+        fields = ('task','title', 'checked', 'created_at')
