@@ -45,7 +45,7 @@ class Task(models.Model):
         return self.title
     
 class SubTask(models.Model):
-    task = models.ForeignKey(Task, on_delete=models.CASCADE)
+    task = models.ForeignKey(Task, on_delete=models.CASCADE, related_name='sub_tasks')
     title = models.CharField(max_length=50)
     checked = models.BooleanField(default=False)
     created_at = models.DateField(default=date.today) #for internal use
