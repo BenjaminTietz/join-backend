@@ -28,7 +28,7 @@ class Task(models.Model):
         ('AWAITING_FEEDBACK', 'Awaiting Feedback'),
         ('DONE', 'Done'),
     ]
-
+    id = models.AutoField(primary_key=True)
     title = models.CharField(max_length=50)
     description = models.TextField(max_length=500)
     created_at = models.DateField(default=date.today) #for internal use
@@ -48,7 +48,7 @@ class SubTask(models.Model):
     task = models.ForeignKey(Task, on_delete=models.CASCADE)
     title = models.CharField(max_length=50)
     checked = models.BooleanField(default=False)
-    #created_at = models.DateField(default=date.today) #for internal use
+    created_at = models.DateField(default=date.today) #for internal use
     #author = models.CharField(max_length=50) #for internal use
 
     def __str__(self):
