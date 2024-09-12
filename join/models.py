@@ -10,14 +10,33 @@ from phone_field import PhoneField
 
 # Create your models here.
 class Task(models.Model):
+    CATEGORY_CHOICES = [
+        ('SALES', 'Sales'),
+        ('MARKETING', 'Marketing'),
+        ('ACCOUNTING', 'Accounting'),
+        ('DEVELOPMENT', 'Development'),
+        ('PURCHASE', 'Purchase'),
+    ]
+    PRIORITY_CHOICES = [
+        ('LOW', 'Low'),
+        ('MEDIUM', 'Medium'),
+        ('HIGH', 'High'),
+    ]
+    STATUS_CHOICES = [
+        ('TODO', 'To Do'),
+        ('IN_PROGRESS', 'In Progress'),
+        ('AWAITING_FEEDBACK', 'Awaiting Feedback'),
+        ('DONE', 'Done'),
+    ]
+
     title = models.CharField(max_length=50)
     description = models.TextField(max_length=500)
     created_at = models.DateField(default=date.today) #for internal use
     #author = models.CharField(max_length=50) #for internal use
-    #category = models.CharField(max_length=50)
-    #priority = models.CharField(max_length=50)
-    #status = models.CharField(max_length=50)
-    #due_date = models.DateField()
+    category = models.CharField(choices=CATEGORY_CHOICES, max_length=50, default='DEVELOPMENT')
+    priority = models.CharField(choices=PRIORITY_CHOICES, max_length=50, default='MEDIUM')
+    status = models.CharField(choices=STATUS_CHOICES, max_length=50, default='TODO')
+    due_date = models.DateField(default=date.today)
     #sub_tasks = connect with subtask model
     #completed = models.BooleanField(default=False)
     #assigned_to = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
