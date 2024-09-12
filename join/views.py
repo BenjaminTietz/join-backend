@@ -64,16 +64,38 @@ class TaskView(viewsets.ViewSet):
             'status': task.status,
             'due_date': task.due_date
         })
+    
+    def retrieve(self, request, pk=None):
+
+        task = Task.objects.get(id=pk)
         
+
+        subtasks = task.sub_tasks.all()
+        
+
+        subtask_serializer = SubTaskSerializer(subtasks, many=True)
+        
+
+        return Response({
+            'id': task.id,
+            'title': task.title,
+            'description': task.description,
+            'category': task.category,
+            'priority': task.priority,
+            'status': task.status,
+            'due_date': task.due_date,
+            'subtasks': subtask_serializer.data  
+        })
 class SubTaskView (viewsets.ViewSet):
     def create(self, request):
         serializer = SubTaskSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        task_id = serializer.validated_data['task'].id
         
+        task_id = serializer.validated_data['task'].id
+        task = Task.objects.get(id=task_id)
 
         subtask = SubTask(
-            task=Task.objects.get(id=task_id),
+            task=task,
             title=serializer.validated_data['title'],
             checked=serializer.validated_data['checked'],
             created_at=serializer.validated_data['created_at'],
