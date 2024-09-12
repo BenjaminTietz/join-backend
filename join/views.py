@@ -3,8 +3,8 @@ from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
 from rest_framework import viewsets, status
-from django_join_backend_app.serializers import UserSerializer, ContactSerializer, TaskSerializer
-from .models import Contact, Task
+from django_join_backend_app.serializers import UserSerializer, ContactSerializer, TaskSerializer, SubTaskSerializer
+from .models import Contact, Task, SubTask
 
 # Create your views here.
 class LoginView(ObtainAuthToken):
@@ -63,4 +63,27 @@ class TaskView(viewsets.ViewSet):
             'priority': task.priority,
             'status': task.status,
             'due_date': task.due_date
+        })
+        
+class SubTaskView (viewsets.ViewSet):
+    def create(self, request):
+        serializer = SubTaskSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        task_id = serializer.validated_data['task'].id
+        
+
+        subtask = SubTask(
+            task=Task.objects.get(id=task_id),
+            title=serializer.validated_data['title'],
+            checked=serializer.validated_data['checked'],
+            created_at=serializer.validated_data['created_at'],
+            #author=serializer.validated_data['author']
+        )
+        subtask.save()
+        return Response({
+            'task': subtask.task.id,
+            'title': subtask.title,
+            'checked': subtask.checked,
+            'created_at': subtask.created_at,
+            #'author': subtask.author            
         })
