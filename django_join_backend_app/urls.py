@@ -16,11 +16,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from join.views import LoginView, SignupView, ContactView, TaskView
+from join.views import LoginView, SignupView, ContactView, TaskView, SubTaskView
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('login/', LoginView.as_view()),
     path('signup/', SignupView.as_view({'post': 'create'})),
     path('contact/', ContactView.as_view({'post': 'create'})),
     path('task/', TaskView.as_view({'post': 'create'})),
+    path('subTask/', SubTaskView.as_view({'post': 'create'})),
 ]
