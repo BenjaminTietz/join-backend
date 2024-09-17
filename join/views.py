@@ -86,6 +86,13 @@ class TaskView(viewsets.ViewSet):
             'due_date': task.due_date,
             'subtasks': subtask_serializer.data  
         })
+        
+    def list(self, request):
+        tasks = Task.objects.all()  
+        serializer = TaskSerializer(tasks, many=True)  
+        return Response(serializer.data)  
+    
+    
 class SubTaskView (viewsets.ViewSet):
     def create(self, request):
         serializer = SubTaskSerializer(data=request.data)
