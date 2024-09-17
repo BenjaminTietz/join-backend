@@ -16,11 +16,6 @@ class SubTaskAdmin(admin.ModelAdmin):
     list_display = ('id', 'task', 'title', 'checked', 'created_at')
     fields = ('id', 'task', 'title', 'checked', 'created_at')
     readonly_fields = ('id', 'created_at')
-    
-    def task_title(self, obj):
-        return obj.task.title
-    task_title.short_description = 'Task Title'
-    task_title.admin_order_field = 'task__title'
 @admin.register(Contact)
 class ContactAdmin(admin.ModelAdmin):
     list_display = ('id', 'name', 'email', 'phone', 'created_at')
