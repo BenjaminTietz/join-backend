@@ -43,6 +43,11 @@ class ContactView(viewsets.ViewSet):
             'phone': contact.phone
         })
         
+    def list(self, request):
+        contacts = Contact.objects.all()  
+        serializer = ContactSerializer(contacts, many=True)  
+        return Response(serializer.data)  
+        
 class TaskView(viewsets.ViewSet):
     def create(self, request):
         serializer = TaskSerializer(data=request.data)
