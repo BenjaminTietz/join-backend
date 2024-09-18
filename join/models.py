@@ -9,24 +9,34 @@ from phonenumber_field.modelfields import PhoneNumberField
 from phone_field import PhoneField
 
 # Create your models here.
+class Contact(models.Model):
+    id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=50)
+    email = models.EmailField()
+    phone = PhoneField(blank=True, help_text='Contact phone number')
+    created_at = models.DateField(default=date.today) #for internal use
+
+    def __str__(self):
+        return ', '.join(f"{field.name}: {getattr(self, field.name)}" for field in self._meta.fields) 
+    
 class Task(models.Model):
     CATEGORY_CHOICES = [
-        ('SALES', 'Sales'),
-        ('MARKETING', 'Marketing'),
-        ('ACCOUNTING', 'Accounting'),
-        ('DEVELOPMENT', 'Development'),
-        ('PURCHASE', 'Purchase'),
+        ('sales', 'Sales'),
+        ('marketing', 'Marketing'),
+        ('accounting', 'Accounting'),
+        ('development', 'Development'),
+        ('purchase', 'Purchase'),
     ]
     PRIORITY_CHOICES = [
-        ('LOW', 'Low'),
-        ('MEDIUM', 'Medium'),
-        ('HIGH', 'High'),
+        ('low', 'Low'),
+        ('medium', 'Medium'),
+        ('urgent', 'URGENT'),
     ]
     STATUS_CHOICES = [
-        ('TODO', 'To Do'),
-        ('IN_PROGRESS', 'In Progress'),
-        ('AWAITING_FEEDBACK', 'Awaiting Feedback'),
-        ('DONE', 'Done'),
+        ('todo', 'To Do'),
+        ('inProgress', 'In Progress'),
+        ('awaitingFeedback', 'Awaiting Feedback'),
+        ('done', 'Done'),
     ]
     id = models.AutoField(primary_key=True)
     title = models.CharField(max_length=50)
@@ -39,7 +49,7 @@ class Task(models.Model):
     due_date = models.DateField(default=date.today)
     #sub_tasks = connect with subtask model
     #completed = models.BooleanField(default=False)
-    #assigned_to = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    assigned_to = models.ForeignKey(Contact, on_delete=models.SET_NULL, null=True, blank=True)
 
     def __str__(self):
         return self.title
@@ -54,15 +64,6 @@ class SubTask(models.Model):
     def __str__(self):
         return self.title
 
-class Contact(models.Model):
-    id = models.AutoField(primary_key=True)
-    name = models.CharField(max_length=50)
-    email = models.EmailField()
-    phone = PhoneField(blank=True, help_text='Contact phone number')
-    created_at = models.DateField(default=date.today) #for internal use
-
-    def __str__(self):
-        return ', '.join(f"{field.name}: {getattr(self, field.name)}" for field in self._meta.fields) 
 class User(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True)
 
