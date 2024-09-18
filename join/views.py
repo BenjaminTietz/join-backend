@@ -37,11 +37,17 @@ class ContactView(viewsets.ViewSet):
             phone=serializer.validated_data['phone']
         )
         contact.save()
-        return Response({
-            'name': contact.name,
-            'email': contact.email,
-            'phone': contact.phone
-        })
+        return Response(ContactSerializer(contact).data)
+    
+    def retrieve(self, request, pk=None):
+        try:
+            contact = Contact.objects.get(id=pk)
+        except Contact.DoesNotExist:
+            return Response({'error': 'Contact not found.'}, status=404)
+        
+        contact_serializer = ContactSerializer(contact)
+        return Response(contact_serializer.data)
+        
         
     def list(self, request):
         contacts = Contact.objects.all()  
@@ -71,16 +77,10 @@ class TaskView(viewsets.ViewSet):
         })
     
     def retrieve(self, request, pk=None):
-
         task = Task.objects.get(id=pk)
-        
-
         subtasks = task.sub_tasks.all()
-        
-
         subtask_serializer = SubTaskSerializer(subtasks, many=True)
         
-
         return Response({
             'id': task.id,
             'title': task.title,
