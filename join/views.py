@@ -53,7 +53,6 @@ class ContactView(viewsets.ViewSet):
         contacts = Contact.objects.all()  
         serializer = ContactSerializer(contacts, many=True)  
         return Response(serializer.data)  
-    
     def update(self, request, pk=None):
         try:
             contact = Contact.objects.get(id=pk)

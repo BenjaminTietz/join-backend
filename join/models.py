@@ -73,7 +73,7 @@ class User(serializers.ModelSerializer):
             email=validated_data['email'],
             password=validated_data['password']
         )
-        #user.set_password(validated_data['password'])  # safe method for hashing password
+        user.set_password(validated_data['password'])  # safe method for hashing password
         user.save()
         return user
 

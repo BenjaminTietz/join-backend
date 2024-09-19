@@ -3,9 +3,20 @@ from django.contrib.auth.models import User
 from join.models import Contact, Task, SubTask
 from phonenumber_field.serializerfields import PhoneNumberField
 class UserSerializer(serializers.ModelSerializer):
+    password = serializers.CharField(write_only=True)
+
+    def create(self, validated_data):
+        user = User(
+            username=validated_data['username'],
+            email=validated_data['email'],
+        )
+        user.set_password(validated_data['password'])
+        user.save()
+        return user
+
     class Meta:
         model = User
-        fields = ('username', 'email', 'id')
+        fields = ('id', 'username', 'email', 'password')
 class ContactSerializer(serializers.ModelSerializer):
     class Meta:
         model = Contact
