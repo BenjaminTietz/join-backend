@@ -7,17 +7,13 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         fields = ('username', 'email', 'id')
 class ContactSerializer(serializers.ModelSerializer):
-    phone = serializers.SerializerMethodField()
     class Meta:
         model = Contact
         fields = ('id','name', 'email', 'phone')
-    def get_phone(self, obj):
-        return str(obj.phone) if obj.phone else None
     
     def to_representation(self, instance):
         data = super().to_representation(instance)
         data['response'] = 'Contact details retrieved successfully.'
-        data['phone'] = self.get_phone(instance) 
         return data
         
 class TaskSerializer(serializers.ModelSerializer):
