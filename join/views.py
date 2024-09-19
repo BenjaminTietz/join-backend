@@ -53,6 +53,18 @@ class ContactView(viewsets.ViewSet):
         contacts = Contact.objects.all()  
         serializer = ContactSerializer(contacts, many=True)  
         return Response(serializer.data)  
+    
+    def update(self, request, pk=None):
+        try:
+            contact = Contact.objects.get(id=pk)
+        except Contact.DoesNotExist:
+            return Response({'error': 'Contact not found.'}, status=404)
+
+        serializer = ContactSerializer(contact, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         
 class TaskView(viewsets.ViewSet):
     def create(self, request):

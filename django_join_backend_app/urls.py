@@ -22,7 +22,7 @@ urlpatterns = [
     path('login/', LoginView.as_view()),
     path('signup/', SignupView.as_view({'post': 'create'})),
     path('contact/', ContactView.as_view({'post': 'create', 'get': 'list'})),
-    path('contact/<int:pk>/', ContactView.as_view({'get': 'retrieve'})),
+    path('contact/<int:pk>/', ContactView.as_view({'get': 'retrieve', 'put': 'update'})),
     path('task/', TaskView.as_view({'post': 'create', 'get': 'list'})),
     path('task/<int:pk>/', TaskView.as_view({'get': 'retrieve'})),
     path('subTask/', SubTaskView.as_view({'post': 'create'})),
