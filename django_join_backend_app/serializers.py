@@ -1,12 +1,12 @@
 from rest_framework import serializers
-from django.contrib.auth.models import User
-from join.models import Contact, Task, SubTask
+from join.models import Contact, Task, SubTask, User
 from phonenumber_field.serializerfields import PhoneNumberField
+from django.contrib.auth import authenticate
 class UserSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True)
 
     def create(self, validated_data):
-        user = User(
+        user = User  (
             username=validated_data['username'],
             email=validated_data['email'],
         )
@@ -15,7 +15,7 @@ class UserSerializer(serializers.ModelSerializer):
         return user
 
     class Meta:
-        model = User
+        model = User  
         fields = ('id', 'username', 'email', 'password')
 class ContactSerializer(serializers.ModelSerializer):
     class Meta:
@@ -43,3 +43,22 @@ class SubTaskSerializer(serializers.ModelSerializer):
     class Meta:
         model = SubTask
         fields = ('task','title', 'checked', 'created_at')
+        
+class LoginSerializer(serializers.Serializer):
+    email = serializers.EmailField()
+    password = serializers.CharField()
+
+    def validate(self, data):
+        email = data.get('email')
+        password = data.get('password')
+
+        if email and password:
+
+            user = authenticate(username=email, password=password)
+            if not user:
+                raise serializers.ValidationError("Invalid login credentials")
+        else:
+            raise serializers.ValidationError("Both fields must be filled")
+
+        data['user'] = user
+        return data
