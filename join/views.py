@@ -5,10 +5,14 @@ from rest_framework.response import Response
 from rest_framework import viewsets, status
 from django_join_backend_app.serializers import UserSerializer, ContactSerializer, TaskSerializer, SubTaskSerializer, LoginSerializer
 from .models import Contact, Task, SubTask
-from django.contrib.auth import authenticate
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.permissions import IsAuthenticated
 
 # Create your views here.
 class LoginView(APIView):
+    authentication_classes = []
+    permission_classes = []
+    
     def post(self, request, *args, **kwargs):
         serializer = LoginSerializer(data=request.data)
         if serializer.is_valid(raise_exception=True):
@@ -19,6 +23,9 @@ class LoginView(APIView):
             })
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 class SignupView(viewsets.ViewSet):
+    authentication_classes = []
+    permission_classes = []
+    
     def create(self, request):
         serializer = UserSerializer(data=request.data)
         if serializer.is_valid():
@@ -27,6 +34,9 @@ class SignupView(viewsets.ViewSet):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
 class ContactView(viewsets.ViewSet):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+    
     def create(self, request):
         serializer = ContactSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
@@ -65,6 +75,9 @@ class ContactView(viewsets.ViewSet):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         
 class TaskView(viewsets.ViewSet):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+    
     def create(self, request):
         serializer = TaskSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
@@ -109,6 +122,9 @@ class TaskView(viewsets.ViewSet):
     
     
 class SubTaskView (viewsets.ViewSet):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+    
     def create(self, request):
         serializer = SubTaskSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
