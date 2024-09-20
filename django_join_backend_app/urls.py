@@ -19,7 +19,7 @@ from django.urls import path
 from join.views import LoginView, SignupView, ContactView, TaskView, SubTaskView
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('login/', LoginView.as_view()),
+    path('login/', LoginView.as_view(), name='login'),
     path('signup/', SignupView.as_view({'post': 'create'})),
     path('contact/', ContactView.as_view({'post': 'create', 'get': 'list'})),
     path('contact/<int:pk>/', ContactView.as_view({'get': 'retrieve', 'put': 'update'})),
