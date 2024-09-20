@@ -20,7 +20,7 @@ class UserSerializer(serializers.ModelSerializer):
 class ContactSerializer(serializers.ModelSerializer):
     class Meta:
         model = Contact
-        fields = ('id','name', 'email', 'phone')
+        fields = ('id','name', 'email', 'phone', 'initials', 'color', 'created_at')
     
     def to_representation(self, instance):
         data = super().to_representation(instance)

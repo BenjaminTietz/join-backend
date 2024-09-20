@@ -43,7 +43,9 @@ class ContactView(viewsets.ViewSet):
         contact = Contact(
             name=serializer.validated_data['name'],
             email=serializer.validated_data['email'],
-            phone=serializer.validated_data.get('phone', '')
+            phone=serializer.validated_data.get('phone', ''),
+            initials=serializer.validated_data.get('initials', ''),
+            color=serializer.validated_data.get('color', ''),
         )
         contact.save()
         return Response(ContactSerializer(contact).data)

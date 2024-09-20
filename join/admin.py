@@ -19,8 +19,8 @@ class SubTaskAdmin(admin.ModelAdmin):
     readonly_fields = ('id', 'created_at')
 @admin.register(Contact)
 class ContactAdmin(admin.ModelAdmin):
-    list_display = ('id', 'name', 'email', 'phone', 'created_at')
-    fields = ('id', 'name', 'email', 'phone', 'created_at')
+    list_display = ('id', 'name', 'email', 'phone', 'created_at', 'initials', 'color')
+    fields = ('id', 'name', 'email', 'phone', 'created_at', 'initials', 'color')
     readonly_fields = ('id', 'created_at')
 
 @admin.register(User)

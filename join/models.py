@@ -14,6 +14,8 @@ class Contact(models.Model):
     name = models.CharField(max_length=50)
     email = models.EmailField()
     phone = PhoneField(blank=True, help_text='Contact phone number')
+    initials = models.CharField(blank=True,max_length=2)
+    color = models.CharField(blank=True,max_length=7)
     created_at = models.DateField(default=date.today) #for internal use
 
     def __str__(self):
