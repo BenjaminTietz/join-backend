@@ -4,7 +4,7 @@ from datetime import date
 from django.conf import settings
 from django.db import models
 from rest_framework import serializers
-from django.contrib.auth.models import User
+from django.contrib.auth.models import AbstractUser 
 from phonenumber_field.modelfields import PhoneNumberField
 from phone_field import PhoneField
 
@@ -64,20 +64,9 @@ class SubTask(models.Model):
     def __str__(self):
         return self.title
 
-class User(serializers.ModelSerializer):
-    password = serializers.CharField(write_only=True)
-
-    def create(self, validated_data):
-        user = User(
-            username=validated_data['username'],
-            email=validated_data['email'],
-            password=validated_data['password']
-        )
-        user.set_password(validated_data['password'])  # safe method for hashing password
-        user.save()
-        return user
-
-    class Meta:
-        model = User
-        # Tuple of serialized model fields 
-        fields = ( "id", "username","email", "password", )
+#CustomUser model mit Token
+class User(AbstractUser):
+    username = models.CharField(max_length=150, unique=False, blank=True, null=True)
+    email = models.EmailField(unique=True)
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = ['username']
