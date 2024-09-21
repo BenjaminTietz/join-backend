@@ -37,7 +37,7 @@ class Task(models.Model):
     STATUS_CHOICES = [
         ('todo', 'To Do'),
         ('inProgress', 'In Progress'),
-        ('awaitingFeedback', 'Awaiting Feedback'),
+        ('awaitFeedback', 'Await Feedback'),
         ('done', 'Done'),
     ]
     id = models.AutoField(primary_key=True)
