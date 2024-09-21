@@ -33,7 +33,7 @@ class TaskSerializer(serializers.ModelSerializer):
     status = serializers.ChoiceField(choices=Task.STATUS_CHOICES)
     class Meta:
         model = Task
-        fields = ('title', 'description', 'created_at', 'category', 'priority', 'status', 'due_date')
+        fields = ('id','title', 'description', 'created_at', 'category', 'priority', 'status', 'due_date')
 
     def create(self, validated_data):
         return Task.objects.create(**validated_data)

@@ -93,6 +93,7 @@ class TaskView(viewsets.ViewSet):
         )
         task.save()
         return Response({
+            'id': task.id,
             'title': task.title,
             'description': task.description,
             'category': task.category,
@@ -121,6 +122,18 @@ class TaskView(viewsets.ViewSet):
         tasks = Task.objects.all()  
         serializer = TaskSerializer(tasks, many=True)  
         return Response(serializer.data)  
+    
+    def update(self, request, pk=None):
+        try:
+            task = Task.objects.get(id=pk)
+        except Task.DoesNotExist:
+            return Response({'error': 'Task not found.'}, status=404)
+
+        serializer = TaskSerializer(task, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
     
 class SubTaskView (viewsets.ViewSet):
