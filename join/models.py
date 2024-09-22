@@ -45,19 +45,17 @@ class Task(models.Model):
     description = models.TextField(max_length=500)
     created_at = models.DateField(default=date.today) #for internal use
     #author = models.CharField(max_length=50) #for internal use
-    category = models.CharField(choices=CATEGORY_CHOICES, max_length=50, default='DEVELOPMENT')
-    priority = models.CharField(choices=PRIORITY_CHOICES, max_length=50, default='MEDIUM')
-    status = models.CharField(choices=STATUS_CHOICES, max_length=50, default='TODO')
-    due_date = models.DateField(default=date.today)
-    #sub_tasks = connect with subtask model
-    #completed = models.BooleanField(default=False)
-    assigned_to = models.ForeignKey(Contact, on_delete=models.SET_NULL, null=True, blank=True)
+    category = models.CharField(choices=CATEGORY_CHOICES, max_length=50, default='development')
+    priority = models.CharField(choices=PRIORITY_CHOICES, max_length=50, default='medium')
+    status = models.CharField(choices=STATUS_CHOICES, max_length=50, default='todo')
+    dueDate = models.DateField(default=date.today)
+    #assignedTo = models.ForeignKey(Contact, on_delete=models.SET_NULL, null=True, blank=True)
 
     def __str__(self):
         return self.title
     
 class SubTask(models.Model):
-    task = models.ForeignKey(Task, on_delete=models.CASCADE, related_name='sub_tasks')
+    task = models.ForeignKey(Task, on_delete=models.CASCADE, related_name='subTasks')
     title = models.CharField(max_length=50)
     checked = models.BooleanField(default=False)
     created_at = models.DateField(default=date.today) #for internal use

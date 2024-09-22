@@ -26,23 +26,23 @@ class ContactSerializer(serializers.ModelSerializer):
         data = super().to_representation(instance)
         data['response'] = 'Contact details retrieved successfully.'
         return data
-        
+class SubTaskSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = SubTask
+        fields = ('id', 'title', 'checked', 'created_at', 'task')        
 class TaskSerializer(serializers.ModelSerializer):
     category = serializers.ChoiceField(choices=Task.CATEGORY_CHOICES)
     priority = serializers.ChoiceField(choices=Task.PRIORITY_CHOICES)
-    status = serializers.ChoiceField(choices=Task.STATUS_CHOICES)
+    status = serializers.ChoiceField(choices=Task.STATUS_CHOICES)     
+    subTasks = SubTaskSerializer(many=True, read_only=True)  
     class Meta:
         model = Task
-        fields = ('id','title', 'description', 'created_at', 'category', 'priority', 'status', 'due_date')
+        fields = ('id','title', 'description', 'created_at', 'category', 'priority', 'status', 'dueDate', 'subTasks')
 
     def create(self, validated_data):
         return Task.objects.create(**validated_data)
     
-class SubTaskSerializer(serializers.ModelSerializer):
-    task = serializers.PrimaryKeyRelatedField(queryset=Task.objects.all())
-    class Meta:
-        model = SubTask
-        fields = ('task','title', 'checked', 'created_at')
+
         
 class LoginSerializer(serializers.Serializer):
     email = serializers.EmailField()

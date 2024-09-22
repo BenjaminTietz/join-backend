@@ -89,7 +89,7 @@ class TaskView(viewsets.ViewSet):
             category=serializer.validated_data['category'],
             priority=serializer.validated_data['priority'],
             status=serializer.validated_data['status'],
-            due_date=serializer.validated_data['due_date']
+            dueDate=serializer.validated_data['dueDate'],
         )
         task.save()
         return Response({
@@ -99,13 +99,12 @@ class TaskView(viewsets.ViewSet):
             'category': task.category,
             'priority': task.priority,
             'status': task.status,
-            'due_date': task.due_date
+            'dueDate': task.dueDate,
         })
     
     def retrieve(self, request, pk=None):
         task = Task.objects.get(id=pk)
-        subtasks = task.sub_tasks.all()
-        subtask_serializer = SubTaskSerializer(subtasks, many=True)
+
         
         return Response({
             'id': task.id,
@@ -114,8 +113,8 @@ class TaskView(viewsets.ViewSet):
             'category': task.category,
             'priority': task.priority,
             'status': task.status,
-            'due_date': task.due_date,
-            'subtasks': subtask_serializer.data  
+            'dueDate': task.dueDate,
+  
         })
         
     def list(self, request):
@@ -135,30 +134,16 @@ class TaskView(viewsets.ViewSet):
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
-    
-class SubTaskView (viewsets.ViewSet):
-    authentication_classes = [TokenAuthentication]
-    permission_classes = [IsAuthenticated]
-    
-    def create(self, request):
-        serializer = SubTaskSerializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
+    def add_subtasks(self, request, pk=None):
+        task = Task.objects.get(id=pk)
+        subtask_data = request.data.get('subtasks', [])
         
-        task_id = serializer.validated_data['task'].id
-        task = Task.objects.get(id=task_id)
-
-        subtask = SubTask(
-            task=task,
-            title=serializer.validated_data['title'],
-            checked=serializer.validated_data['checked'],
-            created_at=serializer.validated_data['created_at'],
-            #author=serializer.validated_data['author']
-        )
-        subtask.save()
-        return Response({
-            'task': subtask.task.id,
-            'title': subtask.title,
-            'checked': subtask.checked,
-            'created_at': subtask.created_at,
-            #'author': subtask.author            
-        })
+        for subtask in subtask_data:
+            SubTask.objects.create(
+                task=task,
+                title=subtask['title'],
+                checked=subtask.get('checked', False)
+            )
+        
+        return Response({'status': 'Subtasks added successfully'})
+    

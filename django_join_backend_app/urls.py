@@ -16,7 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from join.views import LoginView, SignupView, ContactView, TaskView, SubTaskView
+from join.views import LoginView, SignupView, ContactView, TaskView
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('login/', LoginView.as_view(), name='login'),
@@ -25,5 +25,5 @@ urlpatterns = [
     path('contact/<int:pk>/', ContactView.as_view({'get': 'retrieve', 'put': 'update'})),
     path('task/', TaskView.as_view({'post': 'create', 'get': 'list'})),
     path('task/<int:pk>/', TaskView.as_view({'get': 'retrieve', 'put': 'update'})),
-    path('subTask/', SubTaskView.as_view({'post': 'create'})),
+    path('task/<int:pk>/add_subtasks/', TaskView.as_view({'post': 'add_subtasks'})),
 ]
