@@ -12,6 +12,10 @@ class TaskAdmin(admin.ModelAdmin):
     fields = ('id', 'title', 'description', 'category', 'priority', 'status', 'dueDate', 'created_at')
     readonly_fields = ('id', 'created_at')  
     inlines = [SubTaskInline]
+    
+    def get_assignees(self, obj):
+        return ", ".join([str(contact) for contact in obj.assignees.all()])
+    get_assignees.short_description = 'Assignees'
 @admin.register(SubTask)
 class SubTaskAdmin(admin.ModelAdmin):
     list_display = ('id', 'task', 'title', 'checked', 'created_at')

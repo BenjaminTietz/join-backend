@@ -9,18 +9,6 @@ from phonenumber_field.modelfields import PhoneNumberField
 from phone_field import PhoneField
 
 # Create your models here.
-class Contact(models.Model):
-    id = models.AutoField(primary_key=True)
-    name = models.CharField(max_length=50)
-    email = models.EmailField()
-    phone = PhoneField(blank=True, help_text='Contact phone number')
-    initials = models.CharField(blank=True,max_length=2)
-    color = models.CharField(blank=True,max_length=7)
-    created_at = models.DateField(default=date.today) #for internal use
-
-    def __str__(self):
-        return ', '.join(f"{field.name}: {getattr(self, field.name)}" for field in self._meta.fields) 
-    
 class Task(models.Model):
     CATEGORY_CHOICES = [
         ('sales', 'Sales'),
@@ -49,7 +37,6 @@ class Task(models.Model):
     priority = models.CharField(choices=PRIORITY_CHOICES, max_length=50, default='medium')
     status = models.CharField(choices=STATUS_CHOICES, max_length=50, default='todo')
     dueDate = models.DateField(default=date.today)
-    #assignedTo = models.ForeignKey(Contact, on_delete=models.SET_NULL, null=True, blank=True)
 
     def __str__(self):
         return self.title
@@ -63,6 +50,21 @@ class SubTask(models.Model):
 
     def __str__(self):
         return self.title
+    
+class Contact(models.Model):
+    id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=50)
+    email = models.EmailField()
+    phone = PhoneField(blank=True, help_text='Contact phone number')
+    initials = models.CharField(blank=True,max_length=2)
+    color = models.CharField(blank=True,max_length=7)
+    created_at = models.DateField(default=date.today) #for internal use
+
+    def __str__(self):
+        return ', '.join(f"{field.name}: {getattr(self, field.name)}" for field in self._meta.fields) 
+class TaskContact(models.Model):
+    task = models.ForeignKey(Task, on_delete=models.CASCADE)
+    contact = models.ForeignKey(Contact, on_delete=models.CASCADE)
 
 #CustomUser model mit Token
 class User(AbstractUser):

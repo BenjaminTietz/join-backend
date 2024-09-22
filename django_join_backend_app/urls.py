@@ -26,4 +26,5 @@ urlpatterns = [
     path('task/', TaskView.as_view({'post': 'create', 'get': 'list'})),
     path('task/<int:pk>/', TaskView.as_view({'get': 'retrieve', 'put': 'update'})),
     path('task/<int:pk>/add_subtasks/', TaskView.as_view({'post': 'add_subtasks'})),
+    path('task/<int:pk>/add_assignees/', TaskView.as_view({'post': 'add_assignees'})),
 ]

@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from join.models import Contact, Task, SubTask, User
+from join.models import Contact, Task, SubTask, User, TaskContact
 from phonenumber_field.serializerfields import PhoneNumberField
 from django.contrib.auth import authenticate
 class UserSerializer(serializers.ModelSerializer):
@@ -35,13 +35,15 @@ class TaskSerializer(serializers.ModelSerializer):
     priority = serializers.ChoiceField(choices=Task.PRIORITY_CHOICES)
     status = serializers.ChoiceField(choices=Task.STATUS_CHOICES)     
     subTasks = SubTaskSerializer(many=True, read_only=True)  
+    assignedTo = serializers.SerializerMethodField()
     class Meta:
         model = Task
-        fields = ('id','title', 'description', 'created_at', 'category', 'priority', 'status', 'dueDate', 'subTasks')
+        fields = ('id','title', 'description', 'created_at', 'category', 'priority', 'status', 'dueDate', 'subTasks', 'assignedTo')
 
-    def create(self, validated_data):
-        return Task.objects.create(**validated_data)
-    
+    def get_assignedTo(self, obj):
+        task_contacts = TaskContact.objects.filter(task=obj)  
+        contacts = [tc.contact for tc in task_contacts]  
+        return ContactSerializer(contacts, many=True).data
 
         
 class LoginSerializer(serializers.Serializer):

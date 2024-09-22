@@ -4,7 +4,7 @@ from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
 from rest_framework import viewsets, status
 from django_join_backend_app.serializers import UserSerializer, ContactSerializer, TaskSerializer, SubTaskSerializer, LoginSerializer
-from .models import Contact, Task, SubTask
+from .models import Contact, Task, SubTask, TaskContact
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 
@@ -83,15 +83,16 @@ class TaskView(viewsets.ViewSet):
     def create(self, request):
         serializer = TaskSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        task = Task(
-            title=serializer.validated_data['title'],
-            description=serializer.validated_data['description'],
-            category=serializer.validated_data['category'],
-            priority=serializer.validated_data['priority'],
-            status=serializer.validated_data['status'],
-            dueDate=serializer.validated_data['dueDate'],
-        )
-        task.save()
+        
+     
+        task = serializer.save()
+        
+     
+        assigned_contacts_data = request.data.get('assignedContacts', [])
+        for contact_data in assigned_contacts_data:
+            contact, created = Contact.objects.get_or_create(**contact_data)
+            TaskContact.objects.get_or_create(task=task, contact=contact)
+
         return Response({
             'id': task.id,
             'title': task.title,
@@ -101,27 +102,17 @@ class TaskView(viewsets.ViewSet):
             'status': task.status,
             'dueDate': task.dueDate,
         })
-    
+        
     def retrieve(self, request, pk=None):
         task = Task.objects.get(id=pk)
-
-        
-        return Response({
-            'id': task.id,
-            'title': task.title,
-            'description': task.description,
-            'category': task.category,
-            'priority': task.priority,
-            'status': task.status,
-            'dueDate': task.dueDate,
-  
-        })
+        serializer = TaskSerializer(task)
+        return Response(serializer.data)
         
     def list(self, request):
         tasks = Task.objects.all()  
         serializer = TaskSerializer(tasks, many=True)  
         return Response(serializer.data)  
-    
+        
     def update(self, request, pk=None):
         try:
             task = Task.objects.get(id=pk)
@@ -146,4 +137,32 @@ class TaskView(viewsets.ViewSet):
             )
         
         return Response({'status': 'Subtasks added successfully'})
+    
+    def add_assignees(self, request, pk=None):
+        status_message = []  
+        try:
+            task = Task.objects.get(id=pk)
+        except Task.DoesNotExist:
+            return Response({'error': 'Task not found.'}, status=404)
+
+        assignee_data = request.data.get('assignedTo', [])
+
+        for assignee in assignee_data:
+            contact, created = Contact.objects.get_or_create(
+                name=assignee['name'],
+                email=assignee['email'],
+                phone=assignee.get('phone', ''),
+                initials=assignee.get('initials', ''),
+                color=assignee.get('color', '')
+            )
+            
+            
+            TaskContact.objects.get_or_create(task=task, contact=contact)
+
+            if created:
+                status_message.append(f'Assignee {contact.name} created and added successfully.')
+            else:
+                status_message.append(f'Assignee {contact.name} already exists and was linked to the task.')
+
+        return Response({'status': 'Assignees processed successfully', 'messages': status_message})
     
