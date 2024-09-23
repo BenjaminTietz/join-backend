@@ -7,13 +7,28 @@ from django_join_backend_app.serializers import UserSerializer, ContactSerialize
 from .models import Contact, Task, SubTask, TaskContact
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
+from django.shortcuts import redirect
 
-# Create your views here.
 class LoginView(APIView):
+    """
+    API view for user login.
+
+    This view handles user authentication by validating login credentials
+    and returning a token if authentication is successful.
+    """
     authentication_classes = []
     permission_classes = []
     
     def post(self, request, *args, **kwargs):
+        """
+        Handle POST request for user login.
+
+        Parameters:
+        - request: HTTP request containing login data.
+
+        Returns:
+        - Response: JSON response with token on success or error messages on failure.
+        """
         serializer = LoginSerializer(data=request.data)
         if serializer.is_valid(raise_exception=True):
             user = serializer.validated_data['user']
@@ -22,11 +37,26 @@ class LoginView(APIView):
                 'token': token.key,
             })
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
 class SignupView(viewsets.ViewSet):
+    """
+    API view for user registration (signup).
+
+    This view handles the creation of new user accounts.
+    """
     authentication_classes = []
     permission_classes = []
     
     def create(self, request):
+        """
+        Handle POST request for user registration.
+
+        Parameters:
+        - request: HTTP request containing user signup data.
+
+        Returns:
+        - Response: JSON response with user data on success or error messages on failure.
+        """
         serializer = UserSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
@@ -34,10 +64,24 @@ class SignupView(viewsets.ViewSet):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
 class ContactView(viewsets.ViewSet):
+    """
+    API view for managing contacts.
+
+    This view allows creating, retrieving, listing, and updating contact details.
+    """
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
     
     def create(self, request):
+        """
+        Handle POST request to create a new contact.
+
+        Parameters:
+        - request: HTTP request containing contact data.
+
+        Returns:
+        - Response: JSON response with contact data on success.
+        """
         serializer = ContactSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         contact = Contact(
@@ -51,6 +95,15 @@ class ContactView(viewsets.ViewSet):
         return Response(ContactSerializer(contact).data)
     
     def retrieve(self, request, pk=None):
+        """
+        Handle GET request to retrieve contact details by ID.
+
+        Parameters:
+        - pk: Primary key of the contact to retrieve.
+
+        Returns:
+        - Response: JSON response with contact data on success or error message on failure.
+        """
         try:
             contact = Contact.objects.get(id=pk)
         except Contact.DoesNotExist:
@@ -61,10 +114,25 @@ class ContactView(viewsets.ViewSet):
         
         
     def list(self, request):
+        """
+        Handle GET request to list all contacts.
+
+        Returns:
+        - Response: JSON response containing a list of all contacts.
+        """
         contacts = Contact.objects.all()  
         serializer = ContactSerializer(contacts, many=True)  
         return Response(serializer.data)  
     def update(self, request, pk=None):
+        """
+        Handle PUT/PATCH request to update a contact's information.
+
+        Parameters:
+        - pk: Primary key of the contact to update.
+
+        Returns:
+        - Response: JSON response with updated contact data on success or error message on failure.
+        """
         try:
             contact = Contact.objects.get(id=pk)
         except Contact.DoesNotExist:
@@ -77,10 +145,24 @@ class ContactView(viewsets.ViewSet):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         
 class TaskView(viewsets.ViewSet):
+    """
+    API view for managing tasks.
+
+    This view allows creating, retrieving, listing, updating tasks, and adding subtasks or assignees.
+    """
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
     
     def create(self, request):
+        """
+        Handle POST request to create a new task.
+
+        Parameters:
+        - request: HTTP request containing task data.
+
+        Returns:
+        - Response: JSON response with task details on success.
+        """
         serializer = TaskSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         
@@ -104,16 +186,40 @@ class TaskView(viewsets.ViewSet):
         })
         
     def retrieve(self, request, pk=None):
+        """
+        Handle GET request to retrieve a task by ID.
+
+        Parameters:
+        - pk: Primary key of the task to retrieve.
+
+        Returns:
+        - Response: JSON response with task details on success.
+        """
         task = Task.objects.get(id=pk)
         serializer = TaskSerializer(task)
         return Response(serializer.data)
         
     def list(self, request):
+        """
+        Handle GET request to list all tasks.
+
+        Returns:
+        - Response: JSON response containing a list of all tasks.
+        """
         tasks = Task.objects.all()  
         serializer = TaskSerializer(tasks, many=True)  
         return Response(serializer.data)  
         
     def update(self, request, pk=None):
+        """
+        Handle PUT/PATCH request to update a task.
+
+        Parameters:
+        - pk: Primary key of the task to update.
+
+        Returns:
+        - Response: JSON response with updated task data on success or error message on failure.
+        """
         try:
             task = Task.objects.get(id=pk)
         except Task.DoesNotExist:
@@ -126,6 +232,15 @@ class TaskView(viewsets.ViewSet):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
     def add_subtasks(self, request, pk=None):
+        """
+        Handle POST request to add subtasks to an existing task.
+
+        Parameters:
+        - pk: Primary key of the task to add subtasks to.
+
+        Returns:
+        - Response: JSON response indicating the status of the operation.
+        """
         task = Task.objects.get(id=pk)
         subtask_data = request.data.get('subtasks', [])
         
@@ -139,6 +254,15 @@ class TaskView(viewsets.ViewSet):
         return Response({'status': 'Subtasks added successfully'})
     
     def add_assignees(self, request, pk=None):
+        """
+        Handle POST request to add assignees to an existing task.
+
+        Parameters:
+        - pk: Primary key of the task to add assignees to.
+
+        Returns:
+        - Response: JSON response with status and processing messages.
+        """
         status_message = []  
         try:
             task = Task.objects.get(id=pk)
@@ -166,3 +290,17 @@ class TaskView(viewsets.ViewSet):
 
         return Response({'status': 'Assignees processed successfully', 'messages': status_message})
     
+def docs_view(request):
+    """
+    View to redirect the user to the Sphinx-generated documentation.
+
+    This view handles requests by redirecting them to the static HTML 
+    documentation generated by Sphinx, located at '/static/index.html'.
+
+    Args:
+        request: The HTTP request object.
+
+    Returns:
+        A redirect response to the '/static/index.html' page.
+    """
+    return redirect('/static/index.html')
