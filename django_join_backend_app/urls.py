@@ -16,8 +16,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from join.views import LoginView, SignupView, ContactView, TaskView
+from join.views import LoginView, SignupView, ContactView, TaskView, DocsView
+
+docs_view = DocsView.as_view({'get': 'get'}) 
+
 urlpatterns = [
+    path('docs/', docs_view, name='docs_view'),
     path('admin/', admin.site.urls),
     path('login/', LoginView.as_view(), name='login'),
     path('signup/', SignupView.as_view({'post': 'create'})),
@@ -26,5 +30,9 @@ urlpatterns = [
     path('task/', TaskView.as_view({'post': 'create', 'get': 'list'})),
     path('task/<int:pk>/', TaskView.as_view({'get': 'retrieve', 'put': 'update'})),
     path('task/<int:pk>/add_subtasks/', TaskView.as_view({'post': 'add_subtasks'})),
+    path('task/<int:pk>/remove_subtasks/', TaskView.as_view({'delete': 'remove_subtasks'})),
+    path('task/<int:task_pk>/subtask/<int:subtask_pk>/', TaskView.as_view({'patch': 'update_subtask_status'})),
+    path('task/<int:task_pk>/subtask/<int:subtask_pk>/update/', TaskView.as_view({'patch': 'update_subtask'})),
     path('task/<int:pk>/add_assignees/', TaskView.as_view({'post': 'add_assignees'})),
+    path('task/<int:pk>/remove_assignees/', TaskView.as_view({'delete': 'remove_assignees'})),
 ]

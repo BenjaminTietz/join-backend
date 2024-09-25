@@ -8,6 +8,7 @@ from .models import Contact, Task, SubTask, TaskContact
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 from django.shortcuts import redirect
+from django.conf import settings
 
 class LoginView(APIView):
     """
@@ -253,6 +254,96 @@ class TaskView(viewsets.ViewSet):
         
         return Response({'status': 'Subtasks added successfully'})
     
+    def remove_subtasks(self, request, pk=None):
+        """
+        Handle DELETE request to remove subtasks from a task.
+
+        Parameters:
+        - pk: Primary key of the task.
+
+        Returns:
+        - Response: JSON response indicating success or failure.
+        """
+        try:
+            task = Task.objects.get(id=pk)
+        except Task.DoesNotExist:
+            return Response({'error': 'Task not found.'}, status=404)
+
+        subtask_data = request.data.get('subtasks', [])
+        status_message = []
+
+        for subtask in subtask_data:
+            try:
+                subtask_instance = SubTask.objects.get(task=task, title=subtask['title'])
+                subtask_instance.delete()
+                status_message.append(f'Subtask {subtask_instance.title} removed successfully.')
+            except SubTask.DoesNotExist:
+                status_message.append(f'Subtask {subtask["title"]} not found.')
+
+        return Response({'status': 'Subtasks processed', 'messages': status_message})
+    
+    def update_subtask_status(self, request, task_pk=None, subtask_pk=None):
+        """
+        Handle PATCH request to update the 'checked' status of a subtask.
+
+        Parameters:
+        - task_pk: Primary key of the parent task.
+        - subtask_pk: Primary key of the subtask to update.
+        
+        Returns:
+        - Response: JSON response indicating success or failure.
+        """
+        try:
+            task = Task.objects.get(id=task_pk)
+        except Task.DoesNotExist:
+            return Response({'error': 'Task not found.'}, status=404)
+        
+        try:
+            subtask = SubTask.objects.get(id=subtask_pk, task=task)
+        except SubTask.DoesNotExist:
+            return Response({'error': 'Subtask not found.'}, status=404)
+        
+        checked_status = request.data.get('checked')
+        if checked_status is not None:
+            subtask.checked = checked_status
+            subtask.save()
+            return Response({'status': 'Subtask updated successfully', 'checked': subtask.checked})
+        
+        return Response({'error': 'Invalid data provided.'}, status=400)
+    def update_subtask(self, request, task_pk=None, subtask_pk=None):
+        """
+        Handle PATCH request to update a subtask's title and other fields.
+
+        Parameters:
+        - task_pk: Primary key of the parent task.
+        - subtask_pk: Primary key of the subtask to update.
+
+        Returns:
+        - Response: JSON response indicating success or failure.
+        """
+        try:
+            task = Task.objects.get(id=task_pk)
+        except Task.DoesNotExist:
+            return Response({'error': 'Task not found.'}, status=404)
+        
+        try:
+            subtask = SubTask.objects.get(id=subtask_pk, task=task)
+        except SubTask.DoesNotExist:
+            return Response({'error': 'Subtask not found.'}, status=404)
+
+        new_title = request.data.get('title')
+        
+        if new_title is not None:
+            subtask.title = new_title
+        
+        subtask.checked = request.data.get('checked', subtask.checked)
+
+        subtask.save()
+        
+        return Response({
+            'status': 'Subtask updated successfully',
+            'subtask': SubTaskSerializer(subtask).data
+        })
     def add_assignees(self, request, pk=None):
         """
         Handle POST request to add assignees to an existing task.
@@ -272,35 +363,64 @@ class TaskView(viewsets.ViewSet):
         assignee_data = request.data.get('assignedTo', [])
 
         for assignee in assignee_data:
-            contact, created = Contact.objects.get_or_create(
-                name=assignee['name'],
-                email=assignee['email'],
-                phone=assignee.get('phone', ''),
-                initials=assignee.get('initials', ''),
-                color=assignee.get('color', '')
-            )
+            try:
+                contact = Contact.objects.get(
+                    name=assignee['name'],
+                    email=assignee['email']
+                )
+                
+                TaskContact.objects.get_or_create(task=task, contact=contact)
+                status_message.append(f'Assignee {contact.name} linked to the task successfully.')
             
-            
-            TaskContact.objects.get_or_create(task=task, contact=contact)
-
-            if created:
-                status_message.append(f'Assignee {contact.name} created and added successfully.')
-            else:
-                status_message.append(f'Assignee {contact.name} already exists and was linked to the task.')
+            except Contact.DoesNotExist:
+                status_message.append(f'Assignee {assignee["name"]} not found. No changes made.')
 
         return Response({'status': 'Assignees processed successfully', 'messages': status_message})
     
-def docs_view(request):
-    """
-    View to redirect the user to the Sphinx-generated documentation.
+    def remove_assignees(self, request, pk=None):
+        """
+        Handle DELETE request to remove assignees from an existing task.
 
-    This view handles requests by redirecting them to the static HTML 
-    documentation generated by Sphinx, located at '/static/index.html'.
+        Parameters:
+        - pk: Primary key of the task.
 
-    Args:
-        request: The HTTP request object.
+        Returns:
+        - Response: JSON response with status and processing messages.
+        """
+        try:
+            task = Task.objects.get(id=pk)
+        except Task.DoesNotExist:
+            return Response({'error': 'Task not found.'}, status=404)
 
-    Returns:
-        A redirect response to the '/static/index.html' page.
-    """
-    return redirect('/static/index.html')
+        assignee_data = request.data.get('assignedTo', [])
+        status_message = []
+
+        for assignee in assignee_data:
+            try:
+                contact = Contact.objects.get(
+                    name=assignee['name'],
+                    email=assignee['email'],
+                )
+                task_contact = TaskContact.objects.get(task=task, contact=contact)
+                task_contact.delete()
+                status_message.append(f'Assignee {contact.name} removed successfully.')
+            except (Contact.DoesNotExist, TaskContact.DoesNotExist):
+                status_message.append(f'Assignee {assignee["name"]} not found for this task.')
+
+        return Response({'status': 'Assignees processed', 'messages': status_message})
+    
+class DocsView(viewsets.ViewSet):
+    def get(self, request):
+        """
+        View to redirect the user to the Sphinx-generated documentation.
+
+        This view handles requests by redirecting them to the static HTML 
+        documentation generated by Sphinx, located at '/_build/html/index.html'.
+
+        Args:
+            request: The HTTP request object.
+
+        Returns:
+            A redirect response to the '/_build/html/index.html' page.
+        """
+        return redirect(f'{settings.STATIC_URL}index.html')   

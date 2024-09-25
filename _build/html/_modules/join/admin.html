@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>join.admin &#8212; Join_Django_Rest_Framework_Backend 1.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=d1102ebc" />
+    <link rel="stylesheet" type="text/css" href="../../_static/basic.css?v=c058f7c8" />
+    <link rel="stylesheet" type="text/css" href="../../_static/alabaster.css?v=27fed22d" />
+    <script src="../../_static/documentation_options.js?v=f2a433a1"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for join.admin</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">.models</span> <span class="kn">import</span> <span class="n">Task</span><span class="p">,</span> <span class="n">SubTask</span><span class="p">,</span> <span class="n">Contact</span><span class="p">,</span> <span class="n">User</span>
+<span class="kn">from</span> <span class="nn">django.contrib</span> <span class="kn">import</span> <span class="n">admin</span>
+<span class="kn">from</span> <span class="nn">django.contrib.auth.admin</span> <span class="kn">import</span> <span class="n">UserAdmin</span> <span class="k">as</span> <span class="n">BaseUserAdmin</span>
+<span class="kn">from</span> <span class="nn">django.utils.translation</span> <span class="kn">import</span> <span class="n">gettext</span> <span class="k">as</span> <span class="n">_</span>
+
+<div class="viewcode-block" id="SubTaskInline">
+<a class="viewcode-back" href="../../module_overview.html#join.admin.SubTaskInline">[docs]</a>
+<span class="k">class</span> <span class="nc">SubTaskInline</span><span class="p">(</span><span class="n">admin</span><span class="o">.</span><span class="n">TabularInline</span><span class="p">):</span> 
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Inline admin class for the SubTask model. </span>
+<span class="sd">    Allows SubTasks to be managed directly within the Task admin page.</span>
+<span class="sd">    </span>
+<span class="sd">    Fields:</span>
+<span class="sd">        - model: The related SubTask model.</span>
+<span class="sd">        - extra: The number of empty forms displayed in the inline.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">SubTask</span>
+    <span class="n">extra</span> <span class="o">=</span> <span class="mi">1</span> </div>
+
+    
+<div class="viewcode-block" id="TaskAdmin">
+<a class="viewcode-back" href="../../module_overview.html#join.admin.TaskAdmin">[docs]</a>
+<span class="nd">@admin</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">Task</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">TaskAdmin</span><span class="p">(</span><span class="n">admin</span><span class="o">.</span><span class="n">ModelAdmin</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Admin interface for managing Task model instances. </span>
+<span class="sd">    Displays task information, handles readonly fields, and includes </span>
+<span class="sd">    inline management of related SubTasks.</span>
+
+<span class="sd">    List Display:</span>
+<span class="sd">        - id: The unique identifier of the task.</span>
+<span class="sd">        - title: The title of the task.</span>
+<span class="sd">        - description: A brief description of the task.</span>
+<span class="sd">        - category: The category of the task.</span>
+<span class="sd">        - priority: The priority level of the task.</span>
+<span class="sd">        - status: The current status of the task.</span>
+<span class="sd">        - dueDate: The due date for the task.</span>
+<span class="sd">        - created_at: The timestamp when the task was created.</span>
+
+<span class="sd">    Fields:</span>
+<span class="sd">        - id: The unique identifier of the task (readonly).</span>
+<span class="sd">        - title: The title of the task.</span>
+<span class="sd">        - description: A brief description of the task.</span>
+<span class="sd">        - category: The category of the task.</span>
+<span class="sd">        - priority: The priority level of the task.</span>
+<span class="sd">        - status: The current status of the task.</span>
+<span class="sd">        - dueDate: The due date for the task.</span>
+<span class="sd">        - created_at: The timestamp when the task was created (readonly).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">list_display</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="s1">&#39;title&#39;</span><span class="p">,</span> <span class="s1">&#39;description&#39;</span><span class="p">,</span> <span class="s1">&#39;category&#39;</span><span class="p">,</span> <span class="s1">&#39;priority&#39;</span><span class="p">,</span> <span class="s1">&#39;status&#39;</span><span class="p">,</span> <span class="s1">&#39;dueDate&#39;</span><span class="p">,</span> <span class="s1">&#39;created_at&#39;</span><span class="p">)</span>
+    <span class="n">fields</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="s1">&#39;title&#39;</span><span class="p">,</span> <span class="s1">&#39;description&#39;</span><span class="p">,</span> <span class="s1">&#39;category&#39;</span><span class="p">,</span> <span class="s1">&#39;priority&#39;</span><span class="p">,</span> <span class="s1">&#39;status&#39;</span><span class="p">,</span> <span class="s1">&#39;dueDate&#39;</span><span class="p">,</span> <span class="s1">&#39;created_at&#39;</span><span class="p">)</span>
+    <span class="n">readonly_fields</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="s1">&#39;created_at&#39;</span><span class="p">)</span>  
+    <span class="n">inlines</span> <span class="o">=</span> <span class="p">[</span><span class="n">SubTaskInline</span><span class="p">]</span>
+    
+<div class="viewcode-block" id="TaskAdmin.get_assignees">
+<a class="viewcode-back" href="../../module_overview.html#join.admin.TaskAdmin.get_assignees">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_assignees</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns a comma-separated string of assignees for the task.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="nb">str</span><span class="p">(</span><span class="n">contact</span><span class="p">)</span> <span class="k">for</span> <span class="n">contact</span> <span class="ow">in</span> <span class="n">obj</span><span class="o">.</span><span class="n">assignees</span><span class="o">.</span><span class="n">all</span><span class="p">()])</span></div>
+
+    <span class="n">get_assignees</span><span class="o">.</span><span class="n">short_description</span> <span class="o">=</span> <span class="s1">&#39;Assignees&#39;</span></div>
+
+    
+<div class="viewcode-block" id="SubTaskAdmin">
+<a class="viewcode-back" href="../../module_overview.html#join.admin.SubTaskAdmin">[docs]</a>
+<span class="nd">@admin</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">SubTask</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">SubTaskAdmin</span><span class="p">(</span><span class="n">admin</span><span class="o">.</span><span class="n">ModelAdmin</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Admin interface for managing SubTask model instances.</span>
+<span class="sd">    </span>
+<span class="sd">    List Display:</span>
+<span class="sd">        - id: The unique identifier of the subtask.</span>
+<span class="sd">        - task: The task that this subtask is related to.</span>
+<span class="sd">        - title: The title of the subtask.</span>
+<span class="sd">        - checked: A boolean indicating whether the subtask is completed.</span>
+<span class="sd">        - created_at: The timestamp when the subtask was created.</span>
+<span class="sd">    </span>
+<span class="sd">    Fields:</span>
+<span class="sd">        - id: The unique identifier of the subtask (readonly).</span>
+<span class="sd">        - task: The related task of the subtask.</span>
+<span class="sd">        - title: The title of the subtask.</span>
+<span class="sd">        - checked: A boolean indicating the completion status of the subtask.</span>
+<span class="sd">        - created_at: The timestamp when the subtask was created (readonly).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">list_display</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="s1">&#39;task&#39;</span><span class="p">,</span> <span class="s1">&#39;title&#39;</span><span class="p">,</span> <span class="s1">&#39;checked&#39;</span><span class="p">,</span> <span class="s1">&#39;created_at&#39;</span><span class="p">)</span>
+    <span class="n">fields</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="s1">&#39;task&#39;</span><span class="p">,</span> <span class="s1">&#39;title&#39;</span><span class="p">,</span> <span class="s1">&#39;checked&#39;</span><span class="p">,</span> <span class="s1">&#39;created_at&#39;</span><span class="p">)</span>
+    <span class="n">readonly_fields</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="s1">&#39;created_at&#39;</span><span class="p">)</span></div>
+
+    
+<div class="viewcode-block" id="ContactAdmin">
+<a class="viewcode-back" href="../../module_overview.html#join.admin.ContactAdmin">[docs]</a>
+<span class="nd">@admin</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">Contact</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">ContactAdmin</span><span class="p">(</span><span class="n">admin</span><span class="o">.</span><span class="n">ModelAdmin</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Admin interface for managing Contact model instances.</span>
+<span class="sd">    </span>
+<span class="sd">    List Display:</span>
+<span class="sd">        - id: The unique identifier of the contact.</span>
+<span class="sd">        - name: The name of the contact.</span>
+<span class="sd">        - email: The email of the contact.</span>
+<span class="sd">        - phone: The phone number of the contact.</span>
+<span class="sd">        - created_at: The timestamp when the contact was created.</span>
+<span class="sd">        - initials: The initials of the contact&#39;s name.</span>
+<span class="sd">        - color: A color associated with the contact.</span>
+<span class="sd">    </span>
+<span class="sd">    Fields:</span>
+<span class="sd">        - id: The unique identifier of the contact (readonly).</span>
+<span class="sd">        - name: The name of the contact.</span>
+<span class="sd">        - email: The email of the contact.</span>
+<span class="sd">        - phone: The phone number of the contact.</span>
+<span class="sd">        - created_at: The timestamp when the contact was created (readonly).</span>
+<span class="sd">        - initials: The initials of the contact.</span>
+<span class="sd">        - color: A color associated with the contact.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">list_display</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="s1">&#39;email&#39;</span><span class="p">,</span> <span class="s1">&#39;phone&#39;</span><span class="p">,</span> <span class="s1">&#39;created_at&#39;</span><span class="p">,</span> <span class="s1">&#39;initials&#39;</span><span class="p">,</span> <span class="s1">&#39;color&#39;</span><span class="p">)</span>
+    <span class="n">fields</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="s1">&#39;email&#39;</span><span class="p">,</span> <span class="s1">&#39;phone&#39;</span><span class="p">,</span> <span class="s1">&#39;created_at&#39;</span><span class="p">,</span> <span class="s1">&#39;initials&#39;</span><span class="p">,</span> <span class="s1">&#39;color&#39;</span><span class="p">)</span>
+    <span class="n">readonly_fields</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="s1">&#39;created_at&#39;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="UserAdmin">
+<a class="viewcode-back" href="../../module_overview.html#join.admin.UserAdmin">[docs]</a>
+<span class="nd">@admin</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">User</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">UserAdmin</span><span class="p">(</span><span class="n">BaseUserAdmin</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Custom admin interface for managing User model instances.</span>
+<span class="sd">    </span>
+<span class="sd">    List Display:</span>
+<span class="sd">        - email: The user&#39;s email address.</span>
+<span class="sd">        - username: The username of the user.</span>
+<span class="sd">        - is_staff: A boolean indicating whether the user has staff permissions.</span>
+<span class="sd">        - is_active: A boolean indicating whether the user account is active.</span>
+<span class="sd">    </span>
+<span class="sd">    Fieldsets:</span>
+<span class="sd">        - Personal info: Fields related to the user&#39;s personal information.</span>
+<span class="sd">        - Permissions: Fields related to user permissions and access control.</span>
+<span class="sd">        - Important dates: Fields related to important timestamps (e.g., last login).</span>
+<span class="sd">    </span>
+<span class="sd">    Add Fieldsets:</span>
+<span class="sd">        - A wide format layout for adding a new user, including password fields.</span>
+<span class="sd">    </span>
+<span class="sd">    Additional Configurations:</span>
+<span class="sd">        - search_fields: Allows searching by email and username.</span>
+<span class="sd">        - ordering: Orders users by email in the admin interface.</span>
+<span class="sd">        - filter_horizontal: Provides horizontal filters for managing groups and permissions.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">list_display</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;email&#39;</span><span class="p">,</span> <span class="s1">&#39;username&#39;</span><span class="p">,</span> <span class="s1">&#39;is_staff&#39;</span><span class="p">,</span> <span class="s1">&#39;is_active&#39;</span><span class="p">)</span>
+    <span class="n">list_filter</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;is_staff&#39;</span><span class="p">,</span> <span class="s1">&#39;is_active&#39;</span><span class="p">)</span>
+
+
+    <span class="n">fieldsets</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;fields&#39;</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;email&#39;</span><span class="p">,</span> <span class="s1">&#39;password&#39;</span><span class="p">)}),</span>
+        <span class="p">(</span><span class="n">_</span><span class="p">(</span><span class="s1">&#39;Personal info&#39;</span><span class="p">),</span> <span class="p">{</span><span class="s1">&#39;fields&#39;</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;username&#39;</span><span class="p">,)}),</span>
+        <span class="p">(</span><span class="n">_</span><span class="p">(</span><span class="s1">&#39;Permissions&#39;</span><span class="p">),</span> <span class="p">{</span><span class="s1">&#39;fields&#39;</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;is_staff&#39;</span><span class="p">,</span> <span class="s1">&#39;is_active&#39;</span><span class="p">,</span> <span class="s1">&#39;is_superuser&#39;</span><span class="p">,</span> <span class="s1">&#39;groups&#39;</span><span class="p">,</span> <span class="s1">&#39;user_permissions&#39;</span><span class="p">)}),</span>
+        <span class="p">(</span><span class="n">_</span><span class="p">(</span><span class="s1">&#39;Important dates&#39;</span><span class="p">),</span> <span class="p">{</span><span class="s1">&#39;fields&#39;</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;last_login&#39;</span><span class="p">,</span> <span class="s1">&#39;date_joined&#39;</span><span class="p">)}),</span>
+    <span class="p">)</span>
+
+
+    <span class="n">add_fieldsets</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="p">{</span>
+            <span class="s1">&#39;classes&#39;</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;wide&#39;</span><span class="p">,),</span>
+            <span class="s1">&#39;fields&#39;</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;email&#39;</span><span class="p">,</span> <span class="s1">&#39;username&#39;</span><span class="p">,</span> <span class="s1">&#39;password1&#39;</span><span class="p">,</span> <span class="s1">&#39;password2&#39;</span><span class="p">,</span> <span class="s1">&#39;is_staff&#39;</span><span class="p">,</span> <span class="s1">&#39;is_active&#39;</span><span class="p">)}</span>
+        <span class="p">),</span>
+    <span class="p">)</span>
+    <span class="n">search_fields</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;email&#39;</span><span class="p">,</span> <span class="s1">&#39;username&#39;</span><span class="p">)</span>
+    <span class="n">ordering</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;email&#39;</span><span class="p">,)</span>
+    <span class="n">filter_horizontal</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;groups&#39;</span><span class="p">,</span> <span class="s1">&#39;user_permissions&#39;</span><span class="p">,)</span></div>
+
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../index.html">Join_Django_Rest_Framework_Backend</a></h1>
+
+
+
+
+
+
+
+
+
+<search id="searchbox" style="display: none" role="search">
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Search"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><h3>Navigation</h3>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2024, Benjamin Tietz.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 8.0.2</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 1.0.0</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>
