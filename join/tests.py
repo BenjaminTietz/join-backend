@@ -22,6 +22,7 @@ class ContactTests(APITestCase):
         response = self.client.get(reverse('contact'))
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(len(response.data), 1)
+        self.assertEqual(response.data[0]['name'], 'Test Contact')
 
     def test_retrieve_contact(self):
         contact = Contact.objects.create(**self.contact_data)
@@ -55,6 +56,7 @@ class TaskTests(APITestCase):
         response = self.client.get(reverse('task'))
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(len(response.data), 1)
+        self.assertEqual(response.data[0]['title'], 'Test Task')
 
     def test_retrieve_task(self):
         task = Task.objects.create(**self.task_data)
