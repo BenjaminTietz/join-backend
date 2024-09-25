@@ -43,7 +43,6 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'phone_field',
     'corsheaders',
-    'django_nose',
 ]
 
 MIDDLEWARE = [
@@ -157,11 +156,3 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:4200", 
 ]
 
-# Use nose to run all tests
-TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
-
-# Tell nose to measure coverage on the 'foo' and 'bar' apps
-NOSE_ARGS = [
-    '--with-coverage',
-    '--cover-package=foo,bar',
-]
