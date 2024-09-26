@@ -28,7 +28,7 @@ urlpatterns = [
     path('contact/', ContactView.as_view({'post': 'create', 'get': 'list'})),
     path('contact/<int:pk>/', ContactView.as_view({'get': 'retrieve', 'put': 'update'})),
     path('task/', TaskView.as_view({'post': 'create', 'get': 'list'})),
-    path('task/<int:pk>/', TaskView.as_view({'get': 'retrieve', 'put': 'update'})),
+    path('task/<int:pk>/', TaskView.as_view({'get': 'retrieve', 'put': 'update', 'delete': 'delete'})),
     path('task/<int:pk>/add_subtasks/', TaskView.as_view({'post': 'add_subtasks'})),
     path('task/<int:pk>/remove_subtasks/', TaskView.as_view({'delete': 'remove_subtasks'})),
     path('task/<int:task_pk>/subtask/<int:subtask_pk>/', TaskView.as_view({'patch': 'update_subtask_status'})),

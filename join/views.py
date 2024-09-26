@@ -145,6 +145,23 @@ class ContactView(viewsets.ViewSet):
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    def delete(self, request, pk=None):
+        """
+        Handle DELETE request to delete a contact.
+
+        Parameters:
+        - pk: Primary key of the contact to delete.
+
+        Returns:
+        - Response: JSON response indicating success or failure.
+        """
+        try:
+            contact = Contact.objects.get(id=pk)
+            contact.delete()
+            return Response({'status': 'Contact deleted successfully'})
+        except Contact.DoesNotExist:
+            return Response({'error': 'Contact not found.'}, status=404)
         
 class TaskView(viewsets.ViewSet):
     """
