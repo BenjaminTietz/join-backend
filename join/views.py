@@ -250,6 +250,24 @@ class TaskView(viewsets.ViewSet):
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
+    def delete(self, request, pk=None):
+        """
+        Handle DELETE request to remove a task.
+
+        Parameters:
+        - pk: Primary key of the task to delete.
+
+        Returns:
+        - Response: JSON response indicating success or failure.
+        """
+        try:
+            task = Task.objects.get(id=pk)
+            task.delete()
+            return Response({'status': 'Task deleted successfully.'})
+        except Task.DoesNotExist:
+            return Response({'error': 'Task not found.'}, status=404)
+        
+    
     def add_subtasks(self, request, pk=None):
         """
         Handle POST request to add subtasks to an existing task.
