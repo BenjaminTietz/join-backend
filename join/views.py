@@ -290,12 +290,13 @@ class TaskView(viewsets.ViewSet):
         
         return Response({'status': 'Subtasks added successfully'})
     
-    def remove_subtasks(self, request, pk=None):
+    def remove_subtasks(self, request, pk=None, subtask_id=None):
         """
-        Handle DELETE request to remove subtasks from a task.
+        Handle DELETE request to remove a specific subtask from a task.
 
         Parameters:
         - pk: Primary key of the task.
+        - subtask_id: Primary key of the subtask to remove.
 
         Returns:
         - Response: JSON response indicating success or failure.
@@ -305,47 +306,14 @@ class TaskView(viewsets.ViewSet):
         except Task.DoesNotExist:
             return Response({'error': 'Task not found.'}, status=404)
 
-        subtask_data = request.data.get('subtasks', [])
-        status_message = []
-
-        for subtask in subtask_data:
-            try:
-                subtask_instance = SubTask.objects.get(task=task, title=subtask['title'])
-                subtask_instance.delete()
-                status_message.append(f'Subtask {subtask_instance.title} removed successfully.')
-            except SubTask.DoesNotExist:
-                status_message.append(f'Subtask {subtask["title"]} not found.')
-
-        return Response({'status': 'Subtasks processed', 'messages': status_message})
-    
-    def update_subtask_status(self, request, task_pk=None, subtask_pk=None):
-        """
-        Handle PATCH request to update the 'checked' status of a subtask.
-
-        Parameters:
-        - task_pk: Primary key of the parent task.
-        - subtask_pk: Primary key of the subtask to update.
-        
-        Returns:
-        - Response: JSON response indicating success or failure.
-        """
         try:
-            task = Task.objects.get(id=task_pk)
-        except Task.DoesNotExist:
-            return Response({'error': 'Task not found.'}, status=404)
-        
-        try:
-            subtask = SubTask.objects.get(id=subtask_pk, task=task)
+            subtask_instance = SubTask.objects.get(id=subtask_id, task=task)
+            subtask_instance.delete()
+            return Response({'status': 'Subtask removed successfully.'})
         except SubTask.DoesNotExist:
             return Response({'error': 'Subtask not found.'}, status=404)
-        
-        checked_status = request.data.get('checked')
-        if checked_status is not None:
-            subtask.checked = checked_status
-            subtask.save()
-            return Response({'status': 'Subtask updated successfully', 'checked': subtask.checked})
-        
-        return Response({'error': 'Invalid data provided.'}, status=400)
+    
+
     def update_subtask(self, request, task_pk=None, subtask_pk=None):
         """
         Handle PATCH request to update a subtask's title and other fields.
