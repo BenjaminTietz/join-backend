@@ -7,6 +7,7 @@ from rest_framework import serializers
 from django.contrib.auth.models import AbstractUser 
 from phonenumber_field.modelfields import PhoneNumberField
 from phone_field import PhoneField
+import random
 
 # Create your models here.
 class Task(models.Model):
@@ -83,33 +84,29 @@ class SubTask(models.Model):
         return self.title
     
 class Contact(models.Model):
-    """
-    Represents a contact in the system with fields for name, email, phone, initials, 
-    color, and creation date.
+    COLOR_CHOICES = [
+        "#6E52FF",  # blue
+        "#462F8A",  # dark blue
+        "#FC71FF",  # pink
+        "#9327FF",  # purple
+        "#FF7A00",  # orange
+        "#1FD7C1",  # light green
+        "#FF4646",  # red
+    ]
 
-    Attributes:
-        id (int): The primary key for the contact.
-        name (str): The name of the contact, limited to 50 characters.
-        email (str): The contact's email address.
-        phone (PhoneField): The contact's phone number, can be left blank.
-        initials (str): The initials of the contact, can be left blank.
-        color (str): The color associated with the contact (e.g., for UI display).
-        created_at (date): The date the contact was created, defaults to today's date.
-    """
-    
-    id = models.AutoField(primary_key=True)
-    name = models.CharField(max_length=50)
+    name = models.CharField(max_length=150)
     email = models.EmailField()
     phone = PhoneField(blank=True, help_text='Contact phone number')
-    initials = models.CharField(blank=True,max_length=2)
-    color = models.CharField(blank=True,max_length=7)
-    created_at = models.DateField(default=date.today) #for internal use
+    initials = models.CharField(max_length=2, blank=True)
+    color = models.CharField(max_length=7, blank=True, default='')
+    created_at = models.DateField(default=date.today)
 
-    def __str__(self):
-        """
-        Returns the string representation of the Contact, which lists all fields and their values.
-        """
-        return ', '.join(f"{field.name}: {getattr(self, field.name)}" for field in self._meta.fields) 
+    def save(self, *args, **kwargs):
+        if not self.initials and self.name:
+            self.initials = ''.join([n[0] for n in self.name.split()[:2]]).upper()
+        if not self.color:
+            self.color = random.choice(self.COLOR_CHOICES)
+        super().save(*args, **kwargs)
     
 class TaskContact(models.Model):
     """
@@ -122,19 +119,3 @@ class TaskContact(models.Model):
     
     task = models.ForeignKey(Task, on_delete=models.CASCADE)
     contact = models.ForeignKey(Contact, on_delete=models.CASCADE)
-
-# CustomUser model with token-based authentication
-class User(AbstractUser):
-    """
-    Custom user model that extends Django's AbstractUser to use email instead of username 
-    for authentication.
-
-    Attributes:
-        username (str): Optional username field, can be null or blank.
-        email (str): The user's unique email address used for authentication.
-    """
-    
-    username = models.CharField(max_length=150, unique=False, blank=True, null=True)
-    email = models.EmailField(unique=True)
-    USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['username']

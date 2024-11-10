@@ -1,30 +1,13 @@
-"""
-URL configuration for django_join_backend_app project.
-
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/5.1/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  path('', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.urls import include, path
-    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
-"""
 from django.contrib import admin
-from django.urls import path
-from join.views import LoginView, SignupView, ContactView, TaskView, DocsView
-
+from django.urls import path, include
+from join.views import ContactView, TaskView, DocsView
+from custom_auth.views import LoginView, SignupView
 docs_view = DocsView.as_view({'get': 'get'}) 
 
 urlpatterns = [
     path('docs/', docs_view, name='docs_view'),
     path('admin/', admin.site.urls),
-    path('login/', LoginView.as_view(), name='login'),
-    path('signup/', SignupView.as_view({'post': 'create'})),
+    path('auth/', include('custom_auth.urls')),
     path('contact/', ContactView.as_view({'post': 'create', 'get': 'list'})),
     path('contact/<int:pk>/', ContactView.as_view({'get': 'retrieve', 'put': 'update'})),
     path('task/', TaskView.as_view({'post': 'create', 'get': 'list'})),

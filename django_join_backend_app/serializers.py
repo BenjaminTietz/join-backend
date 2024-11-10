@@ -1,36 +1,8 @@
 from rest_framework import serializers
-from join.models import Contact, Task, SubTask, User, TaskContact
+from join.models import Contact, Task, SubTask, TaskContact
+from custom_auth.models import User
 from phonenumber_field.serializerfields import PhoneNumberField
 from django.contrib.auth import authenticate
-class UserSerializer(serializers.ModelSerializer):
-    """
-    Serializer for the User model. Handles user creation and serialization
-    of user data, including password handling.
-
-    Fields:
-        - id: The user's ID (auto-generated).
-        - username: The username of the user.
-        - email: The email address of the user.
-        - password: The password of the user (write-only).
-    """
-    password = serializers.CharField(write_only=True)
-
-    def create(self, validated_data):
-        """
-        Create a new user instance with the validated data.
-        The password is hashed before saving the user.
-        """
-        user = User  (
-            username=validated_data['username'],
-            email=validated_data['email'],
-        )
-        user.set_password(validated_data['password'])
-        user.save()
-        return user
-
-    class Meta:
-        model = User  
-        fields = ('id', 'username', 'email', 'password')
 class ContactSerializer(serializers.ModelSerializer):
     """
     Serializer for the Contact model. Handles the serialization and deserialization

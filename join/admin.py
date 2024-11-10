@@ -1,7 +1,11 @@
-from .models import Task, SubTask, Contact, User
+from .models import Task, SubTask, Contact
+from custom_auth.models import User
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.utils.translation import gettext as _
+
+
+#admin.site.register(User)
 
 class SubTaskInline(admin.TabularInline): 
     """

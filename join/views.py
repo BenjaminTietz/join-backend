@@ -3,68 +3,14 @@ from rest_framework.authtoken.views import APIView
 from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
 from rest_framework import viewsets, status
-from django_join_backend_app.serializers import UserSerializer, ContactSerializer, TaskSerializer, SubTaskSerializer, LoginSerializer
+from django_join_backend_app.serializers import ContactSerializer, TaskSerializer, SubTaskSerializer
+from custom_auth.serializers import UserSerializer
 from .models import Contact, Task, SubTask, TaskContact
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 from django.shortcuts import redirect
 from django.conf import settings
 
-class LoginView(APIView):
-    """
-    API view for user login.
-
-    This view handles user authentication by validating login credentials
-    and returning a token if authentication is successful.
-    """
-    authentication_classes = []
-    permission_classes = []
-    
-    def post(self, request, *args, **kwargs):
-        """
-        Handle POST request for user login.
-
-        Parameters:
-        - request: HTTP request containing login data.
-
-        Returns:
-        - Response: JSON response with token on success or error messages on failure.
-        """
-        serializer = LoginSerializer(data=request.data)
-        if serializer.is_valid(raise_exception=True):
-            user = serializer.validated_data['user']
-            token, created = Token.objects.get_or_create(user=user)
-            return Response({
-                'token': token.key,
-                'user': UserSerializer(user).data     # todo if create user then create reponding contact
-            })
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
-class SignupView(viewsets.ViewSet):
-    """
-    API view for user registration (signup).
-
-    This view handles the creation of new user accounts.
-    """
-    authentication_classes = []
-    permission_classes = []
-    
-    def create(self, request):
-        """
-        Handle POST request for user registration.
-
-        Parameters:
-        - request: HTTP request containing user signup data.
-
-        Returns:
-        - Response: JSON response with user data on success or error messages on failure.
-        """
-        serializer = UserSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
 class ContactView(viewsets.ViewSet):
     """
     API view for managing contacts.
