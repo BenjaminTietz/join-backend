@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.urls import path, include
-from join.views import ContactView, TaskView, DocsView
+from join.views import ContactView, TaskView, DocsView, GenerateDemoDataView, GetCsrfTokenView
 from custom_auth.views import LoginView, SignupView
 docs_view = DocsView.as_view({'get': 'get'}) 
 
@@ -17,4 +17,6 @@ urlpatterns = [
     path('task/<int:task_pk>/subtask/<int:subtask_pk>/update/', TaskView.as_view({'patch': 'update_subtask'})),
     path('task/<int:pk>/add_assignees/', TaskView.as_view({'post': 'add_assignees'})),
     path('task/<int:pk>/remove_assignees/', TaskView.as_view({'delete': 'remove_assignees'})),
+    path('generate-demo-data/', GenerateDemoDataView.as_view(), name='generate-demo-data'),
+    path('get-csrf-token/', GetCsrfTokenView.as_view(), name='get-csrf-token'),
 ]

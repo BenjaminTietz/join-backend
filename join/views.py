@@ -1,4 +1,7 @@
+from django.http import JsonResponse
 from django.shortcuts import render
+from django.views import View
+from django.middleware.csrf import get_token
 from rest_framework.authtoken.views import APIView
 from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
@@ -10,6 +13,10 @@ from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 from django.shortcuts import redirect
 from django.conf import settings
+from django.core.management.base import BaseCommand
+from join.management.commands.init_demo_data import generate_demo_data
+from django.utils.decorators import method_decorator
+from django.views.decorators.csrf import csrf_exempt
 
 class ContactView(viewsets.ViewSet):
     """
@@ -374,3 +381,21 @@ class DocsView(viewsets.ViewSet):
             A redirect response to the '/_build/html/index.html' page.
         """
         return redirect(f'{settings.STATIC_URL}index.html')   
+    
+@method_decorator(csrf_exempt, name='dispatch')
+class GenerateDemoDataView(View):
+    def post(self, request, *args, **kwargs):
+        generate_demo_data(sender=self.__class__, user=None)
+        return JsonResponse({"message": "Demo data generated successfully."}, status=200)
+
+class GetCsrfTokenView(View):
+    def get(self, request, *args, **kwargs):
+        token = get_token(request)
+        return JsonResponse({'csrfToken': token}, status=200)
+
+class Command(BaseCommand):
+    help = 'Generate demo data for tasks, contacts, and subtasks'
+
+    def handle(self, *args, **kwargs):
+        generate_demo_data(sender=self.__class__, user=None)
+        self.stdout.write(self.style.SUCCESS('Demo data generation completed successfully.'))
