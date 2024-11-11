@@ -17,6 +17,8 @@ class User(AbstractUser):
     real_name = models.CharField(max_length=255, blank=True, null=True)
     created_at = models.DateField(default=timezone.now)
     contact_id = models.ForeignKey(Contact, on_delete=models.SET_NULL, null=True, blank=True)
+    is_active = models.BooleanField(default=False)
+    remember = models.BooleanField(default=False)
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username']
@@ -26,3 +28,8 @@ class User(AbstractUser):
         if not self.initials and self.real_name:
             self.initials = ''.join([word[0] for word in self.real_name.split()[:2]]).upper()
         super().save(*args, **kwargs)
+
+class PasswordReset(models.Model):
+    email = models.EmailField()
+    token = models.CharField(max_length=100)
+    created_at = models.DateTimeField(auto_now_add=True)

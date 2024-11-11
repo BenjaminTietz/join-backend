@@ -6,8 +6,10 @@ from rest_framework import status, viewsets
 from django.conf import settings
 from django.shortcuts import redirect
 from custom_auth.serializers import UserSerializer, LoginSerializer
-
-
+from django.utils.http import urlsafe_base64_decode
+from django.contrib.auth.tokens import default_token_generator as token_generator
+from .models import User
+from django.http import HttpResponse
 class LoginView(APIView):
     authentication_classes = []
     permission_classes = []
@@ -36,3 +38,20 @@ class SignupView(viewsets.ViewSet):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
+class ActivateUserView(APIView):
+    authentication_classes = []
+    permission_classes = []
+
+    def get(self, request, uidb64, token):
+        try:
+            uid = urlsafe_base64_decode(uidb64).decode()
+            user = User.objects.get(pk=uid)
+        except (TypeError, ValueError, OverflowError, User.DoesNotExist):
+            user = None
+
+        if user is not None and token_generator.check_token(user, token):
+            user.is_active = True
+            user.save()
+            return HttpResponse("Your account has been activated successfully.")
+        else:
+            return HttpResponse("Activation link is invalid.")
