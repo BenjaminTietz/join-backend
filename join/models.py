@@ -27,11 +27,11 @@ class Task(models.Model):
     """
     
     CATEGORY_CHOICES = [
-        ('sales', 'Sales'),
-        ('marketing', 'Marketing'),
-        ('accounting', 'Accounting'),
+        ('testing', 'testing'),
+        ('client communication', 'client communication'),
+        ('project management', 'project management'),
         ('development', 'Development'),
-        ('purchase', 'Purchase'),
+        ('deployment', 'deployment'),
     ]
     PRIORITY_CHOICES = [
         ('low', 'Low'),
