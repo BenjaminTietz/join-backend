@@ -76,8 +76,8 @@ class TaskSerializer(serializers.ModelSerializer):
         Retrieve all contacts assigned to a task by querying the TaskContact
         model for the current task and returning serialized contact data.
         """
-        task_contacts = TaskContact.objects.filter(task=obj)  
-        contacts = [tc.contact for tc in task_contacts]  
+        task_contacts = TaskContact.objects.filter(task=obj)
+        contacts = [tc.contact for tc in task_contacts if tc.contact_id is not None]
         return ContactSerializer(contacts, many=True).data
 
         

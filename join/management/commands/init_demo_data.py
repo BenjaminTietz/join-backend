@@ -36,21 +36,21 @@ def generate_demo_data(sender, user, **kwargs):
         )
         contacts.append(contact)
 
-    CATEGORY_CHOICES = ['development', 'project management', 'deployment', 'testing', 'client communication']
+    CATEGORY_CHOICES = ['development', 'project-management', 'deployment', 'testing', 'client-communication']
     PRIORITY_CHOICES = ['low', 'medium', 'urgent']
     STATUS_CHOICES = ['todo', 'inProgress', 'awaitFeedback', 'done']
 
     demo_tasks = [
         {"title": "Set Up Development Environment", "description": "Prepare all necessary tools and environments for the project.", "category": "development", "priority": "urgent", "status": "todo"},
         {"title": "Backend API Design", "description": "Design the REST API endpoints for the application.", "category": "development", "priority": "medium", "status": "inProgress"},
-        {"title": "Frontend Framework Selection", "description": "Choose the most suitable frontend framework for the project.", "category": "project management", "priority": "medium", "status": "awaitFeedback"},
-        {"title": "Client Requirement Meeting", "description": "Discuss detailed requirements with the client.", "category": "client communication", "priority": "urgent", "status": "done"},
+        {"title": "Frontend Framework Selection", "description": "Choose the most suitable frontend framework for the project.", "category": "project-management", "priority": "medium", "status": "awaitFeedback"},
+        {"title": "Client Requirement Meeting", "description": "Discuss detailed requirements with the client.", "category": "client-communication", "priority": "urgent", "status": "done"},
         {"title": "Deployment Strategy Planning", "description": "Plan the deployment strategy, including CI/CD pipeline setup.", "category": "deployment", "priority": "medium", "status": "todo"},
         {"title": "Testing Suite Implementation", "description": "Implement a testing suite for automated unit and integration tests.", "category": "testing", "priority": "low", "status": "inProgress"},
         {"title": "Database Schema Design", "description": "Design the schema for the project database.", "category": "development", "priority": "urgent", "status": "todo"},
         {"title": "User Authentication Module", "description": "Develop the user authentication and authorization module.", "category": "development", "priority": "urgent", "status": "inProgress"},
         {"title": "Deployment to Staging Server", "description": "Deploy the application to the staging server for final review.", "category": "deployment", "priority": "medium", "status": "awaitFeedback"},
-        {"title": "Final Client Review", "description": "Conduct the final review meeting with the client before the production release.", "category": "client communication", "priority": "urgent", "status": "done"},
+        {"title": "Final Client Review", "description": "Conduct the final review meeting with the client before the production release.", "category": "client-communication", "priority": "urgent", "status": "done"},
     ]
 
     tasks = []

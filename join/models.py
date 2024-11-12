@@ -27,11 +27,11 @@ class Task(models.Model):
     """
     
     CATEGORY_CHOICES = [
-        ('testing', 'testing'),
-        ('client communication', 'client communication'),
-        ('project management', 'project management'),
+        ('testing', 'Testing'),
+        ('client-communication', 'Client Communication'),
+        ('project-management', 'Project Management'),
         ('development', 'Development'),
-        ('deployment', 'deployment'),
+        ('deployment', 'Deployment'),
     ]
     PRIORITY_CHOICES = [
         ('low', 'Low'),
@@ -117,5 +117,5 @@ class TaskContact(models.Model):
         contact (Contact): The related contact.
     """
     
-    task = models.ForeignKey(Task, on_delete=models.CASCADE)
-    contact = models.ForeignKey(Contact, on_delete=models.CASCADE)
+    task = models.ForeignKey(Task, on_delete=models.SET_NULL, null=True)
+    contact = models.ForeignKey(Contact, on_delete=models.SET_NULL, null=True)
