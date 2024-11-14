@@ -69,12 +69,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'join_contacts',
     'join',
+    'custom_auth',
     'rest_framework',
     'rest_framework.authtoken',
     'phone_field',
-    'corsheaders',
-    'custom_auth',
+    'corsheaders'
 ]
 
 MIDDLEWARE = [

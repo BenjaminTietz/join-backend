@@ -8,6 +8,7 @@ from django.contrib.auth.models import AbstractUser
 from phonenumber_field.modelfields import PhoneNumberField
 from phone_field import PhoneField
 import random
+from join_contacts.models import Contact
 
 # Create your models here.
 class Task(models.Model):
@@ -83,30 +84,6 @@ class SubTask(models.Model):
         """
         return self.title
     
-class Contact(models.Model):
-    COLOR_CHOICES = [
-        "#6E52FF",  # blue
-        "#462F8A",  # dark blue
-        "#FC71FF",  # pink
-        "#9327FF",  # purple
-        "#FF7A00",  # orange
-        "#1FD7C1",  # light green
-        "#FF4646",  # red
-    ]
-
-    name = models.CharField(max_length=150)
-    email = models.EmailField()
-    phone = PhoneField(blank=True, help_text='Contact phone number')
-    initials = models.CharField(max_length=2, blank=True)
-    color = models.CharField(max_length=7, blank=True, default='')
-    created_at = models.DateField(default=date.today)
-
-    def save(self, *args, **kwargs):
-        if not self.initials and self.name:
-            self.initials = ''.join([n[0] for n in self.name.split()[:2]]).upper()
-        if not self.color:
-            self.color = random.choice(self.COLOR_CHOICES)
-        super().save(*args, **kwargs)
     
 class TaskContact(models.Model):
     """
@@ -118,4 +95,4 @@ class TaskContact(models.Model):
     """
     
     task = models.ForeignKey(Task, on_delete=models.SET_NULL, null=True)
-    contact = models.ForeignKey(Contact, on_delete=models.SET_NULL, null=True)
+    contact = models.ForeignKey('join_contacts.Contact', on_delete=models.SET_NULL, null=True)
