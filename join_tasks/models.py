@@ -28,11 +28,12 @@ class Task(models.Model):
     """
     
     CATEGORY_CHOICES = [
-        ('testing', 'Testing'),
-        ('client-communication', 'Client Communication'),
-        ('project-management', 'Project Management'),
-        ('development', 'Development'),
+        ('frontend-angular', 'Frontend - Angular'),
+        ('backend-django', 'Backend - Django'),
+        ('authentication', 'Authentication'),
         ('deployment', 'Deployment'),
+        ('testing', 'Testing'),
+        ('project-management', 'Project Management'),
     ]
     PRIORITY_CHOICES = [
         ('low', 'Low'),

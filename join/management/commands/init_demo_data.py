@@ -16,42 +16,47 @@ def generate_demo_data(sender, user, **kwargs):
     Contact.objects.all().delete()
 
     demo_contacts = [
-        {"name": "Luca Bianchi", "email": "luca.bianchi@example.com", "phone": "123-456-7890"},
-        {"name": "Sofia Schmidt", "email": "sofia.schmidt@example.com", "phone": "987-654-3210"},
-        {"name": "Marta Kowalski", "email": "marta.kowalski@example.com", "phone": "555-555-5555"},
-        {"name": "Ivan Novak", "email": "ivan.novak@example.com", "phone": "444-444-4444"},
-        {"name": "Emma Dubois", "email": "emma.dubois@example.com", "phone": "333-333-3333"},
-        {"name": "Noah Jensen", "email": "noah.jensen@example.com", "phone": "222-222-2222"},
-        {"name": "Lucas Muller", "email": "lucas.muller@example.com", "phone": "111-111-1111"},
-        {"name": "Elena Rossi", "email": "elena.rossi@example.com", "phone": "999-999-9999"},
-        {"name": "Johan Svensson", "email": "johan.svensson@example.com", "phone": "888-888-8888"},
-        {"name": "Ana Garcia", "email": "ana.garcia@example.com", "phone": "777-777-7777"},
+        {"name": "Alice Johnson", "email": "alice.johnson@example.com", "phone": "111-222-3333"},
+        {"name": "Bob Smith", "email": "bob.smith@example.com", "phone": "222-333-4444"},
+        {"name": "Cathy Lee", "email": "cathy.lee@example.com", "phone": "333-444-5555"},
+        {"name": "David Kim", "email": "david.kim@example.com", "phone": "444-555-6666"},
+        {"name": "Eva Thompson", "email": "eva.thompson@example.com", "phone": "555-666-7777"},
+        {"name": "Franklin Wright", "email": "franklin.wright@example.com", "phone": "666-777-8888"},
+        {"name": "Grace Park", "email": "grace.park@example.com", "phone": "777-888-9999"},
+        {"name": "Henry Scott", "email": "henry.scott@example.com", "phone": "888-999-0000"},
+        {"name": "Irene Chen", "email": "irene.chen@example.com", "phone": "999-000-1111"},
+        {"name": "Jack Tan", "email": "jack.tan@example.com", "phone": "000-111-2222"},
     ]
 
-    contacts = []
-    for contact_data in demo_contacts:
-        contact = Contact.objects.create(
-            name=contact_data["name"],
-            email=contact_data["email"],
-            phone=contact_data["phone"],
-        )
-        contacts.append(contact)
+    contacts = [Contact.objects.create(**contact_data) for contact_data in demo_contacts]
 
-    CATEGORY_CHOICES = ['development', 'project-management', 'deployment', 'testing', 'client-communication']
-    PRIORITY_CHOICES = ['low', 'medium', 'urgent']
+    CATEGORY_CHOICES = [
+        'frontend-angular', 'backend-django', 'authentication', 'deployment', 'testing', 'project-management'
+    ]
+    PRIORITY_CHOICES = ['low', 'medium', 'high', 'urgent']
     STATUS_CHOICES = ['todo', 'inProgress', 'awaitFeedback', 'done']
 
     demo_tasks = [
-        {"title": "Set Up Development Environment", "description": "Prepare all necessary tools and environments for the project.", "category": "development", "priority": "urgent", "status": "todo"},
-        {"title": "Backend API Design", "description": "Design the REST API endpoints for the application.", "category": "development", "priority": "medium", "status": "inProgress"},
-        {"title": "Frontend Framework Selection", "description": "Choose the most suitable frontend framework for the project.", "category": "project-management", "priority": "medium", "status": "awaitFeedback"},
-        {"title": "Client Requirement Meeting", "description": "Discuss detailed requirements with the client.", "category": "client-communication", "priority": "urgent", "status": "done"},
-        {"title": "Deployment Strategy Planning", "description": "Plan the deployment strategy, including CI/CD pipeline setup.", "category": "deployment", "priority": "medium", "status": "todo"},
-        {"title": "Testing Suite Implementation", "description": "Implement a testing suite for automated unit and integration tests.", "category": "testing", "priority": "low", "status": "inProgress"},
-        {"title": "Database Schema Design", "description": "Design the schema for the project database.", "category": "development", "priority": "urgent", "status": "todo"},
-        {"title": "User Authentication Module", "description": "Develop the user authentication and authorization module.", "category": "development", "priority": "urgent", "status": "inProgress"},
-        {"title": "Deployment to Staging Server", "description": "Deploy the application to the staging server for final review.", "category": "deployment", "priority": "medium", "status": "awaitFeedback"},
-        {"title": "Final Client Review", "description": "Conduct the final review meeting with the client before the production release.", "category": "client-communication", "priority": "urgent", "status": "done"},
+        {"title": "Set up Angular Project Structure", "description": "Initialize Angular 18 project with required dependencies.", "category": "frontend-angular"},
+        {"title": "Implement AuthGuard in Angular", "description": "Set up route guards to protect routes.", "category": "authentication"},
+        {"title": "Build API Endpoints in Django", "description": "Develop API endpoints with Django REST framework.", "category": "backend-django"},
+        {"title": "Implement AuthInterceptor", "description": "Manage authentication tokens using Angular interceptors.", "category": "authentication"},
+        {"title": "Design User Interface for Kanban Board", "description": "Create a drag-and-drop interface using Angular.", "category": "frontend-angular"},
+        {"title": "Setup Database Models in Django", "description": "Design database models for tasks and contacts.", "category": "backend-django"},
+        {"title": "Set Up Docker for Deployment", "description": "Create Docker configurations for deployment.", "category": "deployment"},
+        {"title": "Write Unit Tests for Angular Components", "description": "Implement unit tests for various Angular components.", "category": "testing"},
+        {"title": "Configure Authentication API in Django", "description": "Implement authentication endpoints.", "category": "backend-django"},
+        {"title": "Implement Drag and Drop in Angular", "description": "Use Angular CDK for a drag-and-drop feature.", "category": "frontend-angular"},
+        {"title": "Set up CI/CD Pipeline", "description": "Integrate continuous integration and deployment pipeline.", "category": "deployment"},
+        {"title": "Final Review and Client Meeting", "description": "Prepare for final project review with the client.", "category": "project-management"},
+        {"title": "Integrate JWT Authentication", "description": "Configure JWT for secure communication.", "category": "authentication"},
+        {"title": "Frontend Form Validations", "description": "Implement form validation for user inputs.", "category": "frontend-angular"},
+        {"title": "User Profile Management", "description": "Build user profile management features.", "category": "frontend-angular"},
+        {"title": "Automated Testing for API Endpoints", "description": "Write automated tests for backend APIs.", "category": "testing"},
+        {"title": "Optimize Database Queries", "description": "Improve performance by optimizing queries.", "category": "backend-django"},
+        {"title": "Code Review and Refactoring", "description": "Conduct code review and refactor as needed.", "category": "project-management"},
+        {"title": "Setup Permissions and Access Control", "description": "Implement role-based access control.", "category": "backend-django"},
+        {"title": "Document API with Swagger", "description": "Generate Swagger documentation for APIs.", "category": "backend-django"},
     ]
 
     tasks = []
@@ -61,27 +66,19 @@ def generate_demo_data(sender, user, **kwargs):
             title=task_data["title"],
             description=task_data["description"],
             category=task_data["category"],
-            priority=task_data["priority"],
-            status=task_data["status"],
+            priority=random.choice(PRIORITY_CHOICES),
+            status=random.choice(STATUS_CHOICES),
             dueDate=due_date
         )
         tasks.append(task)
 
-        assigned_contacts = random.sample(contacts, random.randint(1, len(contacts)))
+        assigned_contacts = random.sample(contacts, random.randint(1, len(contacts) // 2))
         for contact in assigned_contacts:
             TaskContact.objects.create(task=task, contact=contact)
 
-        for i in range(random.randint(2, 6)):
+        for i in range(random.randint(3, 6)):
             SubTask.objects.create(
                 task=task,
-                title=f"SubTask {i + 1} for {task.title}",
+                title=f"{task.title} - SubTask {i + 1}",
                 checked=random.choice([True, False]),
             )
-
-
-class Command(BaseCommand):
-    help = 'Generate demo data for tasks, contacts, and subtasks'
-
-    def handle(self, *args, **kwargs):
-        generate_demo_data(sender=self.__class__, user=None)
-        self.stdout.write(self.style.SUCCESS('Demo data generation completed successfully.'))
