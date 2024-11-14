@@ -9,7 +9,8 @@ from rest_framework import viewsets, status
 from django_join_backend_app.serializers import TaskSerializer, SubTaskSerializer
 from join_contacts.serializers import ContactSerializer
 from custom_auth.serializers import UserSerializer
-from .models import Contact, Task, SubTask, TaskContact
+from join_tasks.models import Task, SubTask, TaskContact
+from join_contacts.models import Contact
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 from django.shortcuts import redirect

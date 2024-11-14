@@ -1,7 +1,7 @@
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from custom_auth.models import User
-from join.models import Contact
+from join_contacts.models import Contact
 import logging
 import random
 from rest_framework.authtoken.models import Token

@@ -70,6 +70,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'join_contacts',
+    'join_tasks',
     'join',
     'custom_auth',
     'rest_framework',

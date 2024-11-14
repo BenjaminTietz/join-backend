@@ -4,7 +4,8 @@ from django.views import View
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
 from django.middleware.csrf import get_token
-from join.models import Task, SubTask, Contact, TaskContact
+from join_tasks.models import Task, SubTask, TaskContact
+from join_contacts.models import Contact
 from datetime import date, timedelta
 import random
 

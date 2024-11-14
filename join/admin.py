@@ -1,4 +1,5 @@
-from .models import Task, SubTask, Contact
+from join_contacts.models import Contact
+from join_tasks.models import Task, SubTask
 from custom_auth.models import User
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin

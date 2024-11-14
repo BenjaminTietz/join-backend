@@ -1,5 +1,6 @@
 from rest_framework import serializers
-from join.models import Contact, Task, SubTask, TaskContact
+from join_tasks.models import Task, SubTask, TaskContact
+from join_contacts.models import Contact
 from custom_auth.models import User
 from phonenumber_field.serializerfields import PhoneNumberField
 from django.contrib.auth import authenticate

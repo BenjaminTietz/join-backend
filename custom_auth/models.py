@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from phone_field import PhoneField
 from django.utils import timezone
-from join.models import Contact
+from join_contacts.models import Contact
 
 class User(AbstractUser):
     """
