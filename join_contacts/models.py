@@ -23,8 +23,8 @@ class Contact(models.Model):
     created_at = models.DateField(default=date.today)
 
     def save(self, *args, **kwargs):
-        if not self.initials and self.name:
+        if not self.initials:
             self.initials = ''.join([n[0] for n in self.name.split()[:2]]).upper()
         if not self.color:
             self.color = random.choice(self.COLOR_CHOICES)
-        super().save(*args, **kwargs)
+        super(Contact, self).save(*args, **kwargs)

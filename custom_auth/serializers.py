@@ -7,52 +7,46 @@ from django.contrib.auth import authenticate
 from rest_framework import serializers
 from custom_auth.models import User
 from datetime import date
+from rest_framework import serializers
+from custom_auth.models import User
+from django.contrib.auth.password_validation import validate_password
 
 class UserSerializer(serializers.ModelSerializer):
-    password = serializers.CharField(write_only=True)
-    created_at = serializers.SerializerMethodField()
-
-    def get_created_at(self, obj):
-        return obj.created_at
+    password = serializers.CharField(write_only=True, validators=[validate_password]) 
+    created_at = serializers.DateTimeField(read_only=True)
+    phone = serializers.CharField(required=True)  
 
     def create(self, validated_data):
+        """
+        Erstelle einen neuen Benutzer mit den übergebenen Daten.
+        Der Benutzer gibt seinen vollständigen Namen direkt als `username` an.
+        """
         user = User(
-            username=validated_data.get('username'),
-            email=validated_data.get('email'),
-            phone=validated_data.get('phone'),
-            real_name=validated_data.get('real_name')  
+            username=validated_data['username'],  
+            email=validated_data['email'],       
+            phone=validated_data.get('phone', ''),
         )
-        user.set_password(validated_data['password'])
+        user.set_password(validated_data['password']) 
         user.save()
         return user
 
     class Meta:
         model = User
-        fields = ('id', 'username', 'email', 'phone', 'real_name', 'created_at', 'password')
-
+        fields = ('id', 'username', 'email', 'phone', 'created_at', 'password')
 
 class LoginSerializer(serializers.Serializer):
     """
     Serializer for user login. Validates the provided email and password,
     and authenticates the user if the credentials are correct.
-
-    Fields:
-        - email: The email address of the user.
-        - password: The password of the user.
     """
     email = serializers.EmailField()
     password = serializers.CharField()
 
     def validate(self, data):
-        """
-        Validate the provided email and password. Authenticate the user
-        and raise an error if the credentials are invalid.
-        """
         email = data.get('email')
         password = data.get('password')
 
         if email and password:
-
             user = authenticate(username=email, password=password)
             if not user:
                 raise serializers.ValidationError("Invalid login credentials")
@@ -60,4 +54,7 @@ class LoginSerializer(serializers.Serializer):
             raise serializers.ValidationError("Both fields must be filled")
 
         data['user'] = user
+        data['contact_id'] = user.contact_id_id  
+        data['contact'] = Contact.objects.filter(id=user.contact_id_id).first()
+
         return data

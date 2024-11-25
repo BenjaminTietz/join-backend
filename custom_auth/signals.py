@@ -22,15 +22,13 @@ def generate_random_hex_color():
 @receiver(post_save, sender=User)
 def create_contact_for_user(sender, instance, created, **kwargs):
     if created:
-        print(f"Signal triggered for user: {instance.email}, Name: {instance.real_name}, Phone: {instance.phone}")
         contact = Contact.objects.create(
-            name=instance.first_name or "Default Name",
+            name=instance.username  or "Default Name",
             email=instance.email,
             phone=instance.phone,
         )
         instance.contact_id = contact
-        instance.save()
-        print(f"Contact created with ID: {contact.id} and name: {contact.name}")
+        instance.save(update_fields=['contact_id'])
         
 @receiver(post_save, sender=User)
 def create_auth_token(sender, instance=None, created=False, **kwargs):

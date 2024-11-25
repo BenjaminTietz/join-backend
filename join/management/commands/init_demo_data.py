@@ -33,7 +33,7 @@ def generate_demo_data(sender, user, **kwargs):
     CATEGORY_CHOICES = [
         'frontend-angular', 'backend-django', 'authentication', 'deployment', 'testing', 'project-management'
     ]
-    PRIORITY_CHOICES = ['low', 'medium', 'high', 'urgent']
+    PRIORITY_CHOICES = ['low', 'medium', 'urgent']
     STATUS_CHOICES = ['todo', 'inProgress', 'awaitFeedback', 'done']
 
     demo_tasks = [
