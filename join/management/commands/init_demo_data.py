@@ -13,8 +13,17 @@ def generate_demo_data(sender, user, **kwargs):
     TaskContact.objects.all().delete()
     SubTask.objects.all().delete()
     Task.objects.all().delete()
-    Contact.objects.all().delete()
 
+    
+    demo_emails = [
+        "alice.johnson@example.com", "bob.smith@example.com", "cathy.lee@example.com",
+        "david.kim@example.com", "eva.thompson@example.com", "franklin.wright@example.com",
+        "grace.park@example.com", "henry.scott@example.com", "irene.chen@example.com",
+        "jack.tan@example.com",
+    ]
+    
+    Contact.objects.filter(email__in=demo_emails).delete()
+    
     demo_contacts = [
         {"name": "Alice Johnson", "email": "alice.johnson@example.com", "phone": "111-222-3333"},
         {"name": "Bob Smith", "email": "bob.smith@example.com", "phone": "222-333-4444"},

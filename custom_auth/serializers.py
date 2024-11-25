@@ -10,11 +10,18 @@ from datetime import date
 from rest_framework import serializers
 from custom_auth.models import User
 from django.contrib.auth.password_validation import validate_password
+from join_contacts.models import Contact
 
+class ContactSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Contact
+        fields = ['id', 'name', 'email', 'phone', 'created_at', 'initials', 'color' ]
+        
 class UserSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True, validators=[validate_password]) 
     created_at = serializers.DateTimeField(read_only=True)
-    phone = serializers.CharField(required=True)  
+    phone = serializers.CharField(required=True)
+    contact = ContactSerializer(source='contact_id', read_only=True)  
 
     def create(self, validated_data):
         """
@@ -32,7 +39,8 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('id', 'username', 'email', 'phone', 'created_at', 'password')
+        fields = ('id', 'username', 'email', 'phone', 'created_at', 'password', 'contact')
+
 
 class LoginSerializer(serializers.Serializer):
     """
@@ -58,3 +66,6 @@ class LoginSerializer(serializers.Serializer):
         data['contact'] = Contact.objects.filter(id=user.contact_id_id).first()
 
         return data
+
+class ResetPasswordRequestSerializer(serializers.Serializer):
+    email = serializers.EmailField(required=True)
