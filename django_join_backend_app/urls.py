@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.urls import path, include
-from join.views import TaskView, DocsView, GenerateDemoDataView, GetCsrfTokenView
+from join.views import DocsView, GenerateDemoDataView, GetCsrfTokenView
 from join_contacts.views import ContactView
 docs_view = DocsView.as_view({'get': 'get'}) 
 

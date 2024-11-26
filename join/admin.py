@@ -34,7 +34,7 @@ class TaskAdmin(admin.ModelAdmin):
         - category: The category of the task.
         - priority: The priority level of the task.
         - status: The current status of the task.
-        - dueDate: The due date for the task.
+        - due_date: The due date for the task.
         - created_at: The timestamp when the task was created.
 
     Fields:
@@ -44,11 +44,11 @@ class TaskAdmin(admin.ModelAdmin):
         - category: The category of the task.
         - priority: The priority level of the task.
         - status: The current status of the task.
-        - dueDate: The due date for the task.
+        - due_date: The due date for the task.
         - created_at: The timestamp when the task was created (readonly).
     """
-    list_display = ('id', 'title', 'description', 'category', 'priority', 'status', 'dueDate', 'created_at')
-    fields = ('id', 'title', 'description', 'category', 'priority', 'status', 'dueDate', 'created_at')
+    list_display = ('id', 'title', 'description', 'category', 'priority', 'status', 'due_date', 'created_at')
+    fields = ('id', 'title', 'description', 'category', 'priority', 'status', 'due_date', 'created_at')
     readonly_fields = ('id', 'created_at')  
     inlines = [SubTaskInline]
     

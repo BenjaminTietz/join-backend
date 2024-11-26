@@ -1,5 +1,5 @@
 from django.urls import path
-from join.views import TaskView
+from .views import TaskView
 
 urlpatterns = [
     path('', TaskView.as_view({'post': 'create', 'get': 'list'}), name='task-list-create'),

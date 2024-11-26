@@ -1,98 +1,272 @@
-from django.db import models
-from django.db.models.fields import DateField
-from datetime import date
-from django.conf import settings
-from django.db import models
-from rest_framework import serializers
-from django.contrib.auth.models import AbstractUser 
-from phonenumber_field.modelfields import PhoneNumberField
-from phone_field import PhoneField
-import random
+from django.http import JsonResponse
+from django.shortcuts import render
+from django.views import View
+from django.middleware.csrf import get_token
+from rest_framework.authtoken.views import APIView
+from rest_framework.authtoken.models import Token
+from rest_framework.response import Response
+from rest_framework import viewsets, status
+from django_join_backend_app.serializers import TaskSerializer, SubTaskSerializer
+from join_contacts.serializers import ContactSerializer
+from custom_auth.serializers import UserSerializer
+from join_tasks.models import Task, SubTask, TaskContact
 from join_contacts.models import Contact
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.permissions import IsAuthenticated
+from django.shortcuts import redirect
+from django.conf import settings
+from django.core.management.base import BaseCommand
+from join.management.commands.init_demo_data import generate_demo_data
+from django.utils.decorators import method_decorator
+from django.views.decorators.csrf import csrf_exempt
 
-# Create your models here.
-class Task(models.Model):
-    """
-    Represents a task in the system with fields for title, description, category, 
-    priority, status, and due date.
 
-    Attributes:
-        id (int): The primary key for the task.
-        title (str): The title of the task, limited to 50 characters.
-        description (str): A detailed description of the task, limited to 500 characters.
-        created_at (date): The date the task was created, defaults to today's date.
-        category (str): The category the task falls under, chosen from predefined categories.
-        priority (str): The priority level of the task, chosen from predefined levels.
-        status (str): The current status of the task, chosen from predefined statuses.
-        dueDate (date): The deadline by which the task should be completed, defaults to today's date.
+class TaskView(viewsets.ViewSet):
     """
+    API view for managing tasks.
+
+    This view allows creating, retrieving, listing, updating tasks, and adding subtasks or assignees.
+    """
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
     
-    CATEGORY_CHOICES = [
-        ('testing', 'Testing'),
-        ('client-communication', 'Client Communication'),
-        ('project-management', 'Project Management'),
-        ('development', 'Development'),
-        ('deployment', 'Deployment'),
-    ]
-    PRIORITY_CHOICES = [
-        ('low', 'Low'),
-        ('medium', 'Medium'),
-        ('urgent', 'URGENT'),
-    ]
-    STATUS_CHOICES = [
-        ('todo', 'To Do'),
-        ('inProgress', 'In Progress'),
-        ('awaitFeedback', 'Await Feedback'),
-        ('done', 'Done'),
-    ]
-    id = models.AutoField(primary_key=True)
-    title = models.CharField(max_length=50)
-    description = models.TextField(max_length=500)
-    created_at = models.DateField(default=date.today) #for internal use
-    #author = models.CharField(max_length=50) #for internal use
-    category = models.CharField(choices=CATEGORY_CHOICES, max_length=50, default='development')
-    priority = models.CharField(choices=PRIORITY_CHOICES, max_length=50, default='medium')
-    status = models.CharField(choices=STATUS_CHOICES, max_length=50, default='todo')
-    dueDate = models.DateField(default=date.today)
-
-    def __str__(self):
+    def create(self, request):
         """
-        Returns the string representation of the Task, which is its title.
-        """
-        return self.title
-    
-class SubTask(models.Model):
-    """
-    Represents a subtask that is associated with a specific task.
+        Handle POST request to create a new task.
 
-    Attributes:
-        task (Task): The parent task to which the subtask belongs.
-        title (str): The title of the subtask, limited to 50 characters.
-        checked (bool): A boolean flag indicating whether the subtask is completed or not.
-        created_at (date): The date the subtask was created, defaults to today's date.
-    """
-    
-    task = models.ForeignKey(Task, on_delete=models.CASCADE, related_name='subTasks')
-    title = models.CharField(max_length=50)
-    checked = models.BooleanField(default=False)
-    created_at = models.DateField(default=date.today) #for internal use
-    #author = models.CharField(max_length=50) #for internal use
+        Parameters:
+        - request: HTTP request containing task data.
 
-    def __str__(self):
+        Returns:
+        - Response: JSON response with task details on success.
         """
-        Returns the string representation of the SubTask, which is its title.
-        """
-        return self.title
-    
-    
-class TaskContact(models.Model):
-    """
-    Represents the relationship between a Task and a Contact (many-to-many relationship).
+        serializer = TaskSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        
+     
+        task = serializer.save()
+        
+     
+        assigned_contacts_data = request.data.get('assignedContacts', [])
+        for contact_data in assigned_contacts_data:
+            contact, created = Contact.objects.get_or_create(**contact_data)
+            TaskContact.objects.get_or_create(task=task, contact=contact)
 
-    Attributes:
-        task (Task): The related task.
-        contact (Contact): The related contact.
-    """
+        return Response({
+            'id': task.id,
+            'title': task.title,
+            'description': task.description,
+            'category': task.category,
+            'priority': task.priority,
+            'status': task.status,
+            'due_date': task.due_date,
+        })
+        
+    def retrieve(self, request, pk=None):
+        """
+        Handle GET request to retrieve a task by ID.
+
+        Parameters:
+        - pk: Primary key of the task to retrieve.
+
+        Returns:
+        - Response: JSON response with task details on success.
+        """
+        task = Task.objects.get(id=pk)
+        serializer = TaskSerializer(task)
+        return Response(serializer.data)
+        
+    def list(self, request):
+        """
+        Handle GET request to list all tasks.
+
+        Returns:
+        - Response: JSON response containing a list of all tasks.
+        """
+        tasks = Task.objects.all()  
+        serializer = TaskSerializer(tasks, many=True)  
+        return Response(serializer.data)  
+        
+    def update(self, request, pk=None):
+        """
+        Handle PUT/PATCH request to update a task.
+
+        Parameters:
+        - pk: Primary key of the task to update.
+
+        Returns:
+        - Response: JSON response with updated task data on success or error message on failure.
+        """
+        try:
+            task = Task.objects.get(id=pk)
+        except Task.DoesNotExist:
+            return Response({'error': 'Task not found.'}, status=404)
+
+        serializer = TaskSerializer(task, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
-    task = models.ForeignKey(Task, on_delete=models.SET_NULL, null=True)
-    contact = models.ForeignKey('join_contacts.Contact', on_delete=models.SET_NULL, null=True)
+    def delete(self, request, pk=None):
+        """
+        Handle DELETE request to remove a task.
+
+        Parameters:
+        - pk: Primary key of the task to delete.
+
+        Returns:
+        - Response: JSON response indicating success or failure.
+        """
+        try:
+            task = Task.objects.get(id=pk)
+            task.delete()
+            return Response({'status': 'Task deleted successfully.'})
+        except Task.DoesNotExist:
+            return Response({'error': 'Task not found.'}, status=404)
+        
+    
+    def add_subtasks(self, request, pk=None):
+        """
+        Handle POST request to add subtasks to an existing task.
+
+        Parameters:
+        - pk: Primary key of the task to add subtasks to.
+
+        Returns:
+        - Response: JSON response indicating the status of the operation.
+        """
+        task = Task.objects.get(id=pk)
+        subtask_data = request.data.get('subtasks', [])
+        
+        for subtask in subtask_data:
+            SubTask.objects.create(
+                task=task,
+                title=subtask['title'],
+                checked=subtask.get('checked', False)
+            )
+        
+        return Response({'status': 'Subtasks added successfully'})
+    
+    def remove_subtasks(self, request, pk=None, subtask_id=None):
+        """
+        Handle DELETE request to remove a specific subtask from a task.
+
+        Parameters:
+        - pk: Primary key of the task.
+        - subtask_id: Primary key of the subtask to remove.
+
+        Returns:
+        - Response: JSON response indicating success or failure.
+        """
+        try:
+            task = Task.objects.get(id=pk)
+        except Task.DoesNotExist:
+            return Response({'error': 'Task not found.'}, status=404)
+
+        try:
+            subtask_instance = SubTask.objects.get(id=subtask_id, task=task)
+            subtask_instance.delete()
+            return Response({'status': 'Subtask removed successfully.'})
+        except SubTask.DoesNotExist:
+            return Response({'error': 'Subtask not found.'}, status=404)
+    
+
+    def update_subtask(self, request, task_pk=None, subtask_pk=None):
+        """
+        Handle PATCH request to update a subtask's title and other fields.
+
+        Parameters:
+        - task_pk: Primary key of the parent task.
+        - subtask_pk: Primary key of the subtask to update.
+
+        Returns:
+        - Response: JSON response indicating success or failure.
+        """
+        try:
+            task = Task.objects.get(id=task_pk)
+        except Task.DoesNotExist:
+            return Response({'error': 'Task not found.'}, status=404)
+        
+        try:
+            subtask = SubTask.objects.get(id=subtask_pk, task=task)
+        except SubTask.DoesNotExist:
+            return Response({'error': 'Subtask not found.'}, status=404)
+
+        new_title = request.data.get('title')
+        
+        if new_title is not None:
+            subtask.title = new_title
+        
+        subtask.checked = request.data.get('checked', subtask.checked)
+
+        subtask.save()
+        
+        return Response({
+            'status': 'Subtask updated successfully',
+            'subtask': SubTaskSerializer(subtask).data
+        })
+    def add_assignees(self, request, pk=None):
+        """
+        Handle POST request to add assignees to an existing task.
+
+        Parameters:
+        - pk: Primary key of the task to add assignees to.
+
+        Returns:
+        - Response: JSON response with status and processing messages.
+        """
+        status_message = []  
+        try:
+            task = Task.objects.get(id=pk)
+        except Task.DoesNotExist:
+            return Response({'error': 'Task not found.'}, status=404)
+
+        assignee_data = request.data.get('assignedTo', [])
+
+        for assignee in assignee_data:
+            try:
+                contact = Contact.objects.get(
+                    name=assignee['name'],
+                    email=assignee['email']
+                )
+                
+                TaskContact.objects.get_or_create(task=task, contact=contact)
+                status_message.append(f'Assignee {contact.name} linked to the task successfully.')
+            
+            except Contact.DoesNotExist:
+                status_message.append(f'Assignee {assignee["name"]} not found. No changes made.')
+
+        return Response({'status': 'Assignees processed successfully', 'messages': status_message})
+    
+    def remove_assignees(self, request, pk=None):
+        """
+        Handle DELETE request to remove assignees from an existing task.
+
+        Parameters:
+        - pk: Primary key of the task.
+
+        Returns:
+        - Response: JSON response with status and processing messages.
+        """
+        try:
+            task = Task.objects.get(id=pk)
+        except Task.DoesNotExist:
+            return Response({'error': 'Task not found.'}, status=404)
+
+        assignee_data = request.data.get('assignedTo', [])
+        status_message = []
+
+        for assignee in assignee_data:
+            try:
+                contact = Contact.objects.get(
+                    name=assignee['name'],
+                    email=assignee['email'],
+                )
+                task_contact = TaskContact.objects.get(task=task, contact=contact)
+                task_contact.delete()
+                status_message.append(f'Assignee {contact.name} removed successfully.')
+            except (Contact.DoesNotExist, TaskContact.DoesNotExist):
+                status_message.append(f'Assignee {assignee["name"]} not found for this task.')
+
+        return Response({'status': 'Assignees processed', 'messages': status_message})

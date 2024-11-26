@@ -77,7 +77,7 @@ def generate_demo_data(sender, user, **kwargs):
             category=task_data["category"],
             priority=random.choice(PRIORITY_CHOICES),
             status=random.choice(STATUS_CHOICES),
-            dueDate=due_date
+            due_date=due_date
         )
         tasks.append(task)
 

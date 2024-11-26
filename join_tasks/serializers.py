@@ -33,7 +33,7 @@ class TaskSerializer(serializers.ModelSerializer):
         - category: The category of the task (choice field).
         - priority: The priority of the task (choice field).
         - status: The current status of the task (choice field).
-        - dueDate: The due date of the task.
+        - due_date: The due date of the task.
         - subTasks: A list of related subtasks (read-only).
         - assignedTo: A list of contacts assigned to the task (read-only).
     """
@@ -44,7 +44,7 @@ class TaskSerializer(serializers.ModelSerializer):
     assignedTo = serializers.SerializerMethodField()
     class Meta:
         model = Task
-        fields = ('id','title', 'description', 'created_at', 'category', 'priority', 'status', 'dueDate', 'subTasks', 'assignedTo')
+        fields = ('id','title', 'description', 'created_at', 'category', 'priority', 'status', 'due_date', 'subTasks', 'assignedTo')
 
     def get_assignedTo(self, obj):
         """
