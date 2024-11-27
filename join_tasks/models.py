@@ -49,13 +49,13 @@ class Task(models.Model):
     ]
     
     id = models.AutoField(primary_key=True)
-    title = models.CharField(max_length=50)
+    title = models.CharField(max_length=150)
     description = models.TextField(max_length=500, blank=True, null=True)  
     created_at = models.DateField(default=date.today)
     created_by = models.CharField(max_length=255, default="system")
-    category = models.CharField(choices=CATEGORY_CHOICES, max_length=50, default='frontend-angular')
-    priority = models.CharField(choices=PRIORITY_CHOICES, max_length=50, default='medium')
-    status = models.CharField(choices=STATUS_CHOICES, max_length=50, default='todo')
+    category = models.CharField(choices=CATEGORY_CHOICES, max_length=150, default='frontend-angular')
+    priority = models.CharField(choices=PRIORITY_CHOICES, max_length=150, default='medium')
+    status = models.CharField(choices=STATUS_CHOICES, max_length=150, default='todo')
     due_date = models.DateField(default=date.today)
 
     def __str__(self):
@@ -73,7 +73,7 @@ class SubTask(models.Model):
     """
     
     task = models.ForeignKey(Task, on_delete=models.CASCADE, related_name='subTasks')
-    title = models.CharField(max_length=50)
+    title = models.CharField(max_length=150)
     checked = models.BooleanField(default=False)
     created_at = models.DateField(default=date.today) #for internal use
     #author = models.CharField(max_length=50) #for internal use
