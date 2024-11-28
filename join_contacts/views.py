@@ -69,7 +69,7 @@ class ContactView(viewsets.ViewSet):
         Returns:
         - Response: JSON response containing a list of all contacts.
         """
-        contacts = Contact.objects.all()  
+        contacts = Contact.objects.all().order_by('name')  
         serializer = ContactSerializer(contacts, many=True)  
         return Response(serializer.data)  
     def update(self, request, pk=None):
