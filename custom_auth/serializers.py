@@ -25,8 +25,14 @@ class UserSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         """
-        Erstelle einen neuen Benutzer mit den übergebenen Daten.
-        Der Benutzer gibt seinen vollständigen Namen direkt als `username` an.
+        Create a new user instance with the validated data.
+        The password is hashed before saving the user.
+
+        Parameters:
+        - validated_data: Validated data from the request.
+
+        Returns:
+        - User: The newly created user instance.
         """
         user = User(
             username=validated_data['username'],  
@@ -64,7 +70,6 @@ class LoginSerializer(serializers.Serializer):
         data['user'] = user
         data['contact_id'] = user.contact_id_id  
         data['contact'] = Contact.objects.filter(id=user.contact_id_id).first()
-
         return data
 
 class ResetPasswordRequestSerializer(serializers.Serializer):

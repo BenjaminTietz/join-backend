@@ -10,11 +10,24 @@ from datetime import date, timedelta
 import random
 
 def generate_demo_data(sender, user, **kwargs):
+    """
+    Generates demo data for tasks, subtasks, contacts, and task-contact relationships.
+
+    This function deletes existing TaskContact, SubTask, and Task records, as well as
+    specific Contact records identified by a list of demo emails. It then creates a new
+    set of demo contacts, tasks, and related subtasks. Each task is randomly assigned a 
+    priority, status, and due date, and is associated with a subset of the demo contacts. 
+    For each task, a random number of subtasks are also created.
+    
+    Args:
+        sender (type): The sender of the signal (not used in this context).
+        user (User): The user associated with the operation (not used in this context).
+        **kwargs: Additional keyword arguments (not used in this context).
+    """
     TaskContact.objects.all().delete()
     SubTask.objects.all().delete()
     Task.objects.all().delete()
 
-    
     demo_emails = [
         "alice.johnson@example.com", "bob.smith@example.com", "cathy.lee@example.com",
         "david.kim@example.com", "eva.thompson@example.com", "franklin.wright@example.com",

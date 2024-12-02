@@ -1,7 +1,7 @@
 from django.shortcuts import redirect, render
 from django.conf import settings
 from django.core.management.base import BaseCommand
-from join.management.commands.init_demo_data import generate_demo_data
+from join.management.commands.generate_demo_data import generate_demo_data
 from django.utils.decorators import method_decorator
 from join_contacts.models import Contact
 from join_contacts.serializers import ContactSerializer

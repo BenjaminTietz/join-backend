@@ -1,26 +1,24 @@
 <!DOCTYPE html>
 
-<html lang="en" data-content_root="./">
+<html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>&lt;no title&gt; &#8212; Join_Django_Rest_Framework_Backend 1.0 documentation</title>
-    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=d1102ebc" />
-    <link rel="stylesheet" type="text/css" href="_static/basic.css?v=c058f7c8" />
-    <link rel="stylesheet" type="text/css" href="_static/alabaster.css?v=27fed22d" />
-    <script src="_static/documentation_options.js?v=f2a433a1"></script>
-    <script src="_static/doctools.js?v=9a2dae69"></script>
-    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=4f649999" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css?v=039e1c02" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js?v=359c27e9"></script>
+    <script src="_static/doctools.js?v=888ff710"></script>
+    <script src="_static/sphinx_highlight.js?v=4825356b"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="prev" title="Join_Django_Rest_Framework_Backend documentation" href="index.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
   
-
   
-  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
 
   </head><body>
   
@@ -32,674 +30,9 @@
 
           <div class="body" role="main">
             
-  <dl class="py class" id="module-join.models">
-<dt class="sig sig-object py" id="join.models.Contact">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">join.models.</span></span><span class="sig-name descname"><span class="pre">Contact</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/join/models.html#Contact"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#join.models.Contact" title="Link to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Model</span></code></p>
-<p>Represents a contact in the system with fields for name, email, phone, initials, 
-color, and creation date.</p>
-<dl class="simple">
-<dt>Attributes:</dt><dd><p>id (int): The primary key for the contact.
-name (str): The name of the contact, limited to 50 characters.
-email (str): The contact’s email address.
-phone (PhoneField): The contact’s phone number, can be left blank.
-initials (str): The initials of the contact, can be left blank.
-color (str): The color associated with the contact (e.g., for UI display).
-created_at (date): The date the contact was created, defaults to today’s date.</p>
-</dd>
-</dl>
-<dl class="py exception">
-<dt class="sig sig-object py" id="join.models.Contact.DoesNotExist">
-<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">DoesNotExist</span></span><a class="headerlink" href="#join.models.Contact.DoesNotExist" title="Link to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ObjectDoesNotExist</span></code></p>
-</dd></dl>
-
-<dl class="py exception">
-<dt class="sig sig-object py" id="join.models.Contact.MultipleObjectsReturned">
-<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">MultipleObjectsReturned</span></span><a class="headerlink" href="#join.models.Contact.MultipleObjectsReturned" title="Link to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">MultipleObjectsReturned</span></code></p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="join.models.Contact.color">
-<span class="sig-name descname"><span class="pre">color</span></span><a class="headerlink" href="#join.models.Contact.color" title="Link to this definition">¶</a></dt>
-<dd><p>A wrapper for a deferred-loading field. When the value is read from this
-object the first time, the query is executed.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="join.models.Contact.created_at">
-<span class="sig-name descname"><span class="pre">created_at</span></span><a class="headerlink" href="#join.models.Contact.created_at" title="Link to this definition">¶</a></dt>
-<dd><p>A wrapper for a deferred-loading field. When the value is read from this
-object the first time, the query is executed.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="join.models.Contact.email">
-<span class="sig-name descname"><span class="pre">email</span></span><a class="headerlink" href="#join.models.Contact.email" title="Link to this definition">¶</a></dt>
-<dd><p>A wrapper for a deferred-loading field. When the value is read from this
-object the first time, the query is executed.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="join.models.Contact.get_next_by_created_at">
-<span class="sig-name descname"><span class="pre">get_next_by_created_at</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">field=&lt;django.db.models.fields.DateField:</span> <span class="pre">created_at&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_next=True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">**kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#join.models.Contact.get_next_by_created_at" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="join.models.Contact.get_previous_by_created_at">
-<span class="sig-name descname"><span class="pre">get_previous_by_created_at</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">field=&lt;django.db.models.fields.DateField:</span> <span class="pre">created_at&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_next=False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">**kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#join.models.Contact.get_previous_by_created_at" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="join.models.Contact.id">
-<span class="sig-name descname"><span class="pre">id</span></span><a class="headerlink" href="#join.models.Contact.id" title="Link to this definition">¶</a></dt>
-<dd><p>A wrapper for a deferred-loading field. When the value is read from this
-object the first time, the query is executed.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="join.models.Contact.initials">
-<span class="sig-name descname"><span class="pre">initials</span></span><a class="headerlink" href="#join.models.Contact.initials" title="Link to this definition">¶</a></dt>
-<dd><p>A wrapper for a deferred-loading field. When the value is read from this
-object the first time, the query is executed.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="join.models.Contact.name">
-<span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#join.models.Contact.name" title="Link to this definition">¶</a></dt>
-<dd><p>A wrapper for a deferred-loading field. When the value is read from this
-object the first time, the query is executed.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="join.models.Contact.objects">
-<span class="sig-name descname"><span class="pre">objects</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;django.db.models.manager.Manager</span> <span class="pre">object&gt;</span></em><a class="headerlink" href="#join.models.Contact.objects" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="join.models.Contact.phone">
-<span class="sig-name descname"><span class="pre">phone</span></span><a class="headerlink" href="#join.models.Contact.phone" title="Link to this definition">¶</a></dt>
-<dd><p>A wrapper for a deferred-loading field. When the value is read from this
-object the first time, the query is executed.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="join.models.Contact.taskcontact_set">
-<span class="sig-name descname"><span class="pre">taskcontact_set</span></span><a class="headerlink" href="#join.models.Contact.taskcontact_set" title="Link to this definition">¶</a></dt>
-<dd><p>Accessor to the related objects manager on the reverse side of a
-many-to-one relation.</p>
-<p>In the example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Child</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
-    <span class="n">parent</span> <span class="o">=</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="n">Parent</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;children&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-<p><code class="docutils literal notranslate"><span class="pre">Parent.children</span></code> is a <code class="docutils literal notranslate"><span class="pre">ReverseManyToOneDescriptor</span></code> instance.</p>
-<p>Most of the implementation is delegated to a dynamically defined manager
-class built by <code class="docutils literal notranslate"><span class="pre">create_forward_many_to_many_manager()</span></code> defined below.</p>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="py class">
-<dt class="sig sig-object py" id="join.models.SubTask">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">join.models.</span></span><span class="sig-name descname"><span class="pre">SubTask</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/join/models.html#SubTask"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#join.models.SubTask" title="Link to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Model</span></code></p>
-<p>Represents a subtask that is associated with a specific task.</p>
-<dl class="simple">
-<dt>Attributes:</dt><dd><p>task (Task): The parent task to which the subtask belongs.
-title (str): The title of the subtask, limited to 50 characters.
-checked (bool): A boolean flag indicating whether the subtask is completed or not.
-created_at (date): The date the subtask was created, defaults to today’s date.</p>
-</dd>
-</dl>
-<dl class="py exception">
-<dt class="sig sig-object py" id="join.models.SubTask.DoesNotExist">
-<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">DoesNotExist</span></span><a class="headerlink" href="#join.models.SubTask.DoesNotExist" title="Link to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ObjectDoesNotExist</span></code></p>
-</dd></dl>
-
-<dl class="py exception">
-<dt class="sig sig-object py" id="join.models.SubTask.MultipleObjectsReturned">
-<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">MultipleObjectsReturned</span></span><a class="headerlink" href="#join.models.SubTask.MultipleObjectsReturned" title="Link to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">MultipleObjectsReturned</span></code></p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="join.models.SubTask.checked">
-<span class="sig-name descname"><span class="pre">checked</span></span><a class="headerlink" href="#join.models.SubTask.checked" title="Link to this definition">¶</a></dt>
-<dd><p>A wrapper for a deferred-loading field. When the value is read from this
-object the first time, the query is executed.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="join.models.SubTask.created_at">
-<span class="sig-name descname"><span class="pre">created_at</span></span><a class="headerlink" href="#join.models.SubTask.created_at" title="Link to this definition">¶</a></dt>
-<dd><p>A wrapper for a deferred-loading field. When the value is read from this
-object the first time, the query is executed.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="join.models.SubTask.get_next_by_created_at">
-<span class="sig-name descname"><span class="pre">get_next_by_created_at</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">field=&lt;django.db.models.fields.DateField:</span> <span class="pre">created_at&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_next=True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">**kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#join.models.SubTask.get_next_by_created_at" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="join.models.SubTask.get_previous_by_created_at">
-<span class="sig-name descname"><span class="pre">get_previous_by_created_at</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">field=&lt;django.db.models.fields.DateField:</span> <span class="pre">created_at&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_next=False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">**kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#join.models.SubTask.get_previous_by_created_at" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="join.models.SubTask.id">
-<span class="sig-name descname"><span class="pre">id</span></span><a class="headerlink" href="#join.models.SubTask.id" title="Link to this definition">¶</a></dt>
-<dd><p>A wrapper for a deferred-loading field. When the value is read from this
-object the first time, the query is executed.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="join.models.SubTask.objects">
-<span class="sig-name descname"><span class="pre">objects</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;django.db.models.manager.Manager</span> <span class="pre">object&gt;</span></em><a class="headerlink" href="#join.models.SubTask.objects" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="join.models.SubTask.task">
-<span class="sig-name descname"><span class="pre">task</span></span><a class="headerlink" href="#join.models.SubTask.task" title="Link to this definition">¶</a></dt>
-<dd><p>Accessor to the related object on the forward side of a many-to-one or
-one-to-one (via ForwardOneToOneDescriptor subclass) relation.</p>
-<p>In the example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Child</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
-    <span class="n">parent</span> <span class="o">=</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="n">Parent</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;children&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-<p><code class="docutils literal notranslate"><span class="pre">Child.parent</span></code> is a <code class="docutils literal notranslate"><span class="pre">ForwardManyToOneDescriptor</span></code> instance.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="join.models.SubTask.task_id">
-<span class="sig-name descname"><span class="pre">task_id</span></span><a class="headerlink" href="#join.models.SubTask.task_id" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="join.models.SubTask.title">
-<span class="sig-name descname"><span class="pre">title</span></span><a class="headerlink" href="#join.models.SubTask.title" title="Link to this definition">¶</a></dt>
-<dd><p>A wrapper for a deferred-loading field. When the value is read from this
-object the first time, the query is executed.</p>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="py class">
-<dt class="sig sig-object py" id="join.models.Task">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">join.models.</span></span><span class="sig-name descname"><span class="pre">Task</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/join/models.html#Task"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#join.models.Task" title="Link to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Model</span></code></p>
-<p>Represents a task in the system with fields for title, description, category, 
-priority, status, and due date.</p>
-<dl class="simple">
-<dt>Attributes:</dt><dd><p>id (int): The primary key for the task.
-title (str): The title of the task, limited to 50 characters.
-description (str): A detailed description of the task, limited to 500 characters.
-created_at (date): The date the task was created, defaults to today’s date.
-category (str): The category the task falls under, chosen from predefined categories.
-priority (str): The priority level of the task, chosen from predefined levels.
-status (str): The current status of the task, chosen from predefined statuses.
-dueDate (date): The deadline by which the task should be completed, defaults to today’s date.</p>
-</dd>
-</dl>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="join.models.Task.CATEGORY_CHOICES">
-<span class="sig-name descname"><span class="pre">CATEGORY_CHOICES</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[('sales',</span> <span class="pre">'Sales'),</span> <span class="pre">('marketing',</span> <span class="pre">'Marketing'),</span> <span class="pre">('accounting',</span> <span class="pre">'Accounting'),</span> <span class="pre">('development',</span> <span class="pre">'Development'),</span> <span class="pre">('purchase',</span> <span class="pre">'Purchase')]</span></em><a class="headerlink" href="#join.models.Task.CATEGORY_CHOICES" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py exception">
-<dt class="sig sig-object py" id="join.models.Task.DoesNotExist">
-<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">DoesNotExist</span></span><a class="headerlink" href="#join.models.Task.DoesNotExist" title="Link to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ObjectDoesNotExist</span></code></p>
-</dd></dl>
-
-<dl class="py exception">
-<dt class="sig sig-object py" id="join.models.Task.MultipleObjectsReturned">
-<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">MultipleObjectsReturned</span></span><a class="headerlink" href="#join.models.Task.MultipleObjectsReturned" title="Link to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">MultipleObjectsReturned</span></code></p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="join.models.Task.PRIORITY_CHOICES">
-<span class="sig-name descname"><span class="pre">PRIORITY_CHOICES</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[('low',</span> <span class="pre">'Low'),</span> <span class="pre">('medium',</span> <span class="pre">'Medium'),</span> <span class="pre">('urgent',</span> <span class="pre">'URGENT')]</span></em><a class="headerlink" href="#join.models.Task.PRIORITY_CHOICES" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="join.models.Task.STATUS_CHOICES">
-<span class="sig-name descname"><span class="pre">STATUS_CHOICES</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[('todo',</span> <span class="pre">'To</span> <span class="pre">Do'),</span> <span class="pre">('inProgress',</span> <span class="pre">'In</span> <span class="pre">Progress'),</span> <span class="pre">('awaitFeedback',</span> <span class="pre">'Await</span> <span class="pre">Feedback'),</span> <span class="pre">('done',</span> <span class="pre">'Done')]</span></em><a class="headerlink" href="#join.models.Task.STATUS_CHOICES" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="join.models.Task.category">
-<span class="sig-name descname"><span class="pre">category</span></span><a class="headerlink" href="#join.models.Task.category" title="Link to this definition">¶</a></dt>
-<dd><p>A wrapper for a deferred-loading field. When the value is read from this
-object the first time, the query is executed.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="join.models.Task.created_at">
-<span class="sig-name descname"><span class="pre">created_at</span></span><a class="headerlink" href="#join.models.Task.created_at" title="Link to this definition">¶</a></dt>
-<dd><p>A wrapper for a deferred-loading field. When the value is read from this
-object the first time, the query is executed.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="join.models.Task.description">
-<span class="sig-name descname"><span class="pre">description</span></span><a class="headerlink" href="#join.models.Task.description" title="Link to this definition">¶</a></dt>
-<dd><p>A wrapper for a deferred-loading field. When the value is read from this
-object the first time, the query is executed.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="join.models.Task.dueDate">
-<span class="sig-name descname"><span class="pre">dueDate</span></span><a class="headerlink" href="#join.models.Task.dueDate" title="Link to this definition">¶</a></dt>
-<dd><p>A wrapper for a deferred-loading field. When the value is read from this
-object the first time, the query is executed.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="join.models.Task.get_category_display">
-<span class="sig-name descname"><span class="pre">get_category_display</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">field=&lt;django.db.models.fields.CharField:</span> <span class="pre">category&gt;</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#join.models.Task.get_category_display" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="join.models.Task.get_next_by_created_at">
-<span class="sig-name descname"><span class="pre">get_next_by_created_at</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">field=&lt;django.db.models.fields.DateField:</span> <span class="pre">created_at&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_next=True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">**kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#join.models.Task.get_next_by_created_at" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="join.models.Task.get_next_by_dueDate">
-<span class="sig-name descname"><span class="pre">get_next_by_dueDate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">field=&lt;django.db.models.fields.DateField:</span> <span class="pre">dueDate&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_next=True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">**kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#join.models.Task.get_next_by_dueDate" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="join.models.Task.get_previous_by_created_at">
-<span class="sig-name descname"><span class="pre">get_previous_by_created_at</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">field=&lt;django.db.models.fields.DateField:</span> <span class="pre">created_at&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_next=False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">**kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#join.models.Task.get_previous_by_created_at" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="join.models.Task.get_previous_by_dueDate">
-<span class="sig-name descname"><span class="pre">get_previous_by_dueDate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">field=&lt;django.db.models.fields.DateField:</span> <span class="pre">dueDate&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_next=False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">**kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#join.models.Task.get_previous_by_dueDate" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="join.models.Task.get_priority_display">
-<span class="sig-name descname"><span class="pre">get_priority_display</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">field=&lt;django.db.models.fields.CharField:</span> <span class="pre">priority&gt;</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#join.models.Task.get_priority_display" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="join.models.Task.get_status_display">
-<span class="sig-name descname"><span class="pre">get_status_display</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">field=&lt;django.db.models.fields.CharField:</span> <span class="pre">status&gt;</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#join.models.Task.get_status_display" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="join.models.Task.id">
-<span class="sig-name descname"><span class="pre">id</span></span><a class="headerlink" href="#join.models.Task.id" title="Link to this definition">¶</a></dt>
-<dd><p>A wrapper for a deferred-loading field. When the value is read from this
-object the first time, the query is executed.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="join.models.Task.objects">
-<span class="sig-name descname"><span class="pre">objects</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;django.db.models.manager.Manager</span> <span class="pre">object&gt;</span></em><a class="headerlink" href="#join.models.Task.objects" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="join.models.Task.priority">
-<span class="sig-name descname"><span class="pre">priority</span></span><a class="headerlink" href="#join.models.Task.priority" title="Link to this definition">¶</a></dt>
-<dd><p>A wrapper for a deferred-loading field. When the value is read from this
-object the first time, the query is executed.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="join.models.Task.status">
-<span class="sig-name descname"><span class="pre">status</span></span><a class="headerlink" href="#join.models.Task.status" title="Link to this definition">¶</a></dt>
-<dd><p>A wrapper for a deferred-loading field. When the value is read from this
-object the first time, the query is executed.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="join.models.Task.subTasks">
-<span class="sig-name descname"><span class="pre">subTasks</span></span><a class="headerlink" href="#join.models.Task.subTasks" title="Link to this definition">¶</a></dt>
-<dd><p>Accessor to the related objects manager on the reverse side of a
-many-to-one relation.</p>
-<p>In the example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Child</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
-    <span class="n">parent</span> <span class="o">=</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="n">Parent</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;children&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-<p><code class="docutils literal notranslate"><span class="pre">Parent.children</span></code> is a <code class="docutils literal notranslate"><span class="pre">ReverseManyToOneDescriptor</span></code> instance.</p>
-<p>Most of the implementation is delegated to a dynamically defined manager
-class built by <code class="docutils literal notranslate"><span class="pre">create_forward_many_to_many_manager()</span></code> defined below.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="join.models.Task.taskcontact_set">
-<span class="sig-name descname"><span class="pre">taskcontact_set</span></span><a class="headerlink" href="#join.models.Task.taskcontact_set" title="Link to this definition">¶</a></dt>
-<dd><p>Accessor to the related objects manager on the reverse side of a
-many-to-one relation.</p>
-<p>In the example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Child</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
-    <span class="n">parent</span> <span class="o">=</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="n">Parent</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;children&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-<p><code class="docutils literal notranslate"><span class="pre">Parent.children</span></code> is a <code class="docutils literal notranslate"><span class="pre">ReverseManyToOneDescriptor</span></code> instance.</p>
-<p>Most of the implementation is delegated to a dynamically defined manager
-class built by <code class="docutils literal notranslate"><span class="pre">create_forward_many_to_many_manager()</span></code> defined below.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="join.models.Task.title">
-<span class="sig-name descname"><span class="pre">title</span></span><a class="headerlink" href="#join.models.Task.title" title="Link to this definition">¶</a></dt>
-<dd><p>A wrapper for a deferred-loading field. When the value is read from this
-object the first time, the query is executed.</p>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="py class">
-<dt class="sig sig-object py" id="join.models.TaskContact">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">join.models.</span></span><span class="sig-name descname"><span class="pre">TaskContact</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/join/models.html#TaskContact"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#join.models.TaskContact" title="Link to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Model</span></code></p>
-<p>Represents the relationship between a Task and a Contact (many-to-many relationship).</p>
-<dl class="simple">
-<dt>Attributes:</dt><dd><p>task (Task): The related task.
-contact (Contact): The related contact.</p>
-</dd>
-</dl>
-<dl class="py exception">
-<dt class="sig sig-object py" id="join.models.TaskContact.DoesNotExist">
-<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">DoesNotExist</span></span><a class="headerlink" href="#join.models.TaskContact.DoesNotExist" title="Link to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ObjectDoesNotExist</span></code></p>
-</dd></dl>
-
-<dl class="py exception">
-<dt class="sig sig-object py" id="join.models.TaskContact.MultipleObjectsReturned">
-<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">MultipleObjectsReturned</span></span><a class="headerlink" href="#join.models.TaskContact.MultipleObjectsReturned" title="Link to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">MultipleObjectsReturned</span></code></p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="join.models.TaskContact.contact">
-<span class="sig-name descname"><span class="pre">contact</span></span><a class="headerlink" href="#join.models.TaskContact.contact" title="Link to this definition">¶</a></dt>
-<dd><p>Accessor to the related object on the forward side of a many-to-one or
-one-to-one (via ForwardOneToOneDescriptor subclass) relation.</p>
-<p>In the example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Child</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
-    <span class="n">parent</span> <span class="o">=</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="n">Parent</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;children&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-<p><code class="docutils literal notranslate"><span class="pre">Child.parent</span></code> is a <code class="docutils literal notranslate"><span class="pre">ForwardManyToOneDescriptor</span></code> instance.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="join.models.TaskContact.contact_id">
-<span class="sig-name descname"><span class="pre">contact_id</span></span><a class="headerlink" href="#join.models.TaskContact.contact_id" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="join.models.TaskContact.id">
-<span class="sig-name descname"><span class="pre">id</span></span><a class="headerlink" href="#join.models.TaskContact.id" title="Link to this definition">¶</a></dt>
-<dd><p>A wrapper for a deferred-loading field. When the value is read from this
-object the first time, the query is executed.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="join.models.TaskContact.objects">
-<span class="sig-name descname"><span class="pre">objects</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;django.db.models.manager.Manager</span> <span class="pre">object&gt;</span></em><a class="headerlink" href="#join.models.TaskContact.objects" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="join.models.TaskContact.task">
-<span class="sig-name descname"><span class="pre">task</span></span><a class="headerlink" href="#join.models.TaskContact.task" title="Link to this definition">¶</a></dt>
-<dd><p>Accessor to the related object on the forward side of a many-to-one or
-one-to-one (via ForwardOneToOneDescriptor subclass) relation.</p>
-<p>In the example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Child</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
-    <span class="n">parent</span> <span class="o">=</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="n">Parent</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;children&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-<p><code class="docutils literal notranslate"><span class="pre">Child.parent</span></code> is a <code class="docutils literal notranslate"><span class="pre">ForwardManyToOneDescriptor</span></code> instance.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="join.models.TaskContact.task_id">
-<span class="sig-name descname"><span class="pre">task_id</span></span><a class="headerlink" href="#join.models.TaskContact.task_id" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
-<dl class="py class">
-<dt class="sig sig-object py" id="join.models.User">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">join.models.</span></span><span class="sig-name descname"><span class="pre">User</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/join/models.html#User"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#join.models.User" title="Link to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">AbstractUser</span></code></p>
-<p>Custom user model that extends Django’s AbstractUser to use email instead of username 
-for authentication.</p>
-<dl class="simple">
-<dt>Attributes:</dt><dd><p>username (str): Optional username field, can be null or blank.
-email (str): The user’s unique email address used for authentication.</p>
-</dd>
-</dl>
-<dl class="py exception">
-<dt class="sig sig-object py" id="join.models.User.DoesNotExist">
-<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">DoesNotExist</span></span><a class="headerlink" href="#join.models.User.DoesNotExist" title="Link to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ObjectDoesNotExist</span></code></p>
-</dd></dl>
-
-<dl class="py exception">
-<dt class="sig sig-object py" id="join.models.User.MultipleObjectsReturned">
-<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">MultipleObjectsReturned</span></span><a class="headerlink" href="#join.models.User.MultipleObjectsReturned" title="Link to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">MultipleObjectsReturned</span></code></p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="join.models.User.REQUIRED_FIELDS">
-<span class="sig-name descname"><span class="pre">REQUIRED_FIELDS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">['username']</span></em><a class="headerlink" href="#join.models.User.REQUIRED_FIELDS" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="join.models.User.USERNAME_FIELD">
-<span class="sig-name descname"><span class="pre">USERNAME_FIELD</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'email'</span></em><a class="headerlink" href="#join.models.User.USERNAME_FIELD" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="join.models.User.auth_token">
-<span class="sig-name descname"><span class="pre">auth_token</span></span><a class="headerlink" href="#join.models.User.auth_token" title="Link to this definition">¶</a></dt>
-<dd><p>Accessor to the related object on the reverse side of a one-to-one
-relation.</p>
-<p>In the example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Restaurant</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
-    <span class="n">place</span> <span class="o">=</span> <span class="n">OneToOneField</span><span class="p">(</span><span class="n">Place</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;restaurant&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-<p><code class="docutils literal notranslate"><span class="pre">Place.restaurant</span></code> is a <code class="docutils literal notranslate"><span class="pre">ReverseOneToOneDescriptor</span></code> instance.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="join.models.User.date_joined">
-<span class="sig-name descname"><span class="pre">date_joined</span></span><a class="headerlink" href="#join.models.User.date_joined" title="Link to this definition">¶</a></dt>
-<dd><p>A wrapper for a deferred-loading field. When the value is read from this
-object the first time, the query is executed.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="join.models.User.email">
-<span class="sig-name descname"><span class="pre">email</span></span><a class="headerlink" href="#join.models.User.email" title="Link to this definition">¶</a></dt>
-<dd><p>A wrapper for a deferred-loading field. When the value is read from this
-object the first time, the query is executed.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="join.models.User.first_name">
-<span class="sig-name descname"><span class="pre">first_name</span></span><a class="headerlink" href="#join.models.User.first_name" title="Link to this definition">¶</a></dt>
-<dd><p>A wrapper for a deferred-loading field. When the value is read from this
-object the first time, the query is executed.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="join.models.User.get_next_by_date_joined">
-<span class="sig-name descname"><span class="pre">get_next_by_date_joined</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">field=&lt;django.db.models.fields.DateTimeField:</span> <span class="pre">date_joined&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_next=True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">**kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#join.models.User.get_next_by_date_joined" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="join.models.User.get_previous_by_date_joined">
-<span class="sig-name descname"><span class="pre">get_previous_by_date_joined</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">field=&lt;django.db.models.fields.DateTimeField:</span> <span class="pre">date_joined&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_next=False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">**kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#join.models.User.get_previous_by_date_joined" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="join.models.User.groups">
-<span class="sig-name descname"><span class="pre">groups</span></span><a class="headerlink" href="#join.models.User.groups" title="Link to this definition">¶</a></dt>
-<dd><p>Accessor to the related objects manager on the forward and reverse sides of
-a many-to-many relation.</p>
-<p>In the example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Pizza</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
-    <span class="n">toppings</span> <span class="o">=</span> <span class="n">ManyToManyField</span><span class="p">(</span><span class="n">Topping</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;pizzas&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-<p><code class="docutils literal notranslate"><span class="pre">Pizza.toppings</span></code> and <code class="docutils literal notranslate"><span class="pre">Topping.pizzas</span></code> are <code class="docutils literal notranslate"><span class="pre">ManyToManyDescriptor</span></code>
-instances.</p>
-<p>Most of the implementation is delegated to a dynamically defined manager
-class built by <code class="docutils literal notranslate"><span class="pre">create_forward_many_to_many_manager()</span></code> defined below.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="join.models.User.id">
-<span class="sig-name descname"><span class="pre">id</span></span><a class="headerlink" href="#join.models.User.id" title="Link to this definition">¶</a></dt>
-<dd><p>A wrapper for a deferred-loading field. When the value is read from this
-object the first time, the query is executed.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="join.models.User.is_active">
-<span class="sig-name descname"><span class="pre">is_active</span></span><a class="headerlink" href="#join.models.User.is_active" title="Link to this definition">¶</a></dt>
-<dd><p>A wrapper for a deferred-loading field. When the value is read from this
-object the first time, the query is executed.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="join.models.User.is_staff">
-<span class="sig-name descname"><span class="pre">is_staff</span></span><a class="headerlink" href="#join.models.User.is_staff" title="Link to this definition">¶</a></dt>
-<dd><p>A wrapper for a deferred-loading field. When the value is read from this
-object the first time, the query is executed.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="join.models.User.is_superuser">
-<span class="sig-name descname"><span class="pre">is_superuser</span></span><a class="headerlink" href="#join.models.User.is_superuser" title="Link to this definition">¶</a></dt>
-<dd><p>A wrapper for a deferred-loading field. When the value is read from this
-object the first time, the query is executed.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="join.models.User.last_login">
-<span class="sig-name descname"><span class="pre">last_login</span></span><a class="headerlink" href="#join.models.User.last_login" title="Link to this definition">¶</a></dt>
-<dd><p>A wrapper for a deferred-loading field. When the value is read from this
-object the first time, the query is executed.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="join.models.User.last_name">
-<span class="sig-name descname"><span class="pre">last_name</span></span><a class="headerlink" href="#join.models.User.last_name" title="Link to this definition">¶</a></dt>
-<dd><p>A wrapper for a deferred-loading field. When the value is read from this
-object the first time, the query is executed.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="join.models.User.logentry_set">
-<span class="sig-name descname"><span class="pre">logentry_set</span></span><a class="headerlink" href="#join.models.User.logentry_set" title="Link to this definition">¶</a></dt>
-<dd><p>Accessor to the related objects manager on the reverse side of a
-many-to-one relation.</p>
-<p>In the example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Child</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
-    <span class="n">parent</span> <span class="o">=</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="n">Parent</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;children&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-<p><code class="docutils literal notranslate"><span class="pre">Parent.children</span></code> is a <code class="docutils literal notranslate"><span class="pre">ReverseManyToOneDescriptor</span></code> instance.</p>
-<p>Most of the implementation is delegated to a dynamically defined manager
-class built by <code class="docutils literal notranslate"><span class="pre">create_forward_many_to_many_manager()</span></code> defined below.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="join.models.User.password">
-<span class="sig-name descname"><span class="pre">password</span></span><a class="headerlink" href="#join.models.User.password" title="Link to this definition">¶</a></dt>
-<dd><p>A wrapper for a deferred-loading field. When the value is read from this
-object the first time, the query is executed.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="join.models.User.user_permissions">
-<span class="sig-name descname"><span class="pre">user_permissions</span></span><a class="headerlink" href="#join.models.User.user_permissions" title="Link to this definition">¶</a></dt>
-<dd><p>Accessor to the related objects manager on the forward and reverse sides of
-a many-to-many relation.</p>
-<p>In the example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Pizza</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
-    <span class="n">toppings</span> <span class="o">=</span> <span class="n">ManyToManyField</span><span class="p">(</span><span class="n">Topping</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;pizzas&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-<p><code class="docutils literal notranslate"><span class="pre">Pizza.toppings</span></code> and <code class="docutils literal notranslate"><span class="pre">Topping.pizzas</span></code> are <code class="docutils literal notranslate"><span class="pre">ManyToManyDescriptor</span></code>
-instances.</p>
-<p>Most of the implementation is delegated to a dynamically defined manager
-class built by <code class="docutils literal notranslate"><span class="pre">create_forward_many_to_many_manager()</span></code> defined below.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="join.models.User.username">
-<span class="sig-name descname"><span class="pre">username</span></span><a class="headerlink" href="#join.models.User.username" title="Link to this definition">¶</a></dt>
-<dd><p>A wrapper for a deferred-loading field. When the value is read from this
-object the first time, the query is executed.</p>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="py class" id="module-django_join_backend_app.serializers">
-<dt class="sig sig-object py" id="django_join_backend_app.serializers.ContactSerializer">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">django_join_backend_app.serializers.</span></span><span class="sig-name descname"><span class="pre">ContactSerializer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/django_join_backend_app/serializers.html#ContactSerializer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django_join_backend_app.serializers.ContactSerializer" title="Link to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ModelSerializer</span></code></p>
-<p>Serializer for the Contact model. Handles the serialization and deserialization
-of contact data, including name, email, phone, initials, and color.</p>
-<dl class="simple">
-<dt>Fields:</dt><dd><ul class="simple">
-<li><p>id: The contact’s ID (auto-generated).</p></li>
-<li><p>name: The name of the contact.</p></li>
-<li><p>email: The email of the contact.</p></li>
-<li><p>phone: The phone number of the contact.</p></li>
-<li><p>initials: The initials of the contact’s name.</p></li>
-<li><p>color: A color associated with the contact.</p></li>
-<li><p>created_at: The timestamp when the contact was created.</p></li>
-</ul>
-</dd>
-</dl>
-<dl class="py class">
-<dt class="sig sig-object py" id="django_join_backend_app.serializers.ContactSerializer.Meta">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Meta</span></span><a class="reference internal" href="_modules/django_join_backend_app/serializers.html#ContactSerializer.Meta"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django_join_backend_app.serializers.ContactSerializer.Meta" title="Link to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="django_join_backend_app.serializers.ContactSerializer.Meta.fields">
-<span class="sig-name descname"><span class="pre">fields</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">('id',</span> <span class="pre">'name',</span> <span class="pre">'email',</span> <span class="pre">'phone',</span> <span class="pre">'initials',</span> <span class="pre">'color',</span> <span class="pre">'created_at')</span></em><a class="headerlink" href="#django_join_backend_app.serializers.ContactSerializer.Meta.fields" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="django_join_backend_app.serializers.ContactSerializer.Meta.model">
-<span class="sig-name descname"><span class="pre">model</span></span><a class="headerlink" href="#django_join_backend_app.serializers.ContactSerializer.Meta.model" title="Link to this definition">¶</a></dt>
-<dd><p>alias of <a class="reference internal" href="#join.models.Contact" title="join.models.Contact"><code class="xref py py-class docutils literal notranslate"><span class="pre">Contact</span></code></a></p>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="django_join_backend_app.serializers.ContactSerializer.to_representation">
-<span class="sig-name descname"><span class="pre">to_representation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">instance</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/django_join_backend_app/serializers.html#ContactSerializer.to_representation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django_join_backend_app.serializers.ContactSerializer.to_representation" title="Link to this definition">¶</a></dt>
-<dd><p>Modify the default representation to include a custom response message.</p>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="py class">
+  <span class="target" id="module-join.models"></span><span class="target" id="module-django_join_backend_app.serializers"></span><dl class="py class">
 <dt class="sig sig-object py" id="django_join_backend_app.serializers.LoginSerializer">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">django_join_backend_app.serializers.</span></span><span class="sig-name descname"><span class="pre">LoginSerializer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/django_join_backend_app/serializers.html#LoginSerializer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django_join_backend_app.serializers.LoginSerializer" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">django_join_backend_app.serializers.</span></span><span class="sig-name descname"><span class="pre">LoginSerializer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/django_join_backend_app/serializers.html#LoginSerializer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django_join_backend_app.serializers.LoginSerializer" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Serializer</span></code></p>
 <p>Serializer for user login. Validates the provided email and password,
 and authenticates the user if the credentials are correct.</p>
@@ -712,199 +45,38 @@ and authenticates the user if the credentials are correct.</p>
 </dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="django_join_backend_app.serializers.LoginSerializer.validate">
-<span class="sig-name descname"><span class="pre">validate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/django_join_backend_app/serializers.html#LoginSerializer.validate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django_join_backend_app.serializers.LoginSerializer.validate" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">validate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/django_join_backend_app/serializers.html#LoginSerializer.validate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django_join_backend_app.serializers.LoginSerializer.validate" title="Permalink to this definition">¶</a></dt>
 <dd><p>Validate the provided email and password. Authenticate the user
 and raise an error if the credentials are invalid.</p>
 </dd></dl>
 
 </dd></dl>
 
-<dl class="py class">
-<dt class="sig sig-object py" id="django_join_backend_app.serializers.SubTaskSerializer">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">django_join_backend_app.serializers.</span></span><span class="sig-name descname"><span class="pre">SubTaskSerializer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/django_join_backend_app/serializers.html#SubTaskSerializer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django_join_backend_app.serializers.SubTaskSerializer" title="Link to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ModelSerializer</span></code></p>
-<p>Serializer for the SubTask model. Handles the serialization and deserialization
-of subtask data, including title, checked status, and associated task.</p>
-<dl class="simple">
-<dt>Fields:</dt><dd><ul class="simple">
-<li><p>id: The subtask’s ID (auto-generated).</p></li>
-<li><p>title: The title of the subtask.</p></li>
-<li><p>checked: A boolean indicating whether the subtask is completed.</p></li>
-<li><p>created_at: The timestamp when the subtask was created.</p></li>
-<li><p>task: The task to which the subtask is assigned.</p></li>
-</ul>
-</dd>
-</dl>
-<dl class="py class">
-<dt class="sig sig-object py" id="django_join_backend_app.serializers.SubTaskSerializer.Meta">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Meta</span></span><a class="reference internal" href="_modules/django_join_backend_app/serializers.html#SubTaskSerializer.Meta"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django_join_backend_app.serializers.SubTaskSerializer.Meta" title="Link to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<span class="target" id="module-join.views"></span><dl class="py class">
+<dt class="sig sig-object py" id="join.views.Command">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">join.views.</span></span><span class="sig-name descname"><span class="pre">Command</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stdout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stderr</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">no_color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">force_color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/join/views.html#Command"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#join.views.Command" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">BaseCommand</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="join.views.Command.handle">
+<span class="sig-name descname"><span class="pre">handle</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/join/views.html#Command.handle"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#join.views.Command.handle" title="Permalink to this definition">¶</a></dt>
+<dd><p>The actual logic of the command. Subclasses must implement
+this method.</p>
+</dd></dl>
+
 <dl class="py attribute">
-<dt class="sig sig-object py" id="django_join_backend_app.serializers.SubTaskSerializer.Meta.fields">
-<span class="sig-name descname"><span class="pre">fields</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">('id',</span> <span class="pre">'title',</span> <span class="pre">'checked',</span> <span class="pre">'created_at',</span> <span class="pre">'task')</span></em><a class="headerlink" href="#django_join_backend_app.serializers.SubTaskSerializer.Meta.fields" title="Link to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="join.views.Command.help">
+<span class="sig-name descname"><span class="pre">help</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Generate</span> <span class="pre">demo</span> <span class="pre">data</span> <span class="pre">for</span> <span class="pre">tasks,</span> <span class="pre">contacts,</span> <span class="pre">and</span> <span class="pre">subtasks'</span></em><a class="headerlink" href="#join.views.Command.help" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="django_join_backend_app.serializers.SubTaskSerializer.Meta.model">
-<span class="sig-name descname"><span class="pre">model</span></span><a class="headerlink" href="#django_join_backend_app.serializers.SubTaskSerializer.Meta.model" title="Link to this definition">¶</a></dt>
-<dd><p>alias of <a class="reference internal" href="#join.models.SubTask" title="join.models.SubTask"><code class="xref py py-class docutils literal notranslate"><span class="pre">SubTask</span></code></a></p>
-</dd></dl>
-
-</dd></dl>
-
-</dd></dl>
-
-<dl class="py class">
-<dt class="sig sig-object py" id="django_join_backend_app.serializers.TaskSerializer">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">django_join_backend_app.serializers.</span></span><span class="sig-name descname"><span class="pre">TaskSerializer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/django_join_backend_app/serializers.html#TaskSerializer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django_join_backend_app.serializers.TaskSerializer" title="Link to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ModelSerializer</span></code></p>
-<p>Serializer for the Task model. Handles the serialization and deserialization
-of task data, including title, description, category, priority, status, due date,
-and related subtasks and assigned contacts.</p>
-<dl class="simple">
-<dt>Fields:</dt><dd><ul class="simple">
-<li><p>id: The task’s ID (auto-generated).</p></li>
-<li><p>title: The title of the task.</p></li>
-<li><p>description: The description of the task.</p></li>
-<li><p>category: The category of the task (choice field).</p></li>
-<li><p>priority: The priority of the task (choice field).</p></li>
-<li><p>status: The current status of the task (choice field).</p></li>
-<li><p>dueDate: The due date of the task.</p></li>
-<li><p>subTasks: A list of related subtasks (read-only).</p></li>
-<li><p>assignedTo: A list of contacts assigned to the task (read-only).</p></li>
-</ul>
-</dd>
-</dl>
-<dl class="py class">
-<dt class="sig sig-object py" id="django_join_backend_app.serializers.TaskSerializer.Meta">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Meta</span></span><a class="reference internal" href="_modules/django_join_backend_app/serializers.html#TaskSerializer.Meta"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django_join_backend_app.serializers.TaskSerializer.Meta" title="Link to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="django_join_backend_app.serializers.TaskSerializer.Meta.fields">
-<span class="sig-name descname"><span class="pre">fields</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">('id',</span> <span class="pre">'title',</span> <span class="pre">'description',</span> <span class="pre">'created_at',</span> <span class="pre">'category',</span> <span class="pre">'priority',</span> <span class="pre">'status',</span> <span class="pre">'dueDate',</span> <span class="pre">'subTasks',</span> <span class="pre">'assignedTo')</span></em><a class="headerlink" href="#django_join_backend_app.serializers.TaskSerializer.Meta.fields" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="django_join_backend_app.serializers.TaskSerializer.Meta.model">
-<span class="sig-name descname"><span class="pre">model</span></span><a class="headerlink" href="#django_join_backend_app.serializers.TaskSerializer.Meta.model" title="Link to this definition">¶</a></dt>
-<dd><p>alias of <a class="reference internal" href="#join.models.Task" title="join.models.Task"><code class="xref py py-class docutils literal notranslate"><span class="pre">Task</span></code></a></p>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="django_join_backend_app.serializers.TaskSerializer.get_assignedTo">
-<span class="sig-name descname"><span class="pre">get_assignedTo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/django_join_backend_app/serializers.html#TaskSerializer.get_assignedTo"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django_join_backend_app.serializers.TaskSerializer.get_assignedTo" title="Link to this definition">¶</a></dt>
-<dd><p>Retrieve all contacts assigned to a task by querying the TaskContact
-model for the current task and returning serialized contact data.</p>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="py class">
-<dt class="sig sig-object py" id="django_join_backend_app.serializers.UserSerializer">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">django_join_backend_app.serializers.</span></span><span class="sig-name descname"><span class="pre">UserSerializer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/django_join_backend_app/serializers.html#UserSerializer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django_join_backend_app.serializers.UserSerializer" title="Link to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ModelSerializer</span></code></p>
-<p>Serializer for the User model. Handles user creation and serialization
-of user data, including password handling.</p>
-<dl class="simple">
-<dt>Fields:</dt><dd><ul class="simple">
-<li><p>id: The user’s ID (auto-generated).</p></li>
-<li><p>username: The username of the user.</p></li>
-<li><p>email: The email address of the user.</p></li>
-<li><p>password: The password of the user (write-only).</p></li>
-</ul>
-</dd>
-</dl>
-<dl class="py class">
-<dt class="sig sig-object py" id="django_join_backend_app.serializers.UserSerializer.Meta">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Meta</span></span><a class="reference internal" href="_modules/django_join_backend_app/serializers.html#UserSerializer.Meta"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django_join_backend_app.serializers.UserSerializer.Meta" title="Link to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="django_join_backend_app.serializers.UserSerializer.Meta.fields">
-<span class="sig-name descname"><span class="pre">fields</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">('id',</span> <span class="pre">'username',</span> <span class="pre">'email',</span> <span class="pre">'password')</span></em><a class="headerlink" href="#django_join_backend_app.serializers.UserSerializer.Meta.fields" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="django_join_backend_app.serializers.UserSerializer.Meta.model">
-<span class="sig-name descname"><span class="pre">model</span></span><a class="headerlink" href="#django_join_backend_app.serializers.UserSerializer.Meta.model" title="Link to this definition">¶</a></dt>
-<dd><p>alias of <a class="reference internal" href="#join.models.User" title="join.models.User"><code class="xref py py-class docutils literal notranslate"><span class="pre">User</span></code></a></p>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="django_join_backend_app.serializers.UserSerializer.create">
-<span class="sig-name descname"><span class="pre">create</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">validated_data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/django_join_backend_app/serializers.html#UserSerializer.create"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django_join_backend_app.serializers.UserSerializer.create" title="Link to this definition">¶</a></dt>
-<dd><p>Create a new user instance with the validated data.
-The password is hashed before saving the user.</p>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="py class" id="module-join.views">
-<dt class="sig sig-object py" id="join.views.ContactView">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">join.views.</span></span><span class="sig-name descname"><span class="pre">ContactView</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/join/views.html#ContactView"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#join.views.ContactView" title="Link to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ViewSet</span></code></p>
-<p>API view for managing contacts.</p>
-<p>This view allows creating, retrieving, listing, and updating contact details.</p>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="join.views.ContactView.authentication_classes">
-<span class="sig-name descname"><span class="pre">authentication_classes</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[&lt;class</span> <span class="pre">'rest_framework.authentication.TokenAuthentication'&gt;]</span></em><a class="headerlink" href="#join.views.ContactView.authentication_classes" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="join.views.ContactView.create">
-<span class="sig-name descname"><span class="pre">create</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/join/views.html#ContactView.create"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#join.views.ContactView.create" title="Link to this definition">¶</a></dt>
-<dd><p>Handle POST request to create a new contact.</p>
-<p>Parameters:
-- request: HTTP request containing contact data.</p>
-<p>Returns:
-- Response: JSON response with contact data on success.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="join.views.ContactView.list">
-<span class="sig-name descname"><span class="pre">list</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/join/views.html#ContactView.list"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#join.views.ContactView.list" title="Link to this definition">¶</a></dt>
-<dd><p>Handle GET request to list all contacts.</p>
-<p>Returns:
-- Response: JSON response containing a list of all contacts.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="join.views.ContactView.permission_classes">
-<span class="sig-name descname"><span class="pre">permission_classes</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[&lt;class</span> <span class="pre">'rest_framework.permissions.IsAuthenticated'&gt;]</span></em><a class="headerlink" href="#join.views.ContactView.permission_classes" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="join.views.ContactView.retrieve">
-<span class="sig-name descname"><span class="pre">retrieve</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pk</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/join/views.html#ContactView.retrieve"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#join.views.ContactView.retrieve" title="Link to this definition">¶</a></dt>
-<dd><p>Handle GET request to retrieve contact details by ID.</p>
-<p>Parameters:
-- pk: Primary key of the contact to retrieve.</p>
-<p>Returns:
-- Response: JSON response with contact data on success or error message on failure.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="join.views.ContactView.update">
-<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pk</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/join/views.html#ContactView.update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#join.views.ContactView.update" title="Link to this definition">¶</a></dt>
-<dd><p>Handle PUT/PATCH request to update a contact’s information.</p>
-<p>Parameters:
-- pk: Primary key of the contact to update.</p>
-<p>Returns:
-- Response: JSON response with updated contact data on success or error message on failure.</p>
-</dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="join.views.DocsView">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">join.views.</span></span><span class="sig-name descname"><span class="pre">DocsView</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/join/views.html#DocsView"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#join.views.DocsView" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">join.views.</span></span><span class="sig-name descname"><span class="pre">DocsView</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/join/views.html#DocsView"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#join.views.DocsView" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ViewSet</span></code></p>
 <dl class="py method">
 <dt class="sig sig-object py" id="join.views.DocsView.get">
-<span class="sig-name descname"><span class="pre">get</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/join/views.html#DocsView.get"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#join.views.DocsView.get" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">get</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/join/views.html#DocsView.get"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#join.views.DocsView.get" title="Permalink to this definition">¶</a></dt>
 <dd><p>View to redirect the user to the Sphinx-generated documentation.</p>
 <p>This view handles requests by redirecting them to the static HTML 
 documentation generated by Sphinx, located at ‘/_build/html/index.html’.</p>
@@ -919,183 +91,35 @@ documentation generated by Sphinx, located at ‘/_build/html/index.html’.</p>
 </dd></dl>
 
 <dl class="py class">
-<dt class="sig sig-object py" id="join.views.LoginView">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">join.views.</span></span><span class="sig-name descname"><span class="pre">LoginView</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/join/views.html#LoginView"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#join.views.LoginView" title="Link to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">APIView</span></code></p>
-<p>API view for user login.</p>
-<p>This view handles user authentication by validating login credentials
-and returning a token if authentication is successful.</p>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="join.views.LoginView.authentication_classes">
-<span class="sig-name descname"><span class="pre">authentication_classes</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[]</span></em><a class="headerlink" href="#join.views.LoginView.authentication_classes" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="join.views.LoginView.permission_classes">
-<span class="sig-name descname"><span class="pre">permission_classes</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[]</span></em><a class="headerlink" href="#join.views.LoginView.permission_classes" title="Link to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="join.views.GenerateDemoDataView">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">join.views.</span></span><span class="sig-name descname"><span class="pre">GenerateDemoDataView</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/join/views.html#GenerateDemoDataView"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#join.views.GenerateDemoDataView" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">View</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="join.views.GenerateDemoDataView.dispatch">
+<span class="sig-name descname"><span class="pre">dispatch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#join.views.GenerateDemoDataView.dispatch" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="join.views.LoginView.post">
-<span class="sig-name descname"><span class="pre">post</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/join/views.html#LoginView.post"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#join.views.LoginView.post" title="Link to this definition">¶</a></dt>
-<dd><p>Handle POST request for user login.</p>
-<p>Parameters:
-- request: HTTP request containing login data.</p>
-<p>Returns:
-- Response: JSON response with token on success or error messages on failure.</p>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="py class">
-<dt class="sig sig-object py" id="join.views.SignupView">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">join.views.</span></span><span class="sig-name descname"><span class="pre">SignupView</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/join/views.html#SignupView"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#join.views.SignupView" title="Link to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ViewSet</span></code></p>
-<p>API view for user registration (signup).</p>
-<p>This view handles the creation of new user accounts.</p>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="join.views.SignupView.authentication_classes">
-<span class="sig-name descname"><span class="pre">authentication_classes</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[]</span></em><a class="headerlink" href="#join.views.SignupView.authentication_classes" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="join.views.SignupView.create">
-<span class="sig-name descname"><span class="pre">create</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/join/views.html#SignupView.create"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#join.views.SignupView.create" title="Link to this definition">¶</a></dt>
-<dd><p>Handle POST request for user registration.</p>
-<p>Parameters:
-- request: HTTP request containing user signup data.</p>
-<p>Returns:
-- Response: JSON response with user data on success or error messages on failure.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="join.views.SignupView.permission_classes">
-<span class="sig-name descname"><span class="pre">permission_classes</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[]</span></em><a class="headerlink" href="#join.views.SignupView.permission_classes" title="Link to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="join.views.GenerateDemoDataView.post">
+<span class="sig-name descname"><span class="pre">post</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/join/views.html#GenerateDemoDataView.post"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#join.views.GenerateDemoDataView.post" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
-<dt class="sig sig-object py" id="join.views.TaskView">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">join.views.</span></span><span class="sig-name descname"><span class="pre">TaskView</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/join/views.html#TaskView"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#join.views.TaskView" title="Link to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ViewSet</span></code></p>
-<p>API view for managing tasks.</p>
-<p>This view allows creating, retrieving, listing, updating tasks, and adding subtasks or assignees.</p>
+<dt class="sig sig-object py" id="join.views.GetCsrfTokenView">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">join.views.</span></span><span class="sig-name descname"><span class="pre">GetCsrfTokenView</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/join/views.html#GetCsrfTokenView"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#join.views.GetCsrfTokenView" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">View</span></code></p>
 <dl class="py method">
-<dt class="sig sig-object py" id="join.views.TaskView.add_assignees">
-<span class="sig-name descname"><span class="pre">add_assignees</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pk</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/join/views.html#TaskView.add_assignees"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#join.views.TaskView.add_assignees" title="Link to this definition">¶</a></dt>
-<dd><p>Handle POST request to add assignees to an existing task.</p>
-<p>Parameters:
-- pk: Primary key of the task to add assignees to.</p>
-<p>Returns:
-- Response: JSON response with status and processing messages.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="join.views.TaskView.add_subtasks">
-<span class="sig-name descname"><span class="pre">add_subtasks</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pk</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/join/views.html#TaskView.add_subtasks"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#join.views.TaskView.add_subtasks" title="Link to this definition">¶</a></dt>
-<dd><p>Handle POST request to add subtasks to an existing task.</p>
-<p>Parameters:
-- pk: Primary key of the task to add subtasks to.</p>
-<p>Returns:
-- Response: JSON response indicating the status of the operation.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="join.views.TaskView.authentication_classes">
-<span class="sig-name descname"><span class="pre">authentication_classes</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[&lt;class</span> <span class="pre">'rest_framework.authentication.TokenAuthentication'&gt;]</span></em><a class="headerlink" href="#join.views.TaskView.authentication_classes" title="Link to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="join.views.GetCsrfTokenView.get">
+<span class="sig-name descname"><span class="pre">get</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/join/views.html#GetCsrfTokenView.get"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#join.views.GetCsrfTokenView.get" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<dl class="py method">
-<dt class="sig sig-object py" id="join.views.TaskView.create">
-<span class="sig-name descname"><span class="pre">create</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/join/views.html#TaskView.create"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#join.views.TaskView.create" title="Link to this definition">¶</a></dt>
-<dd><p>Handle POST request to create a new task.</p>
-<p>Parameters:
-- request: HTTP request containing task data.</p>
-<p>Returns:
-- Response: JSON response with task details on success.</p>
 </dd></dl>
 
-<dl class="py method">
-<dt class="sig sig-object py" id="join.views.TaskView.list">
-<span class="sig-name descname"><span class="pre">list</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/join/views.html#TaskView.list"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#join.views.TaskView.list" title="Link to this definition">¶</a></dt>
-<dd><p>Handle GET request to list all tasks.</p>
-<p>Returns:
-- Response: JSON response containing a list of all tasks.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="join.views.TaskView.permission_classes">
-<span class="sig-name descname"><span class="pre">permission_classes</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[&lt;class</span> <span class="pre">'rest_framework.permissions.IsAuthenticated'&gt;]</span></em><a class="headerlink" href="#join.views.TaskView.permission_classes" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="join.views.TaskView.remove_assignees">
-<span class="sig-name descname"><span class="pre">remove_assignees</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pk</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/join/views.html#TaskView.remove_assignees"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#join.views.TaskView.remove_assignees" title="Link to this definition">¶</a></dt>
-<dd><p>Handle DELETE request to remove assignees from an existing task.</p>
-<p>Parameters:
-- pk: Primary key of the task.</p>
-<p>Returns:
-- Response: JSON response with status and processing messages.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="join.views.TaskView.remove_subtasks">
-<span class="sig-name descname"><span class="pre">remove_subtasks</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pk</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/join/views.html#TaskView.remove_subtasks"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#join.views.TaskView.remove_subtasks" title="Link to this definition">¶</a></dt>
-<dd><p>Handle DELETE request to remove subtasks from a task.</p>
-<p>Parameters:
-- pk: Primary key of the task.</p>
-<p>Returns:
-- Response: JSON response indicating success or failure.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="join.views.TaskView.retrieve">
-<span class="sig-name descname"><span class="pre">retrieve</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pk</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/join/views.html#TaskView.retrieve"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#join.views.TaskView.retrieve" title="Link to this definition">¶</a></dt>
-<dd><p>Handle GET request to retrieve a task by ID.</p>
-<p>Parameters:
-- pk: Primary key of the task to retrieve.</p>
-<p>Returns:
-- Response: JSON response with task details on success.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="join.views.TaskView.update">
-<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pk</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/join/views.html#TaskView.update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#join.views.TaskView.update" title="Link to this definition">¶</a></dt>
-<dd><p>Handle PUT/PATCH request to update a task.</p>
-<p>Parameters:
-- pk: Primary key of the task to update.</p>
-<p>Returns:
-- Response: JSON response with updated task data on success or error message on failure.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="join.views.TaskView.update_subtask">
-<span class="sig-name descname"><span class="pre">update_subtask</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">task_pk</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subtask_pk</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/join/views.html#TaskView.update_subtask"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#join.views.TaskView.update_subtask" title="Link to this definition">¶</a></dt>
-<dd><p>Handle PATCH request to update a subtask’s title and other fields.</p>
-<p>Parameters:
-- task_pk: Primary key of the parent task.
-- subtask_pk: Primary key of the subtask to update.</p>
-<p>Returns:
-- Response: JSON response indicating success or failure.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="join.views.TaskView.update_subtask_status">
-<span class="sig-name descname"><span class="pre">update_subtask_status</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">task_pk</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subtask_pk</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/join/views.html#TaskView.update_subtask_status"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#join.views.TaskView.update_subtask_status" title="Link to this definition">¶</a></dt>
-<dd><p>Handle PATCH request to update the ‘checked’ status of a subtask.</p>
-<p>Parameters:
-- task_pk: Primary key of the parent task.
-- subtask_pk: Primary key of the subtask to update.</p>
-<p>Returns:
-- Response: JSON response indicating success or failure.</p>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="py class" id="module-join.admin">
+<span class="target" id="module-join.admin"></span><dl class="py class">
 <dt class="sig sig-object py" id="join.admin.ContactAdmin">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">join.admin.</span></span><span class="sig-name descname"><span class="pre">ContactAdmin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">admin_site</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/join/admin.html#ContactAdmin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#join.admin.ContactAdmin" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">join.admin.</span></span><span class="sig-name descname"><span class="pre">ContactAdmin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">admin_site</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/join/admin.html#ContactAdmin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#join.admin.ContactAdmin" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ModelAdmin</span></code></p>
 <p>Admin interface for managing Contact model instances.</p>
 <dl class="simple">
@@ -1122,29 +146,29 @@ and returning a token if authentication is successful.</p>
 </dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="join.admin.ContactAdmin.fields">
-<span class="sig-name descname"><span class="pre">fields</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">('id',</span> <span class="pre">'name',</span> <span class="pre">'email',</span> <span class="pre">'phone',</span> <span class="pre">'created_at',</span> <span class="pre">'initials',</span> <span class="pre">'color')</span></em><a class="headerlink" href="#join.admin.ContactAdmin.fields" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">fields</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">('id',</span> <span class="pre">'name',</span> <span class="pre">'email',</span> <span class="pre">'phone',</span> <span class="pre">'created_at',</span> <span class="pre">'initials',</span> <span class="pre">'color')</span></em><a class="headerlink" href="#join.admin.ContactAdmin.fields" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="join.admin.ContactAdmin.list_display">
-<span class="sig-name descname"><span class="pre">list_display</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">('id',</span> <span class="pre">'name',</span> <span class="pre">'email',</span> <span class="pre">'phone',</span> <span class="pre">'created_at',</span> <span class="pre">'initials',</span> <span class="pre">'color')</span></em><a class="headerlink" href="#join.admin.ContactAdmin.list_display" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">list_display</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">('id',</span> <span class="pre">'name',</span> <span class="pre">'email',</span> <span class="pre">'phone',</span> <span class="pre">'created_at',</span> <span class="pre">'initials',</span> <span class="pre">'color')</span></em><a class="headerlink" href="#join.admin.ContactAdmin.list_display" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="join.admin.ContactAdmin.media">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">media</span></span><a class="headerlink" href="#join.admin.ContactAdmin.media" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">media</span></span><a class="headerlink" href="#join.admin.ContactAdmin.media" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="join.admin.ContactAdmin.readonly_fields">
-<span class="sig-name descname"><span class="pre">readonly_fields</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">('id',</span> <span class="pre">'created_at')</span></em><a class="headerlink" href="#join.admin.ContactAdmin.readonly_fields" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">readonly_fields</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">('id',</span> <span class="pre">'created_at')</span></em><a class="headerlink" href="#join.admin.ContactAdmin.readonly_fields" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="join.admin.SubTaskAdmin">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">join.admin.</span></span><span class="sig-name descname"><span class="pre">SubTaskAdmin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">admin_site</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/join/admin.html#SubTaskAdmin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#join.admin.SubTaskAdmin" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">join.admin.</span></span><span class="sig-name descname"><span class="pre">SubTaskAdmin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">admin_site</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/join/admin.html#SubTaskAdmin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#join.admin.SubTaskAdmin" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ModelAdmin</span></code></p>
 <p>Admin interface for managing SubTask model instances.</p>
 <dl class="simple">
@@ -1167,29 +191,29 @@ and returning a token if authentication is successful.</p>
 </dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="join.admin.SubTaskAdmin.fields">
-<span class="sig-name descname"><span class="pre">fields</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">('id',</span> <span class="pre">'task',</span> <span class="pre">'title',</span> <span class="pre">'checked',</span> <span class="pre">'created_at')</span></em><a class="headerlink" href="#join.admin.SubTaskAdmin.fields" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">fields</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">('id',</span> <span class="pre">'task',</span> <span class="pre">'title',</span> <span class="pre">'checked',</span> <span class="pre">'created_at')</span></em><a class="headerlink" href="#join.admin.SubTaskAdmin.fields" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="join.admin.SubTaskAdmin.list_display">
-<span class="sig-name descname"><span class="pre">list_display</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">('id',</span> <span class="pre">'task',</span> <span class="pre">'title',</span> <span class="pre">'checked',</span> <span class="pre">'created_at')</span></em><a class="headerlink" href="#join.admin.SubTaskAdmin.list_display" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">list_display</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">('id',</span> <span class="pre">'task',</span> <span class="pre">'title',</span> <span class="pre">'checked',</span> <span class="pre">'created_at')</span></em><a class="headerlink" href="#join.admin.SubTaskAdmin.list_display" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="join.admin.SubTaskAdmin.media">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">media</span></span><a class="headerlink" href="#join.admin.SubTaskAdmin.media" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">media</span></span><a class="headerlink" href="#join.admin.SubTaskAdmin.media" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="join.admin.SubTaskAdmin.readonly_fields">
-<span class="sig-name descname"><span class="pre">readonly_fields</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">('id',</span> <span class="pre">'created_at')</span></em><a class="headerlink" href="#join.admin.SubTaskAdmin.readonly_fields" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">readonly_fields</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">('id',</span> <span class="pre">'created_at')</span></em><a class="headerlink" href="#join.admin.SubTaskAdmin.readonly_fields" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="join.admin.SubTaskInline">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">join.admin.</span></span><span class="sig-name descname"><span class="pre">SubTaskInline</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent_model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">admin_site</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/join/admin.html#SubTaskInline"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#join.admin.SubTaskInline" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">join.admin.</span></span><span class="sig-name descname"><span class="pre">SubTaskInline</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent_model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">admin_site</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/join/admin.html#SubTaskInline"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#join.admin.SubTaskInline" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">TabularInline</span></code></p>
 <p>Inline admin class for the SubTask model. 
 Allows SubTasks to be managed directly within the Task admin page.</p>
@@ -1202,25 +226,25 @@ Allows SubTasks to be managed directly within the Task admin page.</p>
 </dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="join.admin.SubTaskInline.extra">
-<span class="sig-name descname"><span class="pre">extra</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="headerlink" href="#join.admin.SubTaskInline.extra" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">extra</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="headerlink" href="#join.admin.SubTaskInline.extra" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="join.admin.SubTaskInline.media">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">media</span></span><a class="headerlink" href="#join.admin.SubTaskInline.media" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">media</span></span><a class="headerlink" href="#join.admin.SubTaskInline.media" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="join.admin.SubTaskInline.model">
-<span class="sig-name descname"><span class="pre">model</span></span><a class="headerlink" href="#join.admin.SubTaskInline.model" title="Link to this definition">¶</a></dt>
-<dd><p>alias of <a class="reference internal" href="#join.models.SubTask" title="join.models.SubTask"><code class="xref py py-class docutils literal notranslate"><span class="pre">SubTask</span></code></a></p>
+<span class="sig-name descname"><span class="pre">model</span></span><a class="headerlink" href="#join.admin.SubTaskInline.model" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal notranslate"><span class="pre">SubTask</span></code></p>
 </dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="join.admin.TaskAdmin">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">join.admin.</span></span><span class="sig-name descname"><span class="pre">TaskAdmin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">admin_site</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/join/admin.html#TaskAdmin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#join.admin.TaskAdmin" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">join.admin.</span></span><span class="sig-name descname"><span class="pre">TaskAdmin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">admin_site</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/join/admin.html#TaskAdmin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#join.admin.TaskAdmin" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ModelAdmin</span></code></p>
 <p>Admin interface for managing Task model instances. 
 Displays task information, handles readonly fields, and includes 
@@ -1233,7 +257,7 @@ inline management of related SubTasks.</p>
 <li><p>category: The category of the task.</p></li>
 <li><p>priority: The priority level of the task.</p></li>
 <li><p>status: The current status of the task.</p></li>
-<li><p>dueDate: The due date for the task.</p></li>
+<li><p>due_date: The due date for the task.</p></li>
 <li><p>created_at: The timestamp when the task was created.</p></li>
 </ul>
 </dd>
@@ -1244,47 +268,47 @@ inline management of related SubTasks.</p>
 <li><p>category: The category of the task.</p></li>
 <li><p>priority: The priority level of the task.</p></li>
 <li><p>status: The current status of the task.</p></li>
-<li><p>dueDate: The due date for the task.</p></li>
+<li><p>due_date: The due date for the task.</p></li>
 <li><p>created_at: The timestamp when the task was created (readonly).</p></li>
 </ul>
 </dd>
 </dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="join.admin.TaskAdmin.fields">
-<span class="sig-name descname"><span class="pre">fields</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">('id',</span> <span class="pre">'title',</span> <span class="pre">'description',</span> <span class="pre">'category',</span> <span class="pre">'priority',</span> <span class="pre">'status',</span> <span class="pre">'dueDate',</span> <span class="pre">'created_at')</span></em><a class="headerlink" href="#join.admin.TaskAdmin.fields" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">fields</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">('id',</span> <span class="pre">'title',</span> <span class="pre">'description',</span> <span class="pre">'category',</span> <span class="pre">'priority',</span> <span class="pre">'status',</span> <span class="pre">'due_date',</span> <span class="pre">'created_at')</span></em><a class="headerlink" href="#join.admin.TaskAdmin.fields" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="join.admin.TaskAdmin.get_assignees">
-<span class="sig-name descname"><span class="pre">get_assignees</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/join/admin.html#TaskAdmin.get_assignees"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#join.admin.TaskAdmin.get_assignees" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">get_assignees</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/join/admin.html#TaskAdmin.get_assignees"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#join.admin.TaskAdmin.get_assignees" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a comma-separated string of assignees for the task.</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="join.admin.TaskAdmin.inlines">
-<span class="sig-name descname"><span class="pre">inlines</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[&lt;class</span> <span class="pre">'join.admin.SubTaskInline'&gt;]</span></em><a class="headerlink" href="#join.admin.TaskAdmin.inlines" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">inlines</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[&lt;class</span> <span class="pre">'join.admin.SubTaskInline'&gt;]</span></em><a class="headerlink" href="#join.admin.TaskAdmin.inlines" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="join.admin.TaskAdmin.list_display">
-<span class="sig-name descname"><span class="pre">list_display</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">('id',</span> <span class="pre">'title',</span> <span class="pre">'description',</span> <span class="pre">'category',</span> <span class="pre">'priority',</span> <span class="pre">'status',</span> <span class="pre">'dueDate',</span> <span class="pre">'created_at')</span></em><a class="headerlink" href="#join.admin.TaskAdmin.list_display" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">list_display</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">('id',</span> <span class="pre">'title',</span> <span class="pre">'description',</span> <span class="pre">'category',</span> <span class="pre">'priority',</span> <span class="pre">'status',</span> <span class="pre">'due_date',</span> <span class="pre">'created_at')</span></em><a class="headerlink" href="#join.admin.TaskAdmin.list_display" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="join.admin.TaskAdmin.media">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">media</span></span><a class="headerlink" href="#join.admin.TaskAdmin.media" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">media</span></span><a class="headerlink" href="#join.admin.TaskAdmin.media" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="join.admin.TaskAdmin.readonly_fields">
-<span class="sig-name descname"><span class="pre">readonly_fields</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">('id',</span> <span class="pre">'created_at')</span></em><a class="headerlink" href="#join.admin.TaskAdmin.readonly_fields" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">readonly_fields</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">('id',</span> <span class="pre">'created_at')</span></em><a class="headerlink" href="#join.admin.TaskAdmin.readonly_fields" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="join.admin.UserAdmin">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">join.admin.</span></span><span class="sig-name descname"><span class="pre">UserAdmin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">admin_site</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/join/admin.html#UserAdmin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#join.admin.UserAdmin" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">join.admin.</span></span><span class="sig-name descname"><span class="pre">UserAdmin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">admin_site</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/join/admin.html#UserAdmin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#join.admin.UserAdmin" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">UserAdmin</span></code></p>
 <p>Custom admin interface for managing User model instances.</p>
 <dl class="simple">
@@ -1314,42 +338,42 @@ inline management of related SubTasks.</p>
 </dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="join.admin.UserAdmin.add_fieldsets">
-<span class="sig-name descname"><span class="pre">add_fieldsets</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">((None,</span> <span class="pre">{'classes':</span> <span class="pre">('wide',),</span> <span class="pre">'fields':</span> <span class="pre">('email',</span> <span class="pre">'username',</span> <span class="pre">'password1',</span> <span class="pre">'password2',</span> <span class="pre">'is_staff',</span> <span class="pre">'is_active')}),)</span></em><a class="headerlink" href="#join.admin.UserAdmin.add_fieldsets" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">add_fieldsets</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">((None,</span> <span class="pre">{'classes':</span> <span class="pre">('wide',),</span> <span class="pre">'fields':</span> <span class="pre">('email',</span> <span class="pre">'username',</span> <span class="pre">'password1',</span> <span class="pre">'password2',</span> <span class="pre">'is_staff',</span> <span class="pre">'is_active')}),)</span></em><a class="headerlink" href="#join.admin.UserAdmin.add_fieldsets" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="join.admin.UserAdmin.fieldsets">
-<span class="sig-name descname"><span class="pre">fieldsets</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">((None,</span> <span class="pre">{'fields':</span> <span class="pre">('email',</span> <span class="pre">'password')}),</span> <span class="pre">('Personal</span> <span class="pre">info',</span> <span class="pre">{'fields':</span> <span class="pre">('username',)}),</span> <span class="pre">('Permissions',</span> <span class="pre">{'fields':</span> <span class="pre">('is_staff',</span> <span class="pre">'is_active',</span> <span class="pre">'is_superuser',</span> <span class="pre">'groups',</span> <span class="pre">'user_permissions')}),</span> <span class="pre">('Important</span> <span class="pre">dates',</span> <span class="pre">{'fields':</span> <span class="pre">('last_login',</span> <span class="pre">'date_joined')}))</span></em><a class="headerlink" href="#join.admin.UserAdmin.fieldsets" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">fieldsets</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">((None,</span> <span class="pre">{'fields':</span> <span class="pre">('email',</span> <span class="pre">'password')}),</span> <span class="pre">('Personal</span> <span class="pre">info',</span> <span class="pre">{'fields':</span> <span class="pre">('username',)}),</span> <span class="pre">('Permissions',</span> <span class="pre">{'fields':</span> <span class="pre">('is_staff',</span> <span class="pre">'is_active',</span> <span class="pre">'is_superuser',</span> <span class="pre">'groups',</span> <span class="pre">'user_permissions')}),</span> <span class="pre">('Important</span> <span class="pre">dates',</span> <span class="pre">{'fields':</span> <span class="pre">('last_login',</span> <span class="pre">'date_joined')}))</span></em><a class="headerlink" href="#join.admin.UserAdmin.fieldsets" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="join.admin.UserAdmin.filter_horizontal">
-<span class="sig-name descname"><span class="pre">filter_horizontal</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">('groups',</span> <span class="pre">'user_permissions')</span></em><a class="headerlink" href="#join.admin.UserAdmin.filter_horizontal" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">filter_horizontal</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">('groups',</span> <span class="pre">'user_permissions')</span></em><a class="headerlink" href="#join.admin.UserAdmin.filter_horizontal" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="join.admin.UserAdmin.list_display">
-<span class="sig-name descname"><span class="pre">list_display</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">('email',</span> <span class="pre">'username',</span> <span class="pre">'is_staff',</span> <span class="pre">'is_active')</span></em><a class="headerlink" href="#join.admin.UserAdmin.list_display" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">list_display</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">('email',</span> <span class="pre">'username',</span> <span class="pre">'is_staff',</span> <span class="pre">'is_active')</span></em><a class="headerlink" href="#join.admin.UserAdmin.list_display" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="join.admin.UserAdmin.list_filter">
-<span class="sig-name descname"><span class="pre">list_filter</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">('is_staff',</span> <span class="pre">'is_active')</span></em><a class="headerlink" href="#join.admin.UserAdmin.list_filter" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">list_filter</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">('is_staff',</span> <span class="pre">'is_active')</span></em><a class="headerlink" href="#join.admin.UserAdmin.list_filter" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="join.admin.UserAdmin.media">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">media</span></span><a class="headerlink" href="#join.admin.UserAdmin.media" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">media</span></span><a class="headerlink" href="#join.admin.UserAdmin.media" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="join.admin.UserAdmin.ordering">
-<span class="sig-name descname"><span class="pre">ordering</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">('email',)</span></em><a class="headerlink" href="#join.admin.UserAdmin.ordering" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">ordering</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">('email',)</span></em><a class="headerlink" href="#join.admin.UserAdmin.ordering" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="join.admin.UserAdmin.search_fields">
-<span class="sig-name descname"><span class="pre">search_fields</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">('email',</span> <span class="pre">'username')</span></em><a class="headerlink" href="#join.admin.UserAdmin.search_fields" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">search_fields</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">('email',</span> <span class="pre">'username')</span></em><a class="headerlink" href="#join.admin.UserAdmin.search_fields" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -1360,7 +384,7 @@ inline management of related SubTasks.</p>
           
         </div>
       </div>
-      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
 <h1 class="logo"><a href="index.html">Join_Django_Rest_Framework_Backend</a></h1>
 
@@ -1371,170 +395,29 @@ inline management of related SubTasks.</p>
 
 
 
-
-<search id="searchbox" style="display: none" role="search">
-    <div class="searchformwrapper">
-    <form class="search" action="search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Search"/>
-      <input type="submit" value="Go" />
-    </form>
-    </div>
-</search>
-<script>document.getElementById('searchbox').style.display = "block"</script><h3>Navigation</h3>
+<h3>Navigation</h3>
 <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
 <ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#"><code class="docutils literal notranslate"><span class="pre">Contact</span></code></a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#join.models.Contact.DoesNotExist"><code class="docutils literal notranslate"><span class="pre">Contact.DoesNotExist</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#join.models.Contact.MultipleObjectsReturned"><code class="docutils literal notranslate"><span class="pre">Contact.MultipleObjectsReturned</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#join.models.Contact.color"><code class="docutils literal notranslate"><span class="pre">Contact.color</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#join.models.Contact.created_at"><code class="docutils literal notranslate"><span class="pre">Contact.created_at</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#join.models.Contact.email"><code class="docutils literal notranslate"><span class="pre">Contact.email</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#join.models.Contact.get_next_by_created_at"><code class="docutils literal notranslate"><span class="pre">Contact.get_next_by_created_at()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#join.models.Contact.get_previous_by_created_at"><code class="docutils literal notranslate"><span class="pre">Contact.get_previous_by_created_at()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#join.models.Contact.id"><code class="docutils literal notranslate"><span class="pre">Contact.id</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#join.models.Contact.initials"><code class="docutils literal notranslate"><span class="pre">Contact.initials</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#join.models.Contact.name"><code class="docutils literal notranslate"><span class="pre">Contact.name</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#join.models.Contact.objects"><code class="docutils literal notranslate"><span class="pre">Contact.objects</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#join.models.Contact.phone"><code class="docutils literal notranslate"><span class="pre">Contact.phone</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#join.models.Contact.taskcontact_set"><code class="docutils literal notranslate"><span class="pre">Contact.taskcontact_set</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="#join.models.SubTask"><code class="docutils literal notranslate"><span class="pre">SubTask</span></code></a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#join.models.SubTask.DoesNotExist"><code class="docutils literal notranslate"><span class="pre">SubTask.DoesNotExist</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#join.models.SubTask.MultipleObjectsReturned"><code class="docutils literal notranslate"><span class="pre">SubTask.MultipleObjectsReturned</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#join.models.SubTask.checked"><code class="docutils literal notranslate"><span class="pre">SubTask.checked</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#join.models.SubTask.created_at"><code class="docutils literal notranslate"><span class="pre">SubTask.created_at</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#join.models.SubTask.get_next_by_created_at"><code class="docutils literal notranslate"><span class="pre">SubTask.get_next_by_created_at()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#join.models.SubTask.get_previous_by_created_at"><code class="docutils literal notranslate"><span class="pre">SubTask.get_previous_by_created_at()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#join.models.SubTask.id"><code class="docutils literal notranslate"><span class="pre">SubTask.id</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#join.models.SubTask.objects"><code class="docutils literal notranslate"><span class="pre">SubTask.objects</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#join.models.SubTask.task"><code class="docutils literal notranslate"><span class="pre">SubTask.task</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#join.models.SubTask.task_id"><code class="docutils literal notranslate"><span class="pre">SubTask.task_id</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#join.models.SubTask.title"><code class="docutils literal notranslate"><span class="pre">SubTask.title</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="#join.models.Task"><code class="docutils literal notranslate"><span class="pre">Task</span></code></a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#join.models.Task.CATEGORY_CHOICES"><code class="docutils literal notranslate"><span class="pre">Task.CATEGORY_CHOICES</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#join.models.Task.DoesNotExist"><code class="docutils literal notranslate"><span class="pre">Task.DoesNotExist</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#join.models.Task.MultipleObjectsReturned"><code class="docutils literal notranslate"><span class="pre">Task.MultipleObjectsReturned</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#join.models.Task.PRIORITY_CHOICES"><code class="docutils literal notranslate"><span class="pre">Task.PRIORITY_CHOICES</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#join.models.Task.STATUS_CHOICES"><code class="docutils literal notranslate"><span class="pre">Task.STATUS_CHOICES</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#join.models.Task.category"><code class="docutils literal notranslate"><span class="pre">Task.category</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#join.models.Task.created_at"><code class="docutils literal notranslate"><span class="pre">Task.created_at</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#join.models.Task.description"><code class="docutils literal notranslate"><span class="pre">Task.description</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#join.models.Task.dueDate"><code class="docutils literal notranslate"><span class="pre">Task.dueDate</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#join.models.Task.get_category_display"><code class="docutils literal notranslate"><span class="pre">Task.get_category_display()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#join.models.Task.get_next_by_created_at"><code class="docutils literal notranslate"><span class="pre">Task.get_next_by_created_at()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#join.models.Task.get_next_by_dueDate"><code class="docutils literal notranslate"><span class="pre">Task.get_next_by_dueDate()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#join.models.Task.get_previous_by_created_at"><code class="docutils literal notranslate"><span class="pre">Task.get_previous_by_created_at()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#join.models.Task.get_previous_by_dueDate"><code class="docutils literal notranslate"><span class="pre">Task.get_previous_by_dueDate()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#join.models.Task.get_priority_display"><code class="docutils literal notranslate"><span class="pre">Task.get_priority_display()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#join.models.Task.get_status_display"><code class="docutils literal notranslate"><span class="pre">Task.get_status_display()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#join.models.Task.id"><code class="docutils literal notranslate"><span class="pre">Task.id</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#join.models.Task.objects"><code class="docutils literal notranslate"><span class="pre">Task.objects</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#join.models.Task.priority"><code class="docutils literal notranslate"><span class="pre">Task.priority</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#join.models.Task.status"><code class="docutils literal notranslate"><span class="pre">Task.status</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#join.models.Task.subTasks"><code class="docutils literal notranslate"><span class="pre">Task.subTasks</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#join.models.Task.taskcontact_set"><code class="docutils literal notranslate"><span class="pre">Task.taskcontact_set</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#join.models.Task.title"><code class="docutils literal notranslate"><span class="pre">Task.title</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="#join.models.TaskContact"><code class="docutils literal notranslate"><span class="pre">TaskContact</span></code></a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#join.models.TaskContact.DoesNotExist"><code class="docutils literal notranslate"><span class="pre">TaskContact.DoesNotExist</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#join.models.TaskContact.MultipleObjectsReturned"><code class="docutils literal notranslate"><span class="pre">TaskContact.MultipleObjectsReturned</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#join.models.TaskContact.contact"><code class="docutils literal notranslate"><span class="pre">TaskContact.contact</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#join.models.TaskContact.contact_id"><code class="docutils literal notranslate"><span class="pre">TaskContact.contact_id</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#join.models.TaskContact.id"><code class="docutils literal notranslate"><span class="pre">TaskContact.id</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#join.models.TaskContact.objects"><code class="docutils literal notranslate"><span class="pre">TaskContact.objects</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#join.models.TaskContact.task"><code class="docutils literal notranslate"><span class="pre">TaskContact.task</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#join.models.TaskContact.task_id"><code class="docutils literal notranslate"><span class="pre">TaskContact.task_id</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="#join.models.User"><code class="docutils literal notranslate"><span class="pre">User</span></code></a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#join.models.User.DoesNotExist"><code class="docutils literal notranslate"><span class="pre">User.DoesNotExist</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#join.models.User.MultipleObjectsReturned"><code class="docutils literal notranslate"><span class="pre">User.MultipleObjectsReturned</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#join.models.User.REQUIRED_FIELDS"><code class="docutils literal notranslate"><span class="pre">User.REQUIRED_FIELDS</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#join.models.User.USERNAME_FIELD"><code class="docutils literal notranslate"><span class="pre">User.USERNAME_FIELD</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#join.models.User.auth_token"><code class="docutils literal notranslate"><span class="pre">User.auth_token</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#join.models.User.date_joined"><code class="docutils literal notranslate"><span class="pre">User.date_joined</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#join.models.User.email"><code class="docutils literal notranslate"><span class="pre">User.email</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#join.models.User.first_name"><code class="docutils literal notranslate"><span class="pre">User.first_name</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#join.models.User.get_next_by_date_joined"><code class="docutils literal notranslate"><span class="pre">User.get_next_by_date_joined()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#join.models.User.get_previous_by_date_joined"><code class="docutils literal notranslate"><span class="pre">User.get_previous_by_date_joined()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#join.models.User.groups"><code class="docutils literal notranslate"><span class="pre">User.groups</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#join.models.User.id"><code class="docutils literal notranslate"><span class="pre">User.id</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#join.models.User.is_active"><code class="docutils literal notranslate"><span class="pre">User.is_active</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#join.models.User.is_staff"><code class="docutils literal notranslate"><span class="pre">User.is_staff</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#join.models.User.is_superuser"><code class="docutils literal notranslate"><span class="pre">User.is_superuser</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#join.models.User.last_login"><code class="docutils literal notranslate"><span class="pre">User.last_login</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#join.models.User.last_name"><code class="docutils literal notranslate"><span class="pre">User.last_name</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#join.models.User.logentry_set"><code class="docutils literal notranslate"><span class="pre">User.logentry_set</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#join.models.User.password"><code class="docutils literal notranslate"><span class="pre">User.password</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#join.models.User.user_permissions"><code class="docutils literal notranslate"><span class="pre">User.user_permissions</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#join.models.User.username"><code class="docutils literal notranslate"><span class="pre">User.username</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="#django_join_backend_app.serializers.ContactSerializer"><code class="docutils literal notranslate"><span class="pre">ContactSerializer</span></code></a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#django_join_backend_app.serializers.ContactSerializer.Meta"><code class="docutils literal notranslate"><span class="pre">ContactSerializer.Meta</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#django_join_backend_app.serializers.ContactSerializer.to_representation"><code class="docutils literal notranslate"><span class="pre">ContactSerializer.to_representation()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="#django_join_backend_app.serializers.LoginSerializer"><code class="docutils literal notranslate"><span class="pre">LoginSerializer</span></code></a><ul>
+<li class="toctree-l1 current"><a class="current reference internal" href="#"><code class="docutils literal notranslate"><span class="pre">LoginSerializer</span></code></a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#django_join_backend_app.serializers.LoginSerializer.validate"><code class="docutils literal notranslate"><span class="pre">LoginSerializer.validate()</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="#django_join_backend_app.serializers.SubTaskSerializer"><code class="docutils literal notranslate"><span class="pre">SubTaskSerializer</span></code></a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#django_join_backend_app.serializers.SubTaskSerializer.Meta"><code class="docutils literal notranslate"><span class="pre">SubTaskSerializer.Meta</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="#django_join_backend_app.serializers.TaskSerializer"><code class="docutils literal notranslate"><span class="pre">TaskSerializer</span></code></a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#django_join_backend_app.serializers.TaskSerializer.Meta"><code class="docutils literal notranslate"><span class="pre">TaskSerializer.Meta</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#django_join_backend_app.serializers.TaskSerializer.get_assignedTo"><code class="docutils literal notranslate"><span class="pre">TaskSerializer.get_assignedTo()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="#django_join_backend_app.serializers.UserSerializer"><code class="docutils literal notranslate"><span class="pre">UserSerializer</span></code></a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#django_join_backend_app.serializers.UserSerializer.Meta"><code class="docutils literal notranslate"><span class="pre">UserSerializer.Meta</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#django_join_backend_app.serializers.UserSerializer.create"><code class="docutils literal notranslate"><span class="pre">UserSerializer.create()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="#join.views.ContactView"><code class="docutils literal notranslate"><span class="pre">ContactView</span></code></a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#join.views.ContactView.authentication_classes"><code class="docutils literal notranslate"><span class="pre">ContactView.authentication_classes</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#join.views.ContactView.create"><code class="docutils literal notranslate"><span class="pre">ContactView.create()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#join.views.ContactView.list"><code class="docutils literal notranslate"><span class="pre">ContactView.list()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#join.views.ContactView.permission_classes"><code class="docutils literal notranslate"><span class="pre">ContactView.permission_classes</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#join.views.ContactView.retrieve"><code class="docutils literal notranslate"><span class="pre">ContactView.retrieve()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#join.views.ContactView.update"><code class="docutils literal notranslate"><span class="pre">ContactView.update()</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="#join.views.Command"><code class="docutils literal notranslate"><span class="pre">Command</span></code></a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#join.views.Command.handle"><code class="docutils literal notranslate"><span class="pre">Command.handle()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#join.views.Command.help"><code class="docutils literal notranslate"><span class="pre">Command.help</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="#join.views.DocsView"><code class="docutils literal notranslate"><span class="pre">DocsView</span></code></a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#join.views.DocsView.get"><code class="docutils literal notranslate"><span class="pre">DocsView.get()</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="#join.views.LoginView"><code class="docutils literal notranslate"><span class="pre">LoginView</span></code></a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#join.views.LoginView.authentication_classes"><code class="docutils literal notranslate"><span class="pre">LoginView.authentication_classes</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#join.views.LoginView.permission_classes"><code class="docutils literal notranslate"><span class="pre">LoginView.permission_classes</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#join.views.LoginView.post"><code class="docutils literal notranslate"><span class="pre">LoginView.post()</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="#join.views.GenerateDemoDataView"><code class="docutils literal notranslate"><span class="pre">GenerateDemoDataView</span></code></a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#join.views.GenerateDemoDataView.dispatch"><code class="docutils literal notranslate"><span class="pre">GenerateDemoDataView.dispatch()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#join.views.GenerateDemoDataView.post"><code class="docutils literal notranslate"><span class="pre">GenerateDemoDataView.post()</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="#join.views.SignupView"><code class="docutils literal notranslate"><span class="pre">SignupView</span></code></a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#join.views.SignupView.authentication_classes"><code class="docutils literal notranslate"><span class="pre">SignupView.authentication_classes</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#join.views.SignupView.create"><code class="docutils literal notranslate"><span class="pre">SignupView.create()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#join.views.SignupView.permission_classes"><code class="docutils literal notranslate"><span class="pre">SignupView.permission_classes</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="#join.views.TaskView"><code class="docutils literal notranslate"><span class="pre">TaskView</span></code></a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#join.views.TaskView.add_assignees"><code class="docutils literal notranslate"><span class="pre">TaskView.add_assignees()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#join.views.TaskView.add_subtasks"><code class="docutils literal notranslate"><span class="pre">TaskView.add_subtasks()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#join.views.TaskView.authentication_classes"><code class="docutils literal notranslate"><span class="pre">TaskView.authentication_classes</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#join.views.TaskView.create"><code class="docutils literal notranslate"><span class="pre">TaskView.create()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#join.views.TaskView.list"><code class="docutils literal notranslate"><span class="pre">TaskView.list()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#join.views.TaskView.permission_classes"><code class="docutils literal notranslate"><span class="pre">TaskView.permission_classes</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#join.views.TaskView.remove_assignees"><code class="docutils literal notranslate"><span class="pre">TaskView.remove_assignees()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#join.views.TaskView.remove_subtasks"><code class="docutils literal notranslate"><span class="pre">TaskView.remove_subtasks()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#join.views.TaskView.retrieve"><code class="docutils literal notranslate"><span class="pre">TaskView.retrieve()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#join.views.TaskView.update"><code class="docutils literal notranslate"><span class="pre">TaskView.update()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#join.views.TaskView.update_subtask"><code class="docutils literal notranslate"><span class="pre">TaskView.update_subtask()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#join.views.TaskView.update_subtask_status"><code class="docutils literal notranslate"><span class="pre">TaskView.update_subtask_status()</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="#join.views.GetCsrfTokenView"><code class="docutils literal notranslate"><span class="pre">GetCsrfTokenView</span></code></a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#join.views.GetCsrfTokenView.get"><code class="docutils literal notranslate"><span class="pre">GetCsrfTokenView.get()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="#join.admin.ContactAdmin"><code class="docutils literal notranslate"><span class="pre">ContactAdmin</span></code></a><ul>
@@ -1587,6 +470,16 @@ inline management of related SubTasks.</p>
   </ul></li>
 </ul>
 </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
 
 
 
@@ -1600,11 +493,11 @@ inline management of related SubTasks.</p>
       <div class="clearer"></div>
     </div>
     <div class="footer">
-      &#169;2024, Benjamin Tietz.
+      &copy;2024, Benjamin Tietz.
       
       |
-      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 8.0.2</a>
-      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 1.0.0</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 7.1.2</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.13</a>
       
       |
       <a href="_sources/module_overview.rst.txt"

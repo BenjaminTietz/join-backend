@@ -12,6 +12,22 @@ from .models import User
 import os
 
 def activate_user(request, uidb64, token):
+    """
+    Activate a user's account given an activation link.
+
+    The function validates the activation link and if valid, activates the user's
+    account. If the account is already activated, it displays a success message.
+    If the link is invalid, it displays an error message.
+
+    Parameters:
+    - request: Django's request object.
+    - uidb64: The user's id encoded in base64.
+    - token: The activation token.
+
+    Returns:
+    - A redirect to the login page if the account is activated or already active.
+    - A redirect to the landing page if the link is invalid.
+    """
     try:
         uid = urlsafe_base64_decode(uidb64).decode()
         user = User.objects.get(pk=uid)

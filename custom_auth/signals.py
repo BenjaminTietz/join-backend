@@ -17,10 +17,29 @@ import os
 logger = logging.getLogger(__name__)
 
 def generate_random_hex_color():
+    """
+    Generates a random hexadecimal color code.
+
+    Returns:
+        str: A string representing a random color in the format '#RRGGBB'.
+    """
     return "#{:06x}".format(random.randint(0, 0xFFFFFF))
 
 @receiver(post_save, sender=User)
 def create_contact_for_user(sender, instance, created, **kwargs):
+    """
+    Signal receiver to create a new Contact for a User instance when one is created.
+    
+    Creates a new Contact with the User instance's username (or "Default Name" if username is None), 
+    email, and phone number. The Contact instance is assigned to the User instance's contact_id field, 
+    and the User instance is saved with the updated contact_id field.
+    
+    Args:
+        sender (User): The User model class.
+        instance (User): The User instance being saved.
+        created (bool): Whether the instance is being created (True) or updated (False).
+    """
+    
     if created:
         contact = Contact.objects.create(
             name=instance.username  or "Default Name",

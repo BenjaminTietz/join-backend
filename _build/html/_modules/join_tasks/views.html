@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>join_tasks.views &#8212; Join_Django_Rest_Framework_Backend 1.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=4f649999" />
+    <link rel="stylesheet" type="text/css" href="../../_static/alabaster.css?v=039e1c02" />
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js?v=359c27e9"></script>
+    <script src="../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../_static/sphinx_highlight.js?v=4825356b"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for join_tasks.views</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">django.http</span> <span class="kn">import</span> <span class="n">JsonResponse</span>
+<span class="kn">from</span> <span class="nn">django.shortcuts</span> <span class="kn">import</span> <span class="n">render</span>
+<span class="kn">from</span> <span class="nn">django.views</span> <span class="kn">import</span> <span class="n">View</span>
+<span class="kn">from</span> <span class="nn">django.middleware.csrf</span> <span class="kn">import</span> <span class="n">get_token</span>
+<span class="kn">from</span> <span class="nn">rest_framework.authtoken.views</span> <span class="kn">import</span> <span class="n">APIView</span>
+<span class="kn">from</span> <span class="nn">rest_framework.authtoken.models</span> <span class="kn">import</span> <span class="n">Token</span>
+<span class="kn">from</span> <span class="nn">rest_framework.response</span> <span class="kn">import</span> <span class="n">Response</span>
+<span class="kn">from</span> <span class="nn">rest_framework</span> <span class="kn">import</span> <span class="n">viewsets</span><span class="p">,</span> <span class="n">status</span>
+<span class="kn">from</span> <span class="nn">django_join_backend_app.serializers</span> <span class="kn">import</span> <span class="n">TaskSerializer</span><span class="p">,</span> <span class="n">SubTaskSerializer</span>
+<span class="kn">from</span> <span class="nn">join_contacts.serializers</span> <span class="kn">import</span> <span class="n">ContactSerializer</span>
+<span class="kn">from</span> <span class="nn">custom_auth.serializers</span> <span class="kn">import</span> <span class="n">UserSerializer</span>
+<span class="kn">from</span> <span class="nn">join_tasks.models</span> <span class="kn">import</span> <span class="n">Task</span><span class="p">,</span> <span class="n">SubTask</span><span class="p">,</span> <span class="n">TaskContact</span>
+<span class="kn">from</span> <span class="nn">join_contacts.models</span> <span class="kn">import</span> <span class="n">Contact</span>
+<span class="kn">from</span> <span class="nn">rest_framework.authentication</span> <span class="kn">import</span> <span class="n">TokenAuthentication</span>
+<span class="kn">from</span> <span class="nn">rest_framework.permissions</span> <span class="kn">import</span> <span class="n">IsAuthenticated</span>
+<span class="kn">from</span> <span class="nn">django.shortcuts</span> <span class="kn">import</span> <span class="n">redirect</span>
+<span class="kn">from</span> <span class="nn">django.conf</span> <span class="kn">import</span> <span class="n">settings</span>
+<span class="kn">from</span> <span class="nn">django.core.management.base</span> <span class="kn">import</span> <span class="n">BaseCommand</span>
+<span class="kn">from</span> <span class="nn">join.management.commands.init_demo_data</span> <span class="kn">import</span> <span class="n">generate_demo_data</span>
+<span class="kn">from</span> <span class="nn">django.utils.decorators</span> <span class="kn">import</span> <span class="n">method_decorator</span>
+<span class="kn">from</span> <span class="nn">django.views.decorators.csrf</span> <span class="kn">import</span> <span class="n">csrf_exempt</span>
+
+
+<div class="viewcode-block" id="TaskView"><a class="viewcode-back" href="../../docs/join_tasks.html#join_tasks.views.TaskView">[docs]</a><span class="k">class</span> <span class="nc">TaskView</span><span class="p">(</span><span class="n">viewsets</span><span class="o">.</span><span class="n">ViewSet</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    API view for managing tasks.</span>
+
+<span class="sd">    This view allows creating, retrieving, listing, updating tasks, and adding subtasks or assignees.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">authentication_classes</span> <span class="o">=</span> <span class="p">[</span><span class="n">TokenAuthentication</span><span class="p">]</span>
+    <span class="n">permission_classes</span> <span class="o">=</span> <span class="p">[</span><span class="n">IsAuthenticated</span><span class="p">]</span>
+    
+<div class="viewcode-block" id="TaskView.create"><a class="viewcode-back" href="../../docs/join_tasks.html#join_tasks.views.TaskView.create">[docs]</a>    <span class="k">def</span> <span class="nf">create</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Handle POST request to create a new task.</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">        - request: HTTP request containing task data.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">        - Response: JSON response with task details on success.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">serializer</span> <span class="o">=</span> <span class="n">TaskSerializer</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">request</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+        <span class="n">serializer</span><span class="o">.</span><span class="n">is_valid</span><span class="p">(</span><span class="n">raise_exception</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        
+     
+        <span class="n">task</span> <span class="o">=</span> <span class="n">serializer</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+        
+     
+        <span class="n">assigned_contacts_data</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;assignedContacts&#39;</span><span class="p">,</span> <span class="p">[])</span>
+        <span class="k">for</span> <span class="n">contact_data</span> <span class="ow">in</span> <span class="n">assigned_contacts_data</span><span class="p">:</span>
+            <span class="n">contact</span><span class="p">,</span> <span class="n">created</span> <span class="o">=</span> <span class="n">Contact</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get_or_create</span><span class="p">(</span><span class="o">**</span><span class="n">contact_data</span><span class="p">)</span>
+            <span class="n">TaskContact</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get_or_create</span><span class="p">(</span><span class="n">task</span><span class="o">=</span><span class="n">task</span><span class="p">,</span> <span class="n">contact</span><span class="o">=</span><span class="n">contact</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">Response</span><span class="p">({</span>
+            <span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="n">task</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
+            <span class="s1">&#39;title&#39;</span><span class="p">:</span> <span class="n">task</span><span class="o">.</span><span class="n">title</span><span class="p">,</span>
+            <span class="s1">&#39;description&#39;</span><span class="p">:</span> <span class="n">task</span><span class="o">.</span><span class="n">description</span><span class="p">,</span>
+            <span class="s1">&#39;category&#39;</span><span class="p">:</span> <span class="n">task</span><span class="o">.</span><span class="n">category</span><span class="p">,</span>
+            <span class="s1">&#39;priority&#39;</span><span class="p">:</span> <span class="n">task</span><span class="o">.</span><span class="n">priority</span><span class="p">,</span>
+            <span class="s1">&#39;status&#39;</span><span class="p">:</span> <span class="n">task</span><span class="o">.</span><span class="n">status</span><span class="p">,</span>
+            <span class="s1">&#39;due_date&#39;</span><span class="p">:</span> <span class="n">task</span><span class="o">.</span><span class="n">due_date</span><span class="p">,</span>
+        <span class="p">})</span></div>
+        
+<div class="viewcode-block" id="TaskView.retrieve"><a class="viewcode-back" href="../../docs/join_tasks.html#join_tasks.views.TaskView.retrieve">[docs]</a>    <span class="k">def</span> <span class="nf">retrieve</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">pk</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Handle GET request to retrieve a task by ID.</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">        - pk: Primary key of the task to retrieve.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">        - Response: JSON response with task details on success.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">task</span> <span class="o">=</span> <span class="n">Task</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="n">pk</span><span class="p">)</span>
+        <span class="n">serializer</span> <span class="o">=</span> <span class="n">TaskSerializer</span><span class="p">(</span><span class="n">task</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">Response</span><span class="p">(</span><span class="n">serializer</span><span class="o">.</span><span class="n">data</span><span class="p">)</span></div>
+        
+<div class="viewcode-block" id="TaskView.list"><a class="viewcode-back" href="../../docs/join_tasks.html#join_tasks.views.TaskView.list">[docs]</a>    <span class="k">def</span> <span class="nf">list</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Handle GET request to list all tasks.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">        - Response: JSON response containing a list of all tasks.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">tasks</span> <span class="o">=</span> <span class="n">Task</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>  
+        <span class="n">serializer</span> <span class="o">=</span> <span class="n">TaskSerializer</span><span class="p">(</span><span class="n">tasks</span><span class="p">,</span> <span class="n">many</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>  
+        <span class="k">return</span> <span class="n">Response</span><span class="p">(</span><span class="n">serializer</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>  </div>
+        
+<div class="viewcode-block" id="TaskView.update"><a class="viewcode-back" href="../../docs/join_tasks.html#join_tasks.views.TaskView.update">[docs]</a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">pk</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Handle PUT/PATCH request to update a task.</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">        - pk: Primary key of the task to update.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">        - Response: JSON response with updated task data on success or error message on failure.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">task</span> <span class="o">=</span> <span class="n">Task</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="n">pk</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">Task</span><span class="o">.</span><span class="n">DoesNotExist</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">Response</span><span class="p">({</span><span class="s1">&#39;error&#39;</span><span class="p">:</span> <span class="s1">&#39;Task not found.&#39;</span><span class="p">},</span> <span class="n">status</span><span class="o">=</span><span class="mi">404</span><span class="p">)</span>
+
+        <span class="n">serializer</span> <span class="o">=</span> <span class="n">TaskSerializer</span><span class="p">(</span><span class="n">task</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">request</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">partial</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">serializer</span><span class="o">.</span><span class="n">is_valid</span><span class="p">():</span>
+            <span class="n">serializer</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+            <span class="k">return</span> <span class="n">Response</span><span class="p">(</span><span class="n">serializer</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">Response</span><span class="p">(</span><span class="n">serializer</span><span class="o">.</span><span class="n">errors</span><span class="p">,</span> <span class="n">status</span><span class="o">=</span><span class="n">status</span><span class="o">.</span><span class="n">HTTP_400_BAD_REQUEST</span><span class="p">)</span></div>
+    
+<div class="viewcode-block" id="TaskView.delete"><a class="viewcode-back" href="../../docs/join_tasks.html#join_tasks.views.TaskView.delete">[docs]</a>    <span class="k">def</span> <span class="nf">delete</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">pk</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Handle DELETE request to remove a task.</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">        - pk: Primary key of the task to delete.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">        - Response: JSON response indicating success or failure.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">task</span> <span class="o">=</span> <span class="n">Task</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="n">pk</span><span class="p">)</span>
+            <span class="n">task</span><span class="o">.</span><span class="n">delete</span><span class="p">()</span>
+            <span class="k">return</span> <span class="n">Response</span><span class="p">({</span><span class="s1">&#39;status&#39;</span><span class="p">:</span> <span class="s1">&#39;Task deleted successfully.&#39;</span><span class="p">})</span>
+        <span class="k">except</span> <span class="n">Task</span><span class="o">.</span><span class="n">DoesNotExist</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">Response</span><span class="p">({</span><span class="s1">&#39;error&#39;</span><span class="p">:</span> <span class="s1">&#39;Task not found.&#39;</span><span class="p">},</span> <span class="n">status</span><span class="o">=</span><span class="mi">404</span><span class="p">)</span></div>
+        
+    
+<div class="viewcode-block" id="TaskView.add_subtasks"><a class="viewcode-back" href="../../docs/join_tasks.html#join_tasks.views.TaskView.add_subtasks">[docs]</a>    <span class="k">def</span> <span class="nf">add_subtasks</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">pk</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Handle POST request to add subtasks to an existing task.</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">        - pk: Primary key of the task to add subtasks to.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">        - Response: JSON response indicating the status of the operation.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">task</span> <span class="o">=</span> <span class="n">Task</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="n">pk</span><span class="p">)</span>
+        <span class="n">subtask_data</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;subtasks&#39;</span><span class="p">,</span> <span class="p">[])</span>
+        
+        <span class="k">for</span> <span class="n">subtask</span> <span class="ow">in</span> <span class="n">subtask_data</span><span class="p">:</span>
+            <span class="n">SubTask</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+                <span class="n">task</span><span class="o">=</span><span class="n">task</span><span class="p">,</span>
+                <span class="n">title</span><span class="o">=</span><span class="n">subtask</span><span class="p">[</span><span class="s1">&#39;title&#39;</span><span class="p">],</span>
+                <span class="n">checked</span><span class="o">=</span><span class="n">subtask</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;checked&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+            <span class="p">)</span>
+        
+        <span class="k">return</span> <span class="n">Response</span><span class="p">({</span><span class="s1">&#39;status&#39;</span><span class="p">:</span> <span class="s1">&#39;Subtasks added successfully&#39;</span><span class="p">})</span></div>
+    
+<div class="viewcode-block" id="TaskView.remove_subtasks"><a class="viewcode-back" href="../../docs/join_tasks.html#join_tasks.views.TaskView.remove_subtasks">[docs]</a>    <span class="k">def</span> <span class="nf">remove_subtasks</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">pk</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">subtask_id</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Handle DELETE request to remove a specific subtask from a task.</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">        - pk: Primary key of the task.</span>
+<span class="sd">        - subtask_id: Primary key of the subtask to remove.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">        - Response: JSON response indicating success or failure.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">task</span> <span class="o">=</span> <span class="n">Task</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="n">pk</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">Task</span><span class="o">.</span><span class="n">DoesNotExist</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">Response</span><span class="p">({</span><span class="s1">&#39;error&#39;</span><span class="p">:</span> <span class="s1">&#39;Task not found.&#39;</span><span class="p">},</span> <span class="n">status</span><span class="o">=</span><span class="mi">404</span><span class="p">)</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">subtask_instance</span> <span class="o">=</span> <span class="n">SubTask</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="n">subtask_id</span><span class="p">,</span> <span class="n">task</span><span class="o">=</span><span class="n">task</span><span class="p">)</span>
+            <span class="n">subtask_instance</span><span class="o">.</span><span class="n">delete</span><span class="p">()</span>
+            <span class="k">return</span> <span class="n">Response</span><span class="p">({</span><span class="s1">&#39;status&#39;</span><span class="p">:</span> <span class="s1">&#39;Subtask removed successfully.&#39;</span><span class="p">})</span>
+        <span class="k">except</span> <span class="n">SubTask</span><span class="o">.</span><span class="n">DoesNotExist</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">Response</span><span class="p">({</span><span class="s1">&#39;error&#39;</span><span class="p">:</span> <span class="s1">&#39;Subtask not found.&#39;</span><span class="p">},</span> <span class="n">status</span><span class="o">=</span><span class="mi">404</span><span class="p">)</span></div>
+    
+
+<div class="viewcode-block" id="TaskView.update_subtask"><a class="viewcode-back" href="../../docs/join_tasks.html#join_tasks.views.TaskView.update_subtask">[docs]</a>    <span class="k">def</span> <span class="nf">update_subtask</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">task_pk</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">subtask_pk</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Handle PATCH request to update a subtask&#39;s title and other fields.</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">        - task_pk: Primary key of the parent task.</span>
+<span class="sd">        - subtask_pk: Primary key of the subtask to update.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">        - Response: JSON response indicating success or failure.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">task</span> <span class="o">=</span> <span class="n">Task</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="n">task_pk</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">Task</span><span class="o">.</span><span class="n">DoesNotExist</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">Response</span><span class="p">({</span><span class="s1">&#39;error&#39;</span><span class="p">:</span> <span class="s1">&#39;Task not found.&#39;</span><span class="p">},</span> <span class="n">status</span><span class="o">=</span><span class="mi">404</span><span class="p">)</span>
+        
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">subtask</span> <span class="o">=</span> <span class="n">SubTask</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="n">subtask_pk</span><span class="p">,</span> <span class="n">task</span><span class="o">=</span><span class="n">task</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">SubTask</span><span class="o">.</span><span class="n">DoesNotExist</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">Response</span><span class="p">({</span><span class="s1">&#39;error&#39;</span><span class="p">:</span> <span class="s1">&#39;Subtask not found.&#39;</span><span class="p">},</span> <span class="n">status</span><span class="o">=</span><span class="mi">404</span><span class="p">)</span>
+
+        <span class="n">new_title</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;title&#39;</span><span class="p">)</span>
+        
+        <span class="k">if</span> <span class="n">new_title</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">subtask</span><span class="o">.</span><span class="n">title</span> <span class="o">=</span> <span class="n">new_title</span>
+        
+        <span class="n">subtask</span><span class="o">.</span><span class="n">checked</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;checked&#39;</span><span class="p">,</span> <span class="n">subtask</span><span class="o">.</span><span class="n">checked</span><span class="p">)</span>
+
+        <span class="n">subtask</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+        
+        <span class="k">return</span> <span class="n">Response</span><span class="p">({</span>
+            <span class="s1">&#39;status&#39;</span><span class="p">:</span> <span class="s1">&#39;Subtask updated successfully&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;subtask&#39;</span><span class="p">:</span> <span class="n">SubTaskSerializer</span><span class="p">(</span><span class="n">subtask</span><span class="p">)</span><span class="o">.</span><span class="n">data</span>
+        <span class="p">})</span></div>
+<div class="viewcode-block" id="TaskView.add_assignees"><a class="viewcode-back" href="../../docs/join_tasks.html#join_tasks.views.TaskView.add_assignees">[docs]</a>    <span class="k">def</span> <span class="nf">add_assignees</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">pk</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Handle POST request to add assignees to an existing task.</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">        - pk: Primary key of the task to add assignees to.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">        - Response: JSON response with status and processing messages.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">status_message</span> <span class="o">=</span> <span class="p">[]</span>  
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">task</span> <span class="o">=</span> <span class="n">Task</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="n">pk</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">Task</span><span class="o">.</span><span class="n">DoesNotExist</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">Response</span><span class="p">({</span><span class="s1">&#39;error&#39;</span><span class="p">:</span> <span class="s1">&#39;Task not found.&#39;</span><span class="p">},</span> <span class="n">status</span><span class="o">=</span><span class="mi">404</span><span class="p">)</span>
+
+        <span class="n">assignee_data</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;assignedTo&#39;</span><span class="p">,</span> <span class="p">[])</span>
+
+        <span class="k">for</span> <span class="n">assignee</span> <span class="ow">in</span> <span class="n">assignee_data</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">contact</span> <span class="o">=</span> <span class="n">Contact</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+                    <span class="n">name</span><span class="o">=</span><span class="n">assignee</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">],</span>
+                    <span class="n">email</span><span class="o">=</span><span class="n">assignee</span><span class="p">[</span><span class="s1">&#39;email&#39;</span><span class="p">]</span>
+                <span class="p">)</span>
+                
+                <span class="n">TaskContact</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get_or_create</span><span class="p">(</span><span class="n">task</span><span class="o">=</span><span class="n">task</span><span class="p">,</span> <span class="n">contact</span><span class="o">=</span><span class="n">contact</span><span class="p">)</span>
+                <span class="n">status_message</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Assignee </span><span class="si">{</span><span class="n">contact</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s1"> linked to the task successfully.&#39;</span><span class="p">)</span>
+            
+            <span class="k">except</span> <span class="n">Contact</span><span class="o">.</span><span class="n">DoesNotExist</span><span class="p">:</span>
+                <span class="n">status_message</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Assignee </span><span class="si">{</span><span class="n">assignee</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span><span class="si">}</span><span class="s1"> not found. No changes made.&#39;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">Response</span><span class="p">({</span><span class="s1">&#39;status&#39;</span><span class="p">:</span> <span class="s1">&#39;Assignees processed successfully&#39;</span><span class="p">,</span> <span class="s1">&#39;messages&#39;</span><span class="p">:</span> <span class="n">status_message</span><span class="p">})</span></div>
+    
+<div class="viewcode-block" id="TaskView.remove_assignees"><a class="viewcode-back" href="../../docs/join_tasks.html#join_tasks.views.TaskView.remove_assignees">[docs]</a>    <span class="k">def</span> <span class="nf">remove_assignees</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">pk</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Handle DELETE request to remove assignees from an existing task.</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">        - pk: Primary key of the task.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">        - Response: JSON response with status and processing messages.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">task</span> <span class="o">=</span> <span class="n">Task</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="n">pk</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">Task</span><span class="o">.</span><span class="n">DoesNotExist</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">Response</span><span class="p">({</span><span class="s1">&#39;error&#39;</span><span class="p">:</span> <span class="s1">&#39;Task not found.&#39;</span><span class="p">},</span> <span class="n">status</span><span class="o">=</span><span class="mi">404</span><span class="p">)</span>
+
+        <span class="n">assignee_data</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;assignedTo&#39;</span><span class="p">,</span> <span class="p">[])</span>
+        <span class="n">status_message</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="k">for</span> <span class="n">assignee</span> <span class="ow">in</span> <span class="n">assignee_data</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">contact</span> <span class="o">=</span> <span class="n">Contact</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+                    <span class="n">name</span><span class="o">=</span><span class="n">assignee</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">],</span>
+                    <span class="n">email</span><span class="o">=</span><span class="n">assignee</span><span class="p">[</span><span class="s1">&#39;email&#39;</span><span class="p">],</span>
+                <span class="p">)</span>
+                <span class="n">task_contact</span> <span class="o">=</span> <span class="n">TaskContact</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">task</span><span class="o">=</span><span class="n">task</span><span class="p">,</span> <span class="n">contact</span><span class="o">=</span><span class="n">contact</span><span class="p">)</span>
+                <span class="n">task_contact</span><span class="o">.</span><span class="n">delete</span><span class="p">()</span>
+                <span class="n">status_message</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Assignee </span><span class="si">{</span><span class="n">contact</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s1"> removed successfully.&#39;</span><span class="p">)</span>
+            <span class="k">except</span> <span class="p">(</span><span class="n">Contact</span><span class="o">.</span><span class="n">DoesNotExist</span><span class="p">,</span> <span class="n">TaskContact</span><span class="o">.</span><span class="n">DoesNotExist</span><span class="p">):</span>
+                <span class="n">status_message</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Assignee </span><span class="si">{</span><span class="n">assignee</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span><span class="si">}</span><span class="s1"> not found for this task.&#39;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">Response</span><span class="p">({</span><span class="s1">&#39;status&#39;</span><span class="p">:</span> <span class="s1">&#39;Assignees processed&#39;</span><span class="p">,</span> <span class="s1">&#39;messages&#39;</span><span class="p">:</span> <span class="n">status_message</span><span class="p">})</span></div></div>
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../index.html">Join_Django_Rest_Framework_Backend</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Contents</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../module_overview.html"><code class="docutils literal notranslate"><span class="pre">LoginSerializer</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_overview.html#join.views.Command"><code class="docutils literal notranslate"><span class="pre">Command</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_overview.html#join.views.DocsView"><code class="docutils literal notranslate"><span class="pre">DocsView</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_overview.html#join.views.GenerateDemoDataView"><code class="docutils literal notranslate"><span class="pre">GenerateDemoDataView</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_overview.html#join.views.GetCsrfTokenView"><code class="docutils literal notranslate"><span class="pre">GetCsrfTokenView</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_overview.html#join.admin.ContactAdmin"><code class="docutils literal notranslate"><span class="pre">ContactAdmin</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_overview.html#join.admin.SubTaskAdmin"><code class="docutils literal notranslate"><span class="pre">SubTaskAdmin</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_overview.html#join.admin.SubTaskInline"><code class="docutils literal notranslate"><span class="pre">SubTaskInline</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_overview.html#join.admin.TaskAdmin"><code class="docutils literal notranslate"><span class="pre">TaskAdmin</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_overview.html#join.admin.UserAdmin"><code class="docutils literal notranslate"><span class="pre">UserAdmin</span></code></a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2024, Benjamin Tietz.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 7.1.2</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.13</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

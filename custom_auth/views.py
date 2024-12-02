@@ -20,11 +20,25 @@ from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.authentication import TokenAuthentication
 from .models import User
 from .serializers import ResetPasswordRequestSerializer
+
+
+
+
 class LoginView(APIView):
     authentication_classes = []
     permission_classes = []
 
     def post(self, request, *args, **kwargs):
+        """
+        Handle POST requests to the login endpoint.
+
+        Validate the provided email and password using the LoginSerializer.
+        If the credentials are correct, return a JSON response with the user's
+        authentication token and serialized user data.
+
+        If the credentials are invalid, return a 400 Bad Request response with
+        the serializer's validation errors.
+        """
         serializer = LoginSerializer(data=request.data)
         if serializer.is_valid(raise_exception=True):
             user = serializer.validated_data['user']
@@ -41,18 +55,43 @@ class SignupView(viewsets.ViewSet):
     permission_classes = []
 
     def create(self, request):
+        """
+        Handle POST requests to the signup endpoint.
+
+        Validate the provided user data using the UserSerializer.
+        If the data is valid, save the user and return a JSON response with the
+        serialized user data.
+
+        If the data is invalid, return a 400 Bad Request response with the
+        serializer's validation errors.
+        """
         serializer = UserSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-
 class ActivateUserView(APIView):
     authentication_classes = []
     permission_classes = []
 
     def get(self, request, uidb64, token):
+        """
+        Handle GET requests to the user activation endpoint.
+
+        Validate the activation link using the token generator.
+        If the link is valid, activate the user and return a success response.
+        If the link is invalid, return an error response.
+
+        Parameters:
+        - request: The HTTP request object.
+        - uidb64: The user's id encoded in base64.
+        - token: The activation token.
+
+        Returns:
+        - A 200 OK response if the user is activated successfully.
+        - A 400 Bad Request response if the activation link is invalid.
+        """
         try:
             uid = urlsafe_base64_decode(uidb64).decode()
             user = User.objects.get(pk=uid)
@@ -62,10 +101,10 @@ class ActivateUserView(APIView):
         if user is not None and token_generator.check_token(user, token):
             user.is_active = True
             user.save()
-            return HttpResponse("Your account has been activated successfully.")
+            return Response({"message": "Your account has been activated successfully."}, status=status.HTTP_200_OK)
         else:
-            return HttpResponse("Activation link is invalid.")
-        
+            return Response({"error": "Activation link is invalid or expired."}, status=status.HTTP_400_BAD_REQUEST)
+
 class VerifyTokenView(APIView):
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
@@ -114,7 +153,6 @@ class PasswordResetView(APIView):
         token_lifetime = timedelta(hours=24)
         if timezone.now() > reset_obj.created_at + token_lifetime:
             return Response({'error': 'Token expired'}, status=status.HTTP_400_BAD_REQUEST)
-
         return Response({'success': 'Token is valid'}, status=status.HTTP_200_OK)
 
     def post(self, request, token):

@@ -3,7 +3,6 @@ from phone_field import PhoneField
 from datetime import date
 import random
 
-# Create your models here.
 class Contact(models.Model):
     COLOR_CHOICES = [
         "#6E52FF",  # blue
@@ -23,6 +22,11 @@ class Contact(models.Model):
     created_at = models.DateField(default=date.today)
 
     def save(self, *args, **kwargs):
+        """
+        Sets default values for initials and color if they are not provided and then
+        saves the model to the database.
+        """
+        
         if not self.initials:
             self.initials = ''.join([n[0] for n in self.name.split()[:2]]).upper()
         if not self.color:

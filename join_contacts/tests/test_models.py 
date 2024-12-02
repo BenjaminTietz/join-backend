@@ -1,0 +1,19 @@
+from django.test import TestCase
+from join_contacts.models import Contact
+
+class ContactModelTestCase(TestCase):
+    def setUp(self):
+        self.contact = Contact.objects.create(
+            name="John Doe",
+            email="johndoe@example.com",
+        )
+
+    def test_contact_creation(self):
+        self.assertEqual(self.contact.name, "John Doe")
+        self.assertEqual(self.contact.email, "johndoe@example.com")
+
+    def test_default_initials(self):
+        self.assertEqual(self.contact.initials, "JD")
+
+    def test_default_color(self):
+        self.assertIn(self.contact.color, Contact.COLOR_CHOICES)

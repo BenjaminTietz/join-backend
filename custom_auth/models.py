@@ -5,10 +5,7 @@ from django.utils import timezone
 from join_contacts.models import Contact
 
 class User(AbstractUser):
-    """
-    Benutzerdefiniertes User-Modell, das das Standard-AbstractUser-Modell erweitert,
-    um E-Mail für die Authentifizierung zu verwenden und zusätzliche Felder hinzuzufügen.
-    """
+    
     email = models.EmailField(unique=True)
     phone = PhoneField(blank=True, help_text='Contact phone number')
     created_at = models.DateTimeField(default=timezone.now)

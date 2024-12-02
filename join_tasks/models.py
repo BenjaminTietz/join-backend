@@ -75,8 +75,8 @@ class SubTask(models.Model):
     task = models.ForeignKey(Task, on_delete=models.CASCADE, related_name='subTasks')
     title = models.CharField(max_length=150)
     checked = models.BooleanField(default=False)
-    created_at = models.DateField(default=date.today) #for internal use
-    #author = models.CharField(max_length=50) #for internal use
+    created_at = models.DateField(default=date.today)
+    created_by = models.CharField(max_length=255, default="system")
 
     def __str__(self):
         """

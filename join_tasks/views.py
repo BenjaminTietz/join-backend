@@ -16,7 +16,7 @@ from rest_framework.permissions import IsAuthenticated
 from django.shortcuts import redirect
 from django.conf import settings
 from django.core.management.base import BaseCommand
-from join.management.commands.init_demo_data import generate_demo_data
+from join.management.commands.generate_demo_data import generate_demo_data
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 
@@ -42,11 +42,8 @@ class TaskView(viewsets.ViewSet):
         """
         serializer = TaskSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        
-     
         task = serializer.save()
         
-     
         assigned_contacts_data = request.data.get('assignedContacts', [])
         for contact_data in assigned_contacts_data:
             contact, created = Contact.objects.get_or_create(**contact_data)

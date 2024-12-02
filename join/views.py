@@ -6,7 +6,7 @@ from rest_framework import viewsets
 from django.shortcuts import redirect
 from django.conf import settings
 from django.core.management.base import BaseCommand
-from join.management.commands.init_demo_data import generate_demo_data
+from join.management.commands.generate_demo_data import generate_demo_data
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 
@@ -30,11 +30,31 @@ class DocsView(viewsets.ViewSet):
 @method_decorator(csrf_exempt, name='dispatch')
 class GenerateDemoDataView(View):
     def post(self, request, *args, **kwargs):
+        """
+        Handle POST requests to generate demo data for tasks, contacts, and subtasks.
+
+        Args:
+            request: The HTTP request object.
+
+        Returns:
+            A JSON response with a success message if the demo data is generated
+            successfully.
+        """
+
         generate_demo_data(sender=self.__class__, user=None)
         return JsonResponse({"message": "Demo data generated successfully."}, status=200)
 
 class GetCsrfTokenView(View):
     def get(self, request, *args, **kwargs):
+        """
+        Handle GET requests to retrieve a CSRF token.
+
+        Args:
+            request: The HTTP request object.
+
+        Returns:
+            A JSON response with a CSRF token.
+        """
         token = get_token(request)
         return JsonResponse({'csrfToken': token}, status=200)
 

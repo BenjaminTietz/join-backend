@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Join &#8212; Join_Django_Rest_Framework_Backend 1.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=4f649999" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css?v=039e1c02" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=359c27e9"></script>
+    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="module-join.views">
+<span id="join"></span><h1>Join<a class="headerlink" href="#module-join.views" title="Permalink to this heading">¶</a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="join.views.Command">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">join.views.</span></span><span class="sig-name descname"><span class="pre">Command</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stdout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stderr</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">no_color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">force_color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/join/views.html#Command"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#join.views.Command" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">BaseCommand</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="join.views.Command.handle">
+<span class="sig-name descname"><span class="pre">handle</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/join/views.html#Command.handle"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#join.views.Command.handle" title="Permalink to this definition">¶</a></dt>
+<dd><p>The actual logic of the command. Subclasses must implement
+this method.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="join.views.Command.help">
+<span class="sig-name descname"><span class="pre">help</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Generate</span> <span class="pre">demo</span> <span class="pre">data</span> <span class="pre">for</span> <span class="pre">tasks,</span> <span class="pre">contacts,</span> <span class="pre">and</span> <span class="pre">subtasks'</span></em><a class="headerlink" href="#join.views.Command.help" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="join.views.DocsView">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">join.views.</span></span><span class="sig-name descname"><span class="pre">DocsView</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/join/views.html#DocsView"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#join.views.DocsView" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ViewSet</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="join.views.DocsView.get">
+<span class="sig-name descname"><span class="pre">get</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/join/views.html#DocsView.get"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#join.views.DocsView.get" title="Permalink to this definition">¶</a></dt>
+<dd><p>View to redirect the user to the Sphinx-generated documentation.</p>
+<p>This view handles requests by redirecting them to the static HTML 
+documentation generated by Sphinx, located at ‘/_build/html/index.html’.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>request: The HTTP request object.</p>
+</dd>
+<dt>Returns:</dt><dd><p>A redirect response to the ‘/_build/html/index.html’ page.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="join.views.GenerateDemoDataView">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">join.views.</span></span><span class="sig-name descname"><span class="pre">GenerateDemoDataView</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/join/views.html#GenerateDemoDataView"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#join.views.GenerateDemoDataView" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">View</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="join.views.GenerateDemoDataView.dispatch">
+<span class="sig-name descname"><span class="pre">dispatch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#join.views.GenerateDemoDataView.dispatch" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="join.views.GenerateDemoDataView.post">
+<span class="sig-name descname"><span class="pre">post</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/join/views.html#GenerateDemoDataView.post"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#join.views.GenerateDemoDataView.post" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="join.views.GetCsrfTokenView">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">join.views.</span></span><span class="sig-name descname"><span class="pre">GetCsrfTokenView</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/join/views.html#GetCsrfTokenView"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#join.views.GetCsrfTokenView" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">View</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="join.views.GetCsrfTokenView.get">
+<span class="sig-name descname"><span class="pre">get</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/join/views.html#GetCsrfTokenView.get"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#join.views.GetCsrfTokenView.get" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<span class="target" id="module-join.management.commands"></span></section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">Join_Django_Rest_Framework_Backend</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Contents</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../module_overview.html"><code class="docutils literal notranslate"><span class="pre">LoginSerializer</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../module_overview.html#join.views.Command"><code class="docutils literal notranslate"><span class="pre">Command</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../module_overview.html#join.views.DocsView"><code class="docutils literal notranslate"><span class="pre">DocsView</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../module_overview.html#join.views.GenerateDemoDataView"><code class="docutils literal notranslate"><span class="pre">GenerateDemoDataView</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../module_overview.html#join.views.GetCsrfTokenView"><code class="docutils literal notranslate"><span class="pre">GetCsrfTokenView</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../module_overview.html#join.admin.ContactAdmin"><code class="docutils literal notranslate"><span class="pre">ContactAdmin</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../module_overview.html#join.admin.SubTaskAdmin"><code class="docutils literal notranslate"><span class="pre">SubTaskAdmin</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../module_overview.html#join.admin.SubTaskInline"><code class="docutils literal notranslate"><span class="pre">SubTaskInline</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../module_overview.html#join.admin.TaskAdmin"><code class="docutils literal notranslate"><span class="pre">TaskAdmin</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../module_overview.html#join.admin.UserAdmin"><code class="docutils literal notranslate"><span class="pre">UserAdmin</span></code></a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2024, Benjamin Tietz.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 7.1.2</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.13</a>
+      
+      |
+      <a href="../_sources/docs/join.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
