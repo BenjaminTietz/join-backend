@@ -125,9 +125,9 @@ class VerifyTokenView(APIView):
         user_token = request.auth
         
         if frontend_token == str(user_token):
-            return Response(status=status.HTTP_200_OK)
+            return Response({"message": "Token is valid"}, status=status.HTTP_200_OK)
         else:
-            return Response(status=status.HTTP_401_UNAUTHORIZED)
+            return Response({"error": "Token is invalid"}, status=status.HTTP_401_UNAUTHORIZED)
         
         
 class PasswordResetView(APIView):

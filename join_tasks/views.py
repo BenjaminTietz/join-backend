@@ -238,7 +238,7 @@ class TaskView(viewsets.ViewSet):
     
     def remove_assignees(self, request, pk=None):
         """
-        Handle DELETE request to remove assignees from an existing task.
+        Handle POST request to remove assignees from an existing task.
 
         Parameters:
         - pk: Primary key of the task.
@@ -251,19 +251,21 @@ class TaskView(viewsets.ViewSet):
         except Task.DoesNotExist:
             return Response({'error': 'Task not found.'}, status=404)
 
-        assignee_data = request.data.get('assignedTo', [])
+        assignee_ids = request.data.get('assignedTo', [])
+        if not assignee_ids:
+            return Response({'error': 'No assignees provided.'}, status=400)
+
         status_message = []
 
-        for assignee in assignee_data:
+        for contact_id in assignee_ids:
             try:
-                contact = Contact.objects.get(
-                    name=assignee['name'],
-                    email=assignee['email'],
-                )
+                contact = Contact.objects.get(id=contact_id)
                 task_contact = TaskContact.objects.get(task=task, contact=contact)
                 task_contact.delete()
                 status_message.append(f'Assignee {contact.name} removed successfully.')
-            except (Contact.DoesNotExist, TaskContact.DoesNotExist):
-                status_message.append(f'Assignee {assignee["name"]} not found for this task.')
+            except Contact.DoesNotExist:
+                status_message.append(f'Contact with ID {contact_id} not found.')
+            except TaskContact.DoesNotExist:
+                status_message.append(f'Contact with ID {contact_id} is not assigned to this task.')
 
-        return Response({'status': 'Assignees processed', 'messages': status_message})
+        return Response({'status': 'Assignees processed', 'messages': status_message}, status=200)
