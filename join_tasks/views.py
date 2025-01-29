@@ -19,7 +19,8 @@ from django.core.management.base import BaseCommand
 from join.management.commands.generate_demo_data import generate_demo_data
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
-
+from django.db import transaction
+from rest_framework.exceptions import NotFound
 
 class TaskView(viewsets.ViewSet):
     """
@@ -168,41 +169,81 @@ class TaskView(viewsets.ViewSet):
         except SubTask.DoesNotExist:
             return Response({'error': 'Subtask not found.'}, status=404)
     
-
     def update_subtask(self, request, task_pk=None, subtask_pk=None):
         """
-        Handle PATCH request to update a subtask's title and other fields.
+        Aktualisiert die Felder eines Subtasks basierend auf der Anfrage.
 
         Parameters:
-        - task_pk: Primary key of the parent task.
-        - subtask_pk: Primary key of the subtask to update.
+        - task_pk: ID des übergeordneten Tasks.
+        - subtask_pk: ID des zu aktualisierenden Subtasks.
 
         Returns:
-        - Response: JSON response indicating success or failure.
+        - JSON-Antwort mit Erfolgsmeldung und aktualisierten Daten.
         """
         try:
-            task = Task.objects.get(id=task_pk)
+            with transaction.atomic():
+                task = Task.objects.get(id=task_pk)
+                subtask = SubTask.objects.get(id=subtask_pk, task=task)
+
+                updated_fields = []
+                for field, value in request.data.items():
+                    if hasattr(subtask, field):
+                        setattr(subtask, field, value)
+                        updated_fields.append(field)
+
+                if not updated_fields:
+                    return Response(
+                        {"error": "No valid fields provided for update."},
+                        status=status.HTTP_400_BAD_REQUEST,
+                    )
+
+                subtask.save()
+
+                return Response(
+                    {
+                        "status": "Subtask updated successfully",
+                        "subtask": SubTaskSerializer(subtask).data,
+                    },
+                    status=status.HTTP_200_OK,
+                )
         except Task.DoesNotExist:
-            return Response({'error': 'Task not found.'}, status=404)
-        
-        try:
-            subtask = SubTask.objects.get(id=subtask_pk, task=task)
+            raise NotFound({"error": "Task not found."})
         except SubTask.DoesNotExist:
-            return Response({'error': 'Subtask not found.'}, status=404)
+            raise NotFound({"error": "Subtask not found."})
+    # def update_subtask(self, request, task_pk=None, subtask_pk=None):
+    #     """
+    #     Handle PATCH request to update a subtask's title and other fields.
 
-        new_title = request.data.get('title')
-        
-        if new_title is not None:
-            subtask.title = new_title
-        
-        subtask.checked = request.data.get('checked', subtask.checked)
+    #     Parameters:
+    #     - task_pk: Primary key of the parent task.
+    #     - subtask_pk: Primary key of the subtask to update.
 
-        subtask.save()
+    #     Returns:
+    #     - Response: JSON response indicating success or failure.
+    #     """
+    #     try:
+    #         task = Task.objects.get(id=task_pk)
+    #     except Task.DoesNotExist:
+    #         return Response({'error': 'Task not found.'}, status=404)
         
-        return Response({
-            'status': 'Subtask updated successfully',
-            'subtask': SubTaskSerializer(subtask).data
-        })
+    #     try:
+    #         subtask = SubTask.objects.get(id=subtask_pk, task=task)
+    #     except SubTask.DoesNotExist:
+    #         return Response({'error': 'Subtask not found.'}, status=404)
+
+    #     new_title = request.data.get('title')
+        
+    #     if new_title is not None:
+    #         subtask.title = new_title
+        
+    #     subtask.checked = request.data.get('checked', subtask.checked)
+
+    #     subtask.save()
+        
+    #     return Response({
+    #         'status': 'Subtask updated successfully',
+    #         'subtask': SubTaskSerializer(subtask).data
+    #     })
     def add_assignees(self, request, pk=None):
         """
         Handle POST request to add assignees to an existing task.
