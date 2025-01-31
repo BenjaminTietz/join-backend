@@ -7,7 +7,7 @@ docs_view = DocsView.as_view({'get': 'get'})
 urlpatterns = [
     path('docs/', docs_view, name='docs_view'),
     path('admin/', admin.site.urls),
-    path('auth/', include('custom_auth.urls')),
+    path('', include('custom_auth.urls')),
     path('contacts/', include('join_contacts.urls')),
     path('task/', include('join_tasks.urls')),
     path('generate-demo-data/', GenerateDemoDataView.as_view(), name='generate-demo-data'),
