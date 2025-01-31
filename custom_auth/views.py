@@ -101,7 +101,7 @@ class ActivateUserView(APIView):
         if user is not None and token_generator.check_token(user, token):
             user.is_active = True
             user.save()
-            return Response({"message": "Your account has been activated successfully."}, status=status.HTTP_200_OK)
+            return redirect(settings.REDIRECT_LANDING)
         else:
             return Response({"error": "Activation link is invalid or expired."}, status=status.HTTP_400_BAD_REQUEST)
 

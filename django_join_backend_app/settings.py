@@ -34,6 +34,9 @@ DEBUG = True
 
 ALLOWED_HOSTS = json.loads(os.getenv('ALLOWED_HOSTS', '[]'))
 
+REDIRECT_LANDING = os.getenv('REDIRECT_LANDING', "http://join-angular.benjamin-tietz.com/")
+
+
 CORS_ALLOW_ALL_ORIGINS = True
 
 CORS_ALLOWED_ORIGINS = json.loads(os.getenv('CORS_ALLOWED_ORIGINS', '[]'))
@@ -166,10 +169,9 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
-STATIC_URL = 'static/'
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, '_build', 'html'),  # Pfad zu deinem Build-Ordner
-]
+STATIC_URL = '/join/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')  # Statischer Ordner für gesammelte Dateien
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
@@ -183,3 +185,6 @@ REST_FRAMEWORK = {
     ]
 }
 
+FORCE_SCRIPT_NAME = "/join"
+USE_X_FORWARDED_HOST = True
+USE_X_FORWARDED_PORT = True
